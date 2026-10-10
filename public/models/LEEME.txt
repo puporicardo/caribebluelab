@@ -1,0 +1,20 @@
+Modelos 3D de las especies (formato .glb)
+
+    mero-guasa.glb   Mero guasa (Epinephelus itajara)
+
+El visor de la web (/arrecife) y el kiosco (escena del Arrecife) lo cargan desde
+/models/mero-guasa.glb. Para sumar más especies, añade su archivo aquí y su ruta
+en src/shared/components/species/models.ts (en el mismo orden que las especies
+de src/content/es.ts y en.ts).
+
+Optimiza siempre el GLB antes de publicarlo. El original del mero
+(Mero_lomo_vientre_corregidos.glb, 85 MB y ~2 M de triángulos) se redujo a ~3 MB
+y ~500 mil triángulos sin pérdida visible con:
+
+    npx @gltf-transform/cli optimize original.glb mero-guasa.glb \
+      --compress meshopt --texture-compress webp --texture-size 2048 \
+      --simplify-ratio 0.25 --simplify-error 0.0005
+
+meshopt no necesita decodificador externo (three/drei lo incluyen), así que el
+kiosco funciona también sin conexión. Con una relación de 0.12 aparecen defectos
+en la aleta pectoral.

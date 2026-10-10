@@ -1,0 +1,11 @@
+node_modules
+dist
+.vercel
+*.local
+.DS_Store
+# Videos y modelos pesados: súbelos con Git LFS o a un almacenamiento externo si superan el límite del repositorio
+# public/media/*.mp4
+# public/models/*.glb
+
+# Originales de modelos 3D (pesados): solo se publica la versión optimizada en public/models
+/*.glb

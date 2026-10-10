@@ -1,0 +1,14 @@
+Videos de fondo por profundidad (MP4, H.264).
+
+Ejecuta `npm run videos` para descargarlos aquí desde Magnific antes de que venzan
+las URLs firmadas (12 oct 2026). Nombres esperados:
+
+  00-superficie.mp4
+  01-zona-de-luz.mp4
+  02-arrecife.mp4
+  03-pradera-marina.mp4
+  04-zona-oscura.mp4
+  05-ascenso.mp4
+
+Si un archivo no está, el sitio usa la URL de Magnific; si tampoco carga,
+el océano WebGL dibuja el fondo completo.

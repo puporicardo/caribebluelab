@@ -1,0 +1,256 @@
+/* ============================================================
+   Caribe Blue Lab · base compartida (web y kiosco)
+   Paleta estricta de la diapositiva de identidad.
+   ============================================================ */
+:root {
+  /* Profundidades */
+  --c-surface: #4c86ae;
+  --c-light: #35668b;
+  --c-reef: #2a4c72;
+  --c-meadow: #1d3256;
+  --c-deep: #0b1b33;
+  --c-ascent: #d2bb81;
+  /* Acento (solo sobre fondos oscuros) y neutros */
+  --c-accent: #6fe3d6;
+  --c-cream: #f5f3f0;
+  --c-white: #ffffff;
+  --c-ink: #0b1b33;
+  --c-gold-ink: #7a5c16;
+  --c-slate: #3a4a5e;
+  --c-mist: #b9cbdd;
+
+  --f-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --f-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --line: rgba(245, 243, 240, 0.26);
+  --line-strong: rgba(245, 243, 240, 0.3);
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--c-deep);
+  color: var(--c-cream);
+  font-family: var(--f-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 3px;
+}
+
+.lt :focus-visible {
+  outline-color: var(--c-ink);
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Tipografía editorial ---------- */
+.disp {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-variation-settings: 'opsz' 144;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.disp em,
+.it {
+  font-style: italic;
+}
+
+.eyebrow {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.eyebrow .n {
+  font-family: var(--f-display);
+  font-style: italic;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.rule {
+  display: inline-block;
+  flex: none;
+  height: 1px;
+  background: currentColor;
+}
+
+/* Marcas de corte de imprenta alrededor de figuras */
+.crop {
+  position: absolute;
+  pointer-events: none;
+  --cm: 18px;
+  background:
+    linear-gradient(currentColor, currentColor) 0 0 / var(--cm) 1px no-repeat,
+    linear-gradient(currentColor, currentColor) 0 0 / 1px var(--cm) no-repeat,
+    linear-gradient(currentColor, currentColor) 100% 0 / var(--cm) 1px no-repeat,
+    linear-gradient(currentColor, currentColor) 100% 0 / 1px var(--cm) no-repeat,
+    linear-gradient(currentColor, currentColor) 0 100% / var(--cm) 1px no-repeat,
+    linear-gradient(currentColor, currentColor) 0 100% / 1px var(--cm) no-repeat,
+    linear-gradient(currentColor, currentColor) 100% 100% / var(--cm) 1px no-repeat,
+    linear-gradient(currentColor, currentColor) 100% 100% / 1px var(--cm) no-repeat;
+}
+
+.hatch {
+  background-image:
+    repeating-linear-gradient(135deg, rgba(245, 243, 240, 0.07) 0 1px, rgba(245, 243, 240, 0) 1px 13px),
+    var(--hatch-bg, linear-gradient(160deg, var(--c-surface), var(--c-meadow)));
+}
+
+/* Ficha técnica con filetes */
+.ficha {
+  margin: 0;
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+
+.ficha dt,
+.ficha dd {
+  margin: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.ficha dt {
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--c-mist);
+}
+
+.lt .ficha {
+  border-top-color: rgba(11, 27, 51, 0.3);
+}
+
+.lt .ficha dt,
+.lt .ficha dd {
+  border-bottom-color: rgba(11, 27, 51, 0.2);
+}
+
+.lt .ficha dt {
+  color: var(--c-slate);
+}
+
+.figcap {
+  display: flex;
+  align-items: baseline;
+  margin: 0;
+  color: var(--c-mist);
+}
+
+.figcap b {
+  flex: none;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--c-ascent);
+}
+
+/* Ondas del agua al paso del puntero */
+.ripples {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.ripple {
+  position: absolute;
+  left: -400px;
+  top: -400px;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1px rgba(245, 243, 240, 0.34),
+    0 0 22px rgba(245, 243, 240, 0.08),
+    inset 0 0 26px rgba(245, 243, 240, 0.08);
+  filter: blur(0.6px);
+  opacity: 0;
+}
+
+@keyframes cbl-ripple {
+  from {
+    transform: translate(-50%, -50%) scale(0.08);
+    opacity: 0.9;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(var(--k, 1));
+    opacity: 0;
+  }
+}
+
+@keyframes cbl-eq {
+  0%,
+  100% {
+    transform: scaleY(0.22);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes cbl-dash {
+  to {
+    stroke-dashoffset: -400;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01s !important;
+    scroll-behavior: auto !important;
+  }
+}
