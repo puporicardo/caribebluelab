@@ -76,7 +76,7 @@ void main(){
     float ca = cn * (0.06 + 0.16 * smoothstep(0.35, 1.0, uv.y)) * (1.0 - smoothstep(0.0, 0.42, d)) * uUnder;
     float a = clamp(pa + ra + ca + ml * 0.16 * uUnder, 0.0, 0.85);
     vec3 lc = mix(pc, cream, clamp((ra + ca) * 3.0 + ml * 2.0 * (1.0 - deep), 0.0, 1.0));
-    gl_FragColor = vec4(lc, a);
+    gl_FragColor = vec4(lc * a, a); // premultiplicado
     return;
   }
   vec3 asc = mix(mix(pal(0.0), gold, 0.55), mix(gold, cream, smoothstep(0.55, 1.0, uv.y)), smoothstep(0.0, 0.7, uv.y));

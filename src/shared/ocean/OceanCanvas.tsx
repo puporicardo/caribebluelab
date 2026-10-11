@@ -25,7 +25,9 @@ export function OceanCanvas({ target, pointer, overlay, ease = 0.06, resolution,
     if (!cv) return;
     let gl: WebGLRenderingContext | null = null;
     try {
-      gl = cv.getContext('webgl', { antialias: false, alpha: true, premultipliedAlpha: false });
+      // Alfa premultiplicado (el modo estándar): Safari/iOS compone mal el no premultiplicado y
+      // sumaba el color de la capa a toda la pantalla (se veía lavada en blanco).
+      gl = cv.getContext('webgl', { antialias: false, alpha: true, premultipliedAlpha: true });
     } catch {
       gl = null;
     }
