@@ -8,7 +8,8 @@ import { makeBars } from '../../shared/bars';
 import { cssVars } from '../../shared/css';
 import { ZoneHead } from '../parts/ZoneHead';
 
-const BIO = '#6FE3D6';
+/** Acento coral de todo el sitio; la bioluminiscencia (cian) queda en lo que brilla: marcas, onda, linterna. */
+const ACCENT = 'var(--c-accent)';
 
 const PLATES = [
   { left: '4%', top: '7%', width: '42%', height: '46%', bg: 'linear-gradient(140deg, #1D3256, #0B1B33)' },
@@ -40,11 +41,11 @@ export function ZonaOscuraPage() {
   return (
     <section id="zona-oscura" className="zone" aria-labelledby="titulo-zona-4">
       <div className="wrap">
-        <ZoneHead index={4} accent={BIO} numeralStroke="rgba(111,227,214,.25)" />
+        <ZoneHead index={4} accent={ACCENT} numeralStroke="rgba(111,227,214,.25)" />
 
         <article className="spread" aria-label={plain(sounds.title)}>
           <div className="stack" data-reveal="">
-            <p className="eyebrow exp-eyebrow" style={{ color: BIO }}>
+            <p className="eyebrow exp-eyebrow" style={{ color: ACCENT }}>
               <span className="n">04</span>
               {t.ui.experience(1, 2)}
             </p>
@@ -63,7 +64,7 @@ export function ZonaOscuraPage() {
                   role="tab"
                   aria-selected={i === track}
                   className={`tab ${i === track ? 'is-on' : ''}`}
-                  style={i === track ? { boxShadow: `inset 0 -2px 0 ${BIO}` } : undefined}
+                  style={i === track ? { boxShadow: `inset 0 -2px 0 ${ACCENT}` } : undefined}
                   onClick={() => setTrack(i)}
                 >
                   {label}
@@ -96,7 +97,7 @@ export function ZonaOscuraPage() {
 
         <article className="spread rev" aria-label={plain(creatures.title)}>
           <div className="stack" data-reveal="">
-            <p className="eyebrow exp-eyebrow" style={{ color: BIO }}>
+            <p className="eyebrow exp-eyebrow" style={{ color: ACCENT }}>
               <span className="n">04</span>
               {t.ui.experience(2, 2)}
             </p>

@@ -8,6 +8,11 @@ interface SeaLifeProps {
   /** Tiempo de la película (0–6): decide el hábitat y la luz. */
   film: Box<number>;
   pointer: Box<PointerState>;
+  /**
+   * Qué mueve la cámara: el scroll (web) o la propia película (kiosco, que avanza solo).
+   * Con 'film' el paralaje y las entradas por arriba/abajo siguen al avance de la película.
+   */
+  drive?: 'scroll' | 'film';
 }
 
 const BUBBLES = Array.from({ length: 8 }, (_, i) => `${import.meta.env.BASE_URL}sea/bubble-${i + 1}.webp`);
@@ -71,7 +76,7 @@ const pick = (pool: [Species, number][]) => {
  * decide su tamaño, desenfoque y cuánto lo vela el agua (con luz cenital y vientre en sombra).
  * Huyen del puntero y se desplazan con el scroll como si la cámara bajara entre ellos.
  */
-export function SeaLife({ film, pointer }: SeaLifeProps) {
+export function SeaLife({ film, pointer, drive = 'scroll' }: SeaLifeProps) {
   const back = useRef<HTMLDivElement>(null);
   const front = useRef<HTMLDivElement>(null);
 
@@ -307,11 +312,13 @@ export function SeaLife({ film, pointer }: SeaLifeProps) {
       const lift = t >= 5 && Math.abs(dT) < 0.2 ? dT * 320 : 0;
       // Cerca de la superficie lo que quede en el agua termina de hundirse fuera de cuadro.
       const sink = t > 5.55 ? (t - 5.55) * 600 * dt : 0;
-      // Salto directo (menú, enlace) hasta la superficie: es un corte, no queda nada en el cielo.
-      if (t > 5.6 && Math.abs(dT) >= 0.2) {
+      // Salto (menú, enlace): la película corta, la fauna también. Y nada queda en el cielo.
+      if (Math.abs(dT) > 0.6 || (t > 5.6 && Math.abs(dT) >= 0.2)) {
         while (live.length) remove(live.length - 1);
         bubbles.splice(0).forEach((b) => b.el.remove());
       }
+      // Kiosco: la cámara baja al avanzar la película (≈ 90 vh por tramo).
+      if (drive === 'film') dy = t < 5 && Math.abs(dT) < 0.2 ? Math.max(-4, Math.min(4, dT * 90)) : 0;
       if (t >= 5) dy = 0;
       // Cuanto más se recorre, más vida entra por el borde hacia el que va la cámara.
       scrollAcc += Math.abs(dy);
@@ -397,7 +404,7 @@ export function SeaLife({ film, pointer }: SeaLifeProps) {
       live.forEach((c) => c.el.remove());
       bubbles.forEach((b) => b.el.remove());
     };
-  }, [film, pointer]);
+  }, [film, pointer, drive]);
 
   // El primer plano va por encima del texto (desenfocado, de paso): se monta en <body>.
   return (

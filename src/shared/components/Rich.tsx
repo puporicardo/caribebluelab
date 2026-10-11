@@ -6,7 +6,8 @@ interface RichProps {
   emStyle?: CSSProperties;
   /**
    * Parte el texto en palabras enmascaradas (.w > .wi) para que entren una a una
-   * cuando su contenedor recibe .is-in. El orden va en --i (retardo escalonado).
+   * cuando su contenedor recibe .is-in. El orden va en --i (retardo escalonado) y las palabras
+   * alternan .w--a / .w--b para coreografías desde lados opuestos.
    */
   split?: boolean;
 }
@@ -21,7 +22,7 @@ export function Rich({ text, emStyle, split = false }: RichProps) {
       if (/^\s+$/.test(w)) return ' ';
       const i = n++;
       return (
-        <span key={k} className="w" style={{ '--i': i } as CSSProperties}>
+        <span key={k} className={`w ${i % 2 ? 'w--b' : 'w--a'}`} style={{ '--i': i } as CSSProperties}>
           <span className="wi">{w}</span>
         </span>
       );

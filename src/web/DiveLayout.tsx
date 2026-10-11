@@ -11,11 +11,11 @@ import { ZONE_PAGES } from './pages';
 import { DepthRail, MobileDepthLine } from './parts/DepthRail';
 import { Footer } from './parts/Footer';
 import { Header } from './parts/Header';
-import { LayerCaption } from './parts/LayerCaption';
 import { Stage } from './parts/Stage';
 import { useScrollMotion } from './useMotion';
 import { useReveal } from './useReveal';
 import './web.css';
+import './type.css';
 import './motion.css';
 
 /** Tiempo que una zona debe quedar en pantalla antes de cambiar la URL (evita “páginas” fugaces al hacer scroll rápido). */
@@ -93,7 +93,7 @@ export default function DiveLayout() {
       // Ascenso: el sol crece arriba a medida que la cámara sube hacia la superficie.
       const asc = smooth(clamp01((T - 5.05) / 0.68));
       // Velo de lectura del Ascenso: entra poco a poco al cruzar a la zona (nunca de golpe).
-      stageRef.current?.style.setProperty('--veil', smooth(clamp01((g - 4.96) / 0.2)).toFixed(4));
+      stageRef.current?.style.setProperty('--veil', smooth(clamp01((g - 5.1) / 0.2)).toFixed(4));
       stageRef.current?.style.setProperty('--asc', (asc * (1 - 0.45 * smooth(clamp01((T - 5.8) / 0.15)))).toFixed(4));
       // Bajo el agua entre el cruce del tramo 1 (~37 %) y la salida del tramo 6 (~78 %).
       target.current.under = smooth(clamp01((T - 0.3) / 0.12)) * (1 - smooth(clamp01((T - 5.7) / 0.1)));
@@ -102,6 +102,8 @@ export default function DiveLayout() {
       stageRef.current?.style.setProperty('--p', prog.toFixed(4));
       // Pantallas recorridas desde arriba (la portada se hunde con esto).
       rootRef.current?.style.setProperty('--sy', Math.min(3, sy / vh).toFixed(4));
+      const docH = document.documentElement.scrollHeight - vh;
+      rootRef.current?.style.setProperty('--prog', clamp01(sy / Math.max(1, docH)).toFixed(4));
       railRef.current?.style.setProperty('--d', gauge);
       lineRef.current?.style.setProperty('--d', gauge);
       setZone(z as ZoneIndex);
@@ -248,7 +250,6 @@ export default function DiveLayout() {
           <Stage zone={zone} stageRef={stageRef} target={target} pointer={pointer} videoOk={videoOk} film={film} />
           <Header solid={solid} />
           <DepthRail railRef={railRef} hidden={footerOn} />
-          <LayerCaption film={film} />
           {pages}
           <Footer ref={footerRef} />
           <MobileDepthLine lineRef={lineRef} hidden={footerOn} />

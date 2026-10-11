@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './film.css';
 import { FILM_LEGS } from '../config/film';
 import type { Box } from '../ocean/types';
@@ -8,6 +8,11 @@ interface DiveFilmProps {
   film: Box<number>;
   /** Se pone en true cuando el primer tramo pinta (el océano WebGL pasa a capa de partículas). */
   playing: Box<boolean>;
+  /**
+   * Kiosco: la película la mueve un reloj, no el scroll. Siempre se reproduce (nunca busca
+   * fotograma a fotograma), sin suavizado extra; quieta en las pausas.
+   */
+  clock?: boolean;
 }
 
 /** Ancho (en tramos) del fundido de seguridad en cada costura. Los fotogramas ya coinciden. */
@@ -23,14 +28,34 @@ const smoothstep = (a: number, b: number, v: number) => {
  * Película del descenso recorrida con el scroll (técnica scroll-world).
  * - Cada tramo se descarga como Blob: siempre se puede buscar (seek) aunque el host no sirva rangos.
  * - Solo se cargan el tramo activo y sus vecinos; el resto llega en segundo plano.
+ * - Avance continuo hacia adelante (el kiosco siempre; la web al bajar a ritmo constante): el video
+ *   se REPRODUCE a la velocidad necesaria (playbackRate) en vez de buscar fotograma a fotograma, así
+ *   se ve fluido. Solo se busca (seek) al ir hacia atrás, al detenerse o para corregir desfase.
  * - Nunca se encola un seek mientras el decodificador sigue buscando (los teléfonos no se congelan).
  * - Cada fotograma buscado se copia a un <canvas>: se pinta igual en todos los navegadores
  *   (iOS no pinta un video silenciado que nunca se reprodujo) y la composición es estable.
  * - El póster queda debajo hasta que llega el primer fotograma.
  * - Con movimiento reducido solo se ven los pósteres, con fundido.
  */
-export function DiveFilm({ film, playing }: DiveFilmProps) {
+/** Pantalla vertical (teléfono de pie, TV girada): se usa la película 9:16 nativa. */
+function usePortrait() {
+  const read = () => typeof window !== 'undefined' && window.innerHeight > window.innerWidth * 1.05;
+  const [portrait, setPortrait] = useState(read);
+  useEffect(() => {
+    const onResize = () => setPortrait(read());
+    window.addEventListener('resize', onResize);
+    window.addEventListener('orientationchange', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('orientationchange', onResize);
+    };
+  }, []);
+  return portrait;
+}
+
+export function DiveFilm({ film, playing, clock = false }: DiveFilmProps) {
   const layers = useRef<(HTMLDivElement | null)[]>([]);
+  const portrait = usePortrait();
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,11 +65,33 @@ export function DiveFilm({ film, playing }: DiveFilmProps) {
     const small = window.matchMedia?.('(max-width: 860px)');
     const isMobile = () => coarse || !!small?.matches;
 
-    type Leg = { el: HTMLDivElement; video: HTMLVideoElement | null; url: string | null; loading: boolean; ready: boolean; painted: boolean };
-    const legs: Leg[] = FILM_LEGS.map((_, i) => ({ el: layers.current[i]!, video: null, url: null, loading: false, ready: false, painted: false }));
+    type Leg = {
+      el: HTMLDivElement;
+      video: HTMLVideoElement | null;
+      url: string | null;
+      loading: boolean;
+      ready: boolean;
+      painted: boolean;
+      draw: () => void;
+      rate: number;
+    };
+    const legs: Leg[] = FILM_LEGS.map((_, i) => ({
+      el: layers.current[i]!,
+      video: null,
+      url: null,
+      loading: false,
+      ready: false,
+      painted: false,
+      draw: () => undefined,
+      rate: 1,
+    }));
     const N = legs.length;
     let cur = film.current;
     let raf = 0;
+    let lastNow = performance.now();
+    /** Velocidad de avance de la película (tramos por segundo), suavizada. */
+    let vel = 0;
+    const hasVFC = typeof HTMLVideoElement !== 'undefined' && 'requestVideoFrameCallback' in HTMLVideoElement.prototype;
     let alive = true;
     let userReady = false;
 
@@ -59,7 +106,7 @@ export function DiveFilm({ film, playing }: DiveFilmProps) {
       if (!L || reduce || L.loading) return;
       L.loading = true;
       const meta = FILM_LEGS[i];
-      const src = isMobile() ? meta.srcMobile : meta.src;
+      const src = portrait ? (isMobile() ? meta.srcPortraitMobile : meta.srcPortrait) : isMobile() ? meta.srcMobile : meta.src;
       fetch(src)
         .then((r) => (r.ok ? r.blob() : Promise.reject(new Error(String(r.status)))))
         .then((blob) => {
@@ -98,9 +145,18 @@ export function DiveFilm({ film, playing }: DiveFilmProps) {
               playing.current = true;
             }
           };
+          L.draw = draw;
           v.addEventListener('seeked', () => {
-            if ('requestVideoFrameCallback' in v) v.requestVideoFrameCallback(() => draw());
+            if (hasVFC) v.requestVideoFrameCallback(() => draw());
             draw();
+          });
+          // Reproduciendo: se pinta cada fotograma decodificado (no cada cuadro de pantalla).
+          const loop = () => {
+            draw();
+            if (!v.paused && alive) v.requestVideoFrameCallback(loop);
+          };
+          v.addEventListener('play', () => {
+            if (hasVFC) v.requestVideoFrameCallback(loop);
           });
           v.addEventListener('loadeddata', () => {
             v.pause();
@@ -115,13 +171,18 @@ export function DiveFilm({ film, playing }: DiveFilmProps) {
         });
     };
 
-    const tick = () => {
+    const tick = (now: number) => {
       raf = requestAnimationFrame(tick);
+      const dt = Math.max(0.001, Math.min(0.1, (now - lastNow) / 1000));
+      lastNow = now;
       const target = clamp(film.current, 0, N);
+      const prev = cur;
       // Saltos grandes (menú, enlace): corte directo, sin recorrer ni descargar los tramos de paso.
-      if (Math.abs(target - cur) > 0.6) cur = target;
+      const jumped = Math.abs(target - cur) > 0.6;
+      if (jumped || clock) cur = target;
       else cur += (target - cur) * (reduce ? 1 : 0.14);
       if (Math.abs(target - cur) < 0.0004) cur = target;
+      vel = jumped ? 0 : vel + ((cur - prev) / dt - vel) * 0.2;
       const a = Math.min(N - 1, Math.floor(cur));
 
       // Al romper la superficie (tramo 6, ~78 %): destello y lente mojada un instante.
@@ -140,18 +201,39 @@ export function DiveFilm({ film, playing }: DiveFilmProps) {
         const near = i >= a - 1 && i <= a + 1;
         L.el.style.opacity = op.toFixed(3);
         L.el.style.visibility = near && op > 0.001 ? 'visible' : 'hidden';
-        if (!near || !L.video || !L.ready || L.video.seeking) continue;
-        const dur = L.video.duration || 10;
+        const V = L.video;
+        if (!near || !V || !L.ready) {
+          if (V && !V.paused) V.pause();
+          continue;
+        }
+        const dur = V.duration || 10;
         const t = clamp(cur - i, 0, 0.9995) * dur;
+
+        // Avance sostenido hacia adelante en el tramo activo: reproducir, no buscar.
+        const flowing = !reduce && L.painted && i === a && vel > (clock ? 0.002 : 0.012) && cur - i < 0.995;
+        if (flowing) {
+          const rate = clamp(vel * dur, clock ? 0.0625 : 0.25, 4);
+          if (Math.abs(rate - L.rate) / L.rate > 0.06) {
+            L.rate = rate;
+            V.playbackRate = rate;
+          }
+          if (V.paused) void V.play().catch(() => undefined);
+          // Corrige desfase grande (p. ej. un tirón de scroll) sin detener la reproducción.
+          if (!V.seeking && Math.abs(V.currentTime - t) > (clock ? 0.3 : 0.45)) V.currentTime = t;
+          if (!hasVFC) L.draw();
+          continue;
+        }
+        if (!V.paused) V.pause();
+        if (V.seeking) continue;
         const eps = isMobile() ? 1 / 24 : 1 / 48;
         // El primer seek fuerza a pintar un fotograma (iOS y Safari no lo hacen solos).
-        if (!L.painted || Math.abs(L.video.currentTime - t) > eps) {
-          if (!L.painted && Math.abs(L.video.currentTime - t) <= eps) {
-            L.video.currentTime = t + 0.001;
+        if (!L.painted || Math.abs(V.currentTime - t) > eps) {
+          if (!L.painted && Math.abs(V.currentTime - t) <= eps) {
+            V.currentTime = t + 0.001;
             continue;
           }
           try {
-            L.video.currentTime = t;
+            V.currentTime = t;
           } catch {
             /* algunos navegadores lanzan si aún no hay datos */
           }
@@ -186,7 +268,8 @@ export function DiveFilm({ film, playing }: DiveFilmProps) {
         if (L.url) URL.revokeObjectURL(L.url);
       });
     };
-  }, [film, playing]);
+    // Al girar el dispositivo se recarga con la película de la otra orientación.
+  }, [film, playing, portrait, clock]);
 
   return (
     <div ref={rootRef} className="film" aria-hidden="true">
@@ -201,7 +284,7 @@ export function DiveFilm({ film, playing }: DiveFilmProps) {
         >
           <img
             className="film-poster"
-            src={leg.poster}
+            src={portrait ? leg.posterPortrait : leg.poster}
             alt=""
             decoding="async"
             loading={i < 2 ? 'eager' : 'lazy'}

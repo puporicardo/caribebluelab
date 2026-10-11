@@ -4,7 +4,7 @@ Micrositio de la Universidad del Magdalena para el ecosistema InnovAzul / Perla 
 (stand en el Blue Zone Forum, Cádiz, 27–30 oct 2026). Dos experiencias sobre el mismo contenido:
 
 - **Web**: un recorrido continuo por seis profundidades, con scroll. Cada zona es una página de React con su propia URL.
-- **Kiosco**: la TV del stand muestra un bucle de 6 minutos (una zona por minuto) en español o inglés.
+- **Kiosco**: la TV del stand recorre sola el mismo descenso de la web (≈2,5 min en bucle), en español o inglés.
 
 React 19 · TypeScript · Vite · React Router · React Three Fiber (visor 3D) · Vercel Analytics + Speed Insights.
 
@@ -26,8 +26,9 @@ Requiere Node 20.19 o superior.
 | --- | --- | --- |
 | Modelo del mero guasa | `public/models/mero-guasa.glb` | Primer ejemplo del visor 3D (web `/arrecife` y kiosco, escena 2). Versión optimizada (~3 MB) del original `Mero_lomo_vientre_corregidos.glb` (85 MB). |
 | Videos de fondo del kiosco | `public/media/00-superficie.mp4` … `05-ascenso.mp4` | `pnpm videos` los baja de Magnific. Si faltan, se usan las URLs firmadas y, como último recurso, el océano WebGL. |
-| Película del descenso (web) | `public/film/leg1…6.mp4` (+ `-m.mp4` y `.webp`) | Una toma continua recorrida con el scroll. Cómo se generó y cómo regenerarla: [docs/descenso.md](docs/descenso.md). |
+| Película del descenso (web y kiosco) | `public/film/leg1…6.mp4` (+ `-m.mp4`, `-v.mp4`, `-vm.mp4` y `.webp`) | Una toma continua recorrida con el scroll. Cómo se generó y cómo regenerarla: [docs/descenso.md](docs/descenso.md). |
 | Fauna animada (web) | `public/sea/*.webp` | Peces, tortuga, raya y medusa reales, sin fondo. |
+| Logo | `public/caribe blue lab logo*.svg` | Originales. En el sitio se usa `src/shared/components/BrandLogo.tsx` (los mismos trazados en línea, para animar la ola del matraz). El favicon es la B‑matraz. |
 
 ## Rutas
 
@@ -54,13 +55,12 @@ El idioma se elige en la Superficie, y también en la cabecera y el pie. Al camb
 ### Kiosco
 
 - `/kiosco/es` (español) y `/kiosco/en` (inglés). `/kiosco` redirige a español.
-- Parámetros de revisión:
-  - `?escena=0–5`: zona en la que empieza.
-  - `?velocidad=x6`: bucle en 1 minuto.
-  - `?velocidad=pausa`: bucle detenido.
-  - `?subtitulos=0`: oculta los subtítulos.
-- Teclado: `F` pantalla completa · `←` `→` cambiar de zona · `espacio` pausa.
-- Para montarlo en la TV del stand, abre `https://<dominio>/kiosco/es` en Chrome en modo kiosco o a pantalla completa.
+- Es la misma película, fauna y luz de la web, automática: baja sola, se detiene en cada profundidad con poco texto (eyebrow, titular con su coreografía y una franja gigante), muestra el mero 3D en el arrecife, sube hasta el atardecer, cierra con el logo y vuelve a empezar (~2,5 min).
+- **Un clic o toque en cualquier parte pone la pantalla completa** y pide mantener la pantalla encendida. No hay avisos ni instrucciones en pantalla. El cursor se esconde solo.
+- Funciona en TV horizontal y vertical (usa la película 9:16 en pantallas verticales).
+- Parámetros de revisión: `?escena=0–6` (parada inicial) y `?velocidad=x2|x6|pausa`.
+- Teclado (solo montaje, no se anuncia): `F` pantalla completa · `←` `→` parada anterior/siguiente · `espacio` pausa.
+- Las pausas y la duración de cada viaje se ajustan en `src/kiosk/timeline.ts`.
 
 ## Estructura
 
@@ -73,9 +73,8 @@ src/
     pages/                 una página por zona (SuperficiePage, ZonaDeLuzPage, ArrecifePage…)
     parts/                 Header, DepthRail, Stage, Footer, ZoneHead…
   kiosk/
-    KioskApp.tsx           bucle de 6 min, escalado 1920×1080, teclado
-    beats/                 18 momentos (6 escenas × 3)
-    parts/                 regla de profundidad, escenografía, mero 3D
+    KioskApp.tsx           recorrido automático en bucle: película, fauna, textos por nivel, mero 3D
+    timeline.ts            paradas, pausas y viajes (el reloj del kiosco)
   shared/
     ocean/                 océano WebGL (shader) compartido: partículas, rayos y cáusticas
     config/                film.ts (tramos y mapa scroll → película), sealife.ts (fauna por capa), media.ts (kiosco)

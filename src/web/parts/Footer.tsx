@@ -4,6 +4,7 @@ import { CONTENT, useContent } from '../../content';
 import { LINKS } from '../../content/links';
 import { LANGS, zonePath } from '../../content/zones';
 import { trackEvent } from '../../shared/analytics';
+import { BrandLogo } from '../../shared/components/BrandLogo';
 import { ArrowRight, ArrowUp } from '../../shared/components/Icons';
 import { Rich } from '../../shared/components/Rich';
 import { useDive } from '../dive';
@@ -20,8 +21,8 @@ export const Footer = forwardRef<HTMLElement>(function Footer(_, ref) {
       <div className="wrap">
         <div className="ft-top">
           <div>
-            <p className="disp ft-mark">
-              Caribe <em>Blue</em> Lab
+            <p className="ft-mark">
+              <BrandLogo variant="stacked" />
             </p>
             <p className="disp it ft-tagline">{t.brand.tagline}</p>
           </div>

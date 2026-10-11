@@ -5,7 +5,7 @@ import { Rich, plain } from '../../shared/components/Rich';
 import { ExternalLink } from '../parts/ExternalLink';
 import { ZoneHead } from '../parts/ZoneHead';
 
-const GOLD_INK = '#7A5C16';
+const ACCENT_INK = 'var(--c-accent-ink)';
 const NUMERALS = ['I', 'II', 'III'];
 
 /** Zona 5 · Ascenso (Monitorear y actuar): Gran Faro, Caribe Blue Challenge y cierre con IncubAzul. */
@@ -18,11 +18,11 @@ export function AscensoPage() {
   return (
     <section id="ascenso" className="zone zone--ascent lt" aria-labelledby="titulo-zona-5">
       <div className="wrap">
-        <ZoneHead index={5} accent={GOLD_INK} numeralStroke="rgba(11,27,51,.14)" />
+        <ZoneHead index={5} />
 
         <article className="spread" aria-label={plain(faro.title)}>
           <div className="stack" data-reveal="">
-            <p className="eyebrow exp-eyebrow" style={{ color: GOLD_INK }}>
+            <p className="eyebrow exp-eyebrow" style={{ color: ACCENT_INK }}>
               <span className="n">05</span>
               {t.ui.experience(1, 2)}
             </p>
@@ -35,7 +35,7 @@ export function AscensoPage() {
             </ExternalLink>
           </div>
           <figure className="faro" data-reveal="" data-m="">
-            <p className="eyebrow faro-panel" style={{ color: GOLD_INK }}>
+            <p className="eyebrow faro-panel" style={{ color: ACCENT_INK }}>
               {faro.panel}
             </p>
             <div className="faro-table">
@@ -57,14 +57,14 @@ export function AscensoPage() {
               </div>
             </div>
             <p className="figcap" style={{ color: '#3A4A5E' }}>
-              <b style={{ color: GOLD_INK }}>{t.ui.fig} 5.1</b>
+              <b style={{ color: ACCENT_INK }}>{t.ui.fig} 5.1</b>
               {faro.fig}
             </p>
           </figure>
         </article>
 
         <article className="challenge" aria-label={plain(challenge.title)} data-reveal="">
-          <p className="eyebrow exp-eyebrow" style={{ color: GOLD_INK }}>
+          <p className="eyebrow exp-eyebrow" style={{ color: ACCENT_INK }}>
             <span className="n">05</span>
             {t.ui.experience(2, 2)}
           </p>
@@ -89,7 +89,7 @@ export function AscensoPage() {
 
         <div id="incubazul" className="close" data-reveal="">
           <div>
-            <p className="eyebrow" style={{ color: GOLD_INK }}>
+            <p className="eyebrow" style={{ color: ACCENT_INK }}>
               {close.eyebrow}
             </p>
             <p className="disp close-title">

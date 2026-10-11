@@ -15,7 +15,6 @@ Técnica tomada del skill `scroll-world` (`.claude/skills/scroll-world`), arquit
 | Fauna por capa (especies, luz, color del agua) | `src/shared/config/sealife.ts` |
 | Motor de scrub (blob + canvas, seek sin cola) | `src/shared/components/DiveFilm.tsx` |
 | Fauna animada | `src/shared/components/SeaLife.tsx` |
-| Rótulo de capa al llegar a cada profundidad | `src/web/parts/LayerCaption.tsx` |
 
 ## Modelos y coste
 
@@ -70,7 +69,6 @@ ffmpeg -i legN.mp4 -an -vf "scale=-2:720" -c:v libx264 -preset slow -crf 26 -pix
 4. **Óptica del agua** (shader): rayos de sol y red de cáusticas sobre el video solo bajo el agua, partículas en suspensión, bioluminiscencia en lo profundo y viñeta de lente.
 5. **Polvo y arena en suspensión** (`MarineSnow`, canvas 2D): cientos de motas diminutas que revolotean con la corriente, algunas destellan al cruzar la luz, y pocos copos irregulares desenfocados cerca del lente. Suben al bajar con el scroll y caen en el ascenso. Arena cálida arriba, nieve marina azulada en lo profundo, motas doradas al subir. Las motas redondas del shader quedaron casi solo como bioluminiscencia en lo profundo.
 6. **Burbujas** (pocas, a propósito): 8 burbujas reales recortadas de una foto sobre negro (el negro pasa a alfa: queda el reflejo plateado y el brillo especular). Suben en chorros desde un mismo punto, las grandes más rápido y deformándose, las pequeñas en zigzag; crecen un poco al subir. Nube de burbujas al zambullirse, muchas en el ascenso y alguna enorme y desenfocada que pasa frente al lente. La medusa se procesó igual: sin caja.
-7. **Rótulo de capa**: al llegar a cada profundidad aparece abajo, al centro, «02 Arrecife · Tocar y crear».
 
 `prefers-reduced-motion`: sin videos ni fauna; solo los pósteres con fundido.
 
@@ -86,3 +84,48 @@ El kiosco sigue usando los videos en bucle de `public/media`.
 - **Ascenso**: la subida arranca rápido para que el titular entre ya sobre luz azul; el velo claro de lectura y el sol crecen con la subida (sin cortes); todo lo que hay en el agua se queda abajo y sale por el borde inferior antes de romper la superficie, con un destello y la lente mojada un instante. Sobre el agua no hay peces ni burbujas.
 - **Visor 3D**: sin caja, con luz submarina, sombra difusa en el agua y un velo de contraste. El pez nada en su sitio y gira con el scroll; se puede seguir arrastrando y usar los botones.
 - Con `prefers-reduced-motion` todo aparece ya en su sitio.
+
+## Tipografía y color
+
+- **Mona Sans** (variable, ancho 75–125 %): titulares anchos y ligeros (`font-stretch` 116–125 %, peso 200–300) y texto corrido en ancho normal.
+- **Martian Mono**: la voz de laboratorio. Eyebrows (que se teclean), etiquetas de ficha, navegación, botones, pies de figura.
+- **Newsreader itálica**: solo el énfasis (*cursivas* de los titulares, verbos de zona, lema).
+- Autoalojadas en `public/fonts` (Google Fonts, licencia SIL OFL), latín y latín extendido. `src/shared/styles/fonts.css` + tokens en `base.css` (`--f-display`, `--f-sans`, `--f-mono`, `--f-serif`).
+- **Acento coral** `#FF8466` (`--c-accent`) sobre fondos oscuros y `#B8442A` (`--c-accent-ink`) sobre claros. El cian bioluminiscente queda solo en lo que brilla en la zona oscura.
+
+## Coreografía de scroll (para exhibición)
+
+Cada cosa entra distinto (`src/web/motion.css`):
+
+| Elemento | Cómo entra |
+| --- | --- |
+| Portada | «Caribe» desde la izquierda, «Lab» desde la derecha, «Blue» desde el desenfoque; al bajar se separan, «Blue» crece y todo se apaga. |
+| Titulares de zona (ligados al scroll) | 1 · convergen desde los dos lados; 2 · caen girando; 3 · ola desde la derecha; 4 · emergen del desenfoque; 5 · suben creciendo. |
+| Eyebrows | Se teclean con cursor, en mono. |
+| Franja gigante bajo cada apertura | Nombre de la zona y verbo, corren de lado con el scroll (dirección alterna) y se inclinan con la velocidad. |
+| Numerales 01–05 | Se dibujan trazo a trazo y cruzan de lado más lento que el texto. |
+| Bloques de texto | Desde su costado, con leve giro. |
+| Figuras | Desde más lejos, barridas desde su borde de entrada, y flotan a otra velocidad. |
+| Fichas | Etiqueta desde la izquierda, valor desde la derecha, filete que se dibuja. |
+| Listas (canciones, filminutos) | Desde la izquierda, cada una a su ritmo. Índice de profundidades: alternando lados. |
+| Estantería | Libros en abanico; la fila corre con el scroll. |
+| Gran Faro | Filas desde la derecha (datos que llegan) y series que se trazan. |
+| Challenge | I desde la izquierda, II desde abajo, III desde la derecha. |
+| Cierre | El titular se acerca, el botón llega desde la derecha y un brillo lo recorre. |
+| Progreso | Hilo coral arriba que se llena con el recorrido. |
+
+## Película vertical (9:16)
+
+Una segunda cadena nativa vertical, no un recorte: mismo guion de cámara, mismo modelo (Kling 3.0, 1080p, 10 s), cada tramo empieza en el último fotograma real del anterior. Fotograma inicial: Seedream 5 Pro en 9:16 con la superficie horizontal como referencia (la extensión automática con Ideogram se descartó: inventó texto). El tramo 5 se oscureció igual que el horizontal antes de encadenar el 6.
+
+- Archivos: `legN-v.mp4` (1080×1920, GOP 8), `legN-vm.mp4` (720×1280, GOP 4, teléfonos), `legN-v.webp` (póster).
+- `DiveFilm` elige la película según la orientación (alto > ancho) y recarga si se gira el dispositivo.
+- Coste: ~5.500 créditos (6 tramos × 900 + fotograma). Se descartó reencuadrar los clips con Runway Aleph 2: 5.850 créditos por tramo.
+
+## Reproducción fluida
+
+`DiveFilm` ya no avanza buscando fotograma a fotograma cuando el avance es continuo hacia adelante: reproduce el video con `playbackRate` igual a la velocidad pedida y pinta cada fotograma decodificado (`requestVideoFrameCallback`). Solo busca al ir hacia atrás, al detenerse o para corregir un desfase grande.
+
+- **Kiosco** (`clock`): siempre reproduce; en las pausas la toma queda quieta; los viajes arrancan ya con velocidad (curva que nunca parte de cero), así nunca hay avance a saltos.
+- **Kiosco, textos sincronizados con la película**: titulares, franjas, logo y mero 3D no esperan a la pausa. `presence()` (en `src/kiosk/timeline.ts`) calcula en cada cuadro cuánto ha llegado la cámara a cada capa (`--in`) y cuánto se ha alejado (`--out`); el CSS mueve todo con eso, igual que la web con el scroll. El titular empieza a entrar mientras la cámara se acerca, termina justo al asentarse y sale arrastrado (hacia arriba al bajar, hacia abajo al subir) en cuanto la cámara reanuda la marcha. El logo se arma con el matraz llenándose, se parte al zambullirse y se vuelve a armar al salir al atardecer.
+- **Web**: el motion ligado al scroll sigue a un scroll suavizado (inercia), no a los saltos de ~100 px de la rueda.

@@ -11,7 +11,11 @@
   --c-deep: #0b1b33;
   --c-ascent: #d2bb81;
   /* Acento (solo sobre fondos oscuros) y neutros */
-  --c-accent: #6fe3d6;
+  /* Acento: coral vivo del arrecife (sobre fondos oscuros) y su versión tinta (sobre claros). */
+  --c-accent: #ff8466;
+  --c-accent-ink: #b8442a;
+  /* Bioluminiscencia: solo en la zona oscura y en la luz del puntero. */
+  --c-bio: #6fe3d6;
   --c-cream: #f5f3f0;
   --c-white: #ffffff;
   --c-ink: #0b1b33;
@@ -19,8 +23,12 @@
   --c-slate: #3a4a5e;
   --c-mist: #b9cbdd;
 
-  --f-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
-  --f-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Tipografía: Mona Sans (ancha y ligera en titulares, normal en texto), Martian Mono para
+     la voz de laboratorio (etiquetas, datos, numerales) y Newsreader itálica solo para el énfasis. */
+  --f-display: 'Mona Sans', 'Helvetica Neue', system-ui, sans-serif;
+  --f-sans: 'Mona Sans', 'Helvetica Neue', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'Martian Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --f-serif: 'Newsreader', 'Iowan Old Style', Georgia, serif;
 
   --line: rgba(245, 243, 240, 0.26);
   --line-strong: rgba(245, 243, 240, 0.3);
@@ -92,30 +100,48 @@ canvas {
   margin: 0;
   font-family: var(--f-display);
   font-weight: 300;
-  font-variation-settings: 'opsz' 144;
-  letter-spacing: -0.02em;
+  font-stretch: 116%;
+  letter-spacing: -0.035em;
   line-height: 1;
 }
 
+/* Énfasis: serif itálica, un punto más grande para igualar la altura de x de la sans ancha. */
 .disp em,
 .it {
+  font-family: var(--f-serif);
   font-style: italic;
+  font-weight: 300;
+  font-stretch: normal;
+  letter-spacing: -0.01em;
+}
+
+.disp em {
+  font-size: 1.07em;
+  line-height: 0.9;
 }
 
 .eyebrow {
   margin: 0;
   display: flex;
   align-items: center;
-  font-weight: 500;
-  letter-spacing: 0.3em;
+  font-family: var(--f-mono);
+  font-weight: 400;
+  font-stretch: 87.5%;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .eyebrow .n {
-  font-family: var(--f-display);
+  font-family: var(--f-serif);
   font-style: italic;
+  font-size: 1.5em;
   letter-spacing: 0;
   text-transform: none;
+  color: var(--c-accent);
+}
+
+.lt .eyebrow .n {
+  color: var(--c-accent-ink);
 }
 
 .rule {
@@ -161,8 +187,10 @@ canvas {
 }
 
 .ficha dt {
-  font-weight: 500;
-  letter-spacing: 0.24em;
+  font-family: var(--f-mono);
+  font-weight: 400;
+  font-stretch: 87.5%;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--c-mist);
 }
@@ -189,8 +217,10 @@ canvas {
 
 .figcap b {
   flex: none;
-  font-weight: 500;
-  letter-spacing: 0.24em;
+  font-family: var(--f-mono);
+  font-weight: 400;
+  font-stretch: 87.5%;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--c-ascent);
 }

@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { useContent } from '../../content';
 import { LANGS, zonePath } from '../../content/zones';
+import { BrandLogo } from '../../shared/components/BrandLogo';
 import { useDive } from '../dive';
 
 /** Cabecera fija: transparente sobre la Superficie, sólida al bajar; tinta navy en el Ascenso. */
@@ -11,8 +12,8 @@ export function Header({ solid }: { solid: boolean }) {
   return (
     <header className={`site-header ${solid ? 'is-solid' : ''}`}>
       <div className="wrap site-header-row">
-        <Link to={zonePath(lang, 0)} className="disp brand">
-          Caribe <em>Blue</em> Lab
+        <Link to={zonePath(lang, 0)} className="brand" aria-label="Caribe Blue Lab">
+          <BrandLogo variant="horizontal" title="" />
         </Link>
         <nav aria-label={t.ui.mainNav} className="navlinks">
           <Link to={{ pathname: zonePath(lang, 0), hash: 'como-recorrer' }}>{t.ui.nav.dive}</Link>

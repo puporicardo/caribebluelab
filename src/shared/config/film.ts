@@ -16,6 +16,10 @@ export interface FilmLeg {
   srcMobile: string;
   /** Primer fotograma del tramo (póster y movimiento reducido). */
   poster: string;
+  /** Película vertical nativa (9:16), su propia cadena: 1080×1920 y 720×1280 para teléfonos. */
+  srcPortrait: string;
+  srcPortraitMobile: string;
+  posterPortrait: string;
 }
 
 const base = import.meta.env.BASE_URL;
@@ -25,6 +29,9 @@ const leg = (n: number, from: string, to: string): FilmLeg => ({
   src: `${base}film/leg${n}.mp4`,
   srcMobile: `${base}film/leg${n}-m.mp4`,
   poster: `${base}film/leg${n}.webp`,
+  srcPortrait: `${base}film/leg${n}-v.mp4`,
+  srcPortraitMobile: `${base}film/leg${n}-vm.mp4`,
+  posterPortrait: `${base}film/leg${n}-v.webp`,
 });
 
 export const FILM_LEGS: FilmLeg[] = [

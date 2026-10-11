@@ -7,7 +7,7 @@ import { cssVars } from '../../shared/css';
 import { makeBars } from '../../shared/bars';
 import { ZoneHead } from '../parts/ZoneHead';
 
-const GOLD = '#D2BB81';
+const ACCENT = 'var(--c-accent)';
 
 /** Colores de portada (paleta) para cada libro de la estantería, en orden. */
 const BOOK_TONES: { bg: string; ink?: string; frame: string; label?: string }[] = [
@@ -41,7 +41,7 @@ export function PraderaMarinaPage() {
   return (
     <section id="pradera-marina" className="zone" aria-labelledby="titulo-zona-3">
       <div className="wrap">
-        <ZoneHead index={3} accent={GOLD} />
+        <ZoneHead index={3} accent={ACCENT} />
 
         <article aria-label={shelf.title.replace(/\*/g, '')} data-reveal="">
           <div className="shelf-head">
@@ -74,7 +74,7 @@ export function PraderaMarinaPage() {
 
         <article className="spread" aria-label={corner.eyebrow}>
           <div className="stack" data-reveal="">
-            <p className="eyebrow exp-eyebrow" style={{ color: GOLD }}>
+            <p className="eyebrow exp-eyebrow" style={{ color: ACCENT }}>
               <span className="n">03</span>
               {corner.eyebrow}
             </p>
@@ -90,7 +90,7 @@ export function PraderaMarinaPage() {
                 return (
                   <li key={s}>
                     <button type="button" aria-pressed={on} className={on ? 'is-on' : ''} onClick={() => toggle(i)}>
-                      {on ? <PauseIcon color="#6FE3D6" /> : <PlayIcon color="#F5F3F0" />}
+                      {on ? <PauseIcon color="#FF8466" /> : <PlayIcon color="#F5F3F0" />}
                       <span>{s}</span>
                       <span className="songs-meta">{on ? t.ui.nowPlaying : corner.duration}</span>
                     </button>
@@ -100,7 +100,7 @@ export function PraderaMarinaPage() {
             </ol>
             <div className={`eq ${playing ? '' : 'is-paused'}`} aria-hidden="true">
               {bars.map((b, i) => (
-                <span key={i} style={cssVars({ '--bi': i }, { height: b.h, background: GOLD, opacity: 0.8, animationDuration: `${b.d}s`, animationDelay: `${b.dl}s` })} />
+                <span key={i} style={cssVars({ '--bi': i }, { height: b.h, background: ACCENT, opacity: 0.8, animationDuration: `${b.d}s`, animationDelay: `${b.dl}s` })} />
               ))}
             </div>
           </div>

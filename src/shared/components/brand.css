@@ -1,0 +1,46 @@
+/* Logo oficial en línea (BrandLogo) */
+.logo {
+  display: block;
+  height: auto;
+  overflow: visible;
+  fill: currentColor;
+  /* Ola: azul claro sobre fondos oscuros (versión blanca del logo); azul pleno sobre claros. */
+  --logo-wave: #3494ea;
+}
+
+.logo .lg-wave-wrap,
+.logo .lg-wave,
+.logo g {
+  transform-box: fill-box;
+}
+
+.logo .lg-wave {
+  fill: var(--logo-wave);
+  transform-origin: 50% 100%;
+  animation: lg-slosh 4.6s ease-in-out infinite alternate;
+}
+
+/* El agua del matraz se mece sola y se inclina con la velocidad del scroll. */
+.logo .lg-wave-wrap {
+  transform-origin: 50% 100%;
+  transform: rotate(calc(var(--vel, 0) * -10deg));
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@keyframes lg-slosh {
+  from {
+    transform: skewY(-3.5deg) scaleY(0.94);
+  }
+  to {
+    transform: skewY(3.5deg) scaleY(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo .lg-wave {
+    animation: none;
+  }
+  .logo .lg-wave-wrap {
+    transform: none;
+  }
+}

@@ -1,0 +1,119 @@
+/* ============================================================
+   Tipografía de la web (sobre web.css): tres voces.
+   · Mona Sans ancha y ligera: titulares. Normal: texto.
+   · Martian Mono: todo lo que es etiqueta, dato, navegación o botón (voz de laboratorio).
+   · Newsreader itálica en coral: solo el énfasis (palabras en *cursiva*, verbos de zona).
+   ============================================================ */
+
+/* Etiquetas en versalitas → mono, con tracking de mono (más cerrado). */
+.web :is(
+    .navlinks,
+    .lang-toggle,
+    .rail-title,
+    .rail-name,
+    .hero-lang-label,
+    .hero-partners,
+    .hero-cue,
+    .btn,
+    .link,
+    .tab,
+    .howto-verb,
+    .shelf-note,
+    .songs-meta,
+    .faro-row--head,
+    .faro-live,
+    .challenge-note,
+    .challenge-status,
+    .viewer-hint,
+    .viewer-toolbar button,
+    .ft-up,
+    .ft-h,
+    .ft-here,
+    .ft-partners,
+    .book-label,
+    .films-count,
+    .frame-label
+  ) {
+  font-family: var(--f-mono);
+  font-stretch: 87.5%;
+  font-weight: 400;
+}
+
+.web :is(.navlinks, .lang-toggle, .btn, .link, .tab, .hero-cue, .hero-lang-label, .howto-verb, .viewer-toolbar button) {
+  letter-spacing: 0.1em;
+}
+
+.web .hero-partners,
+.web .ft-partners {
+  letter-spacing: 0.08em;
+  font-size: 11px;
+}
+
+/* Números y nombres en itálica serif. */
+.web :is(.rail-n, .howto-n, .challenge-n, .ft-partners-label) {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-stretch: normal;
+}
+
+.web .challenge-n {
+  color: var(--c-accent);
+}
+
+.web .lt .challenge-n {
+  color: var(--c-accent-ink);
+}
+
+/* Verbo de zona y lemas: serif itálica (el acento lo pone el color de la zona). */
+.web :is(.zhead-verb, .hero-tagline, .howto-quote em, .species-latin, .films-title) {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-stretch: normal;
+  letter-spacing: -0.005em;
+}
+
+.web .hero-tagline {
+  color: var(--c-accent);
+}
+
+/* Titulares: la sans ancha y ligera ocupa más; se ajustan tamaños e interlínea. */
+.web .zhead-title {
+  font-size: clamp(42px, 6.2vw, 88px);
+  font-weight: 280;
+  line-height: 1;
+}
+
+.web .exp-title {
+  font-weight: 300;
+}
+
+.web .howto-quote {
+  font-family: var(--f-display);
+  font-style: normal;
+  font-weight: 250;
+  font-stretch: 118%;
+  letter-spacing: -0.04em;
+}
+
+/* Texto corrido: Mona Sans normal, un poco más de cuerpo. */
+.web .body {
+  font-weight: 380;
+  letter-spacing: -0.003em;
+}
+
+/* Botón principal y enlaces: coral. */
+.web .btn--cream {
+  background: var(--c-accent);
+  border-color: var(--c-accent);
+  color: #1a0b07;
+}
+
+.web .link:hover {
+  color: var(--c-accent);
+}
+
+.web .btn--cream:hover {
+  background: #ff9c82;
+  border-color: #ff9c82;
+}

@@ -7,7 +7,7 @@ import { SPECIES_IDS, SPECIES_MODELS } from '../../shared/components/species/mod
 import { SpeciesStage, type ViewerAction } from '../../shared/components/species/SpeciesStage';
 import { ZoneHead } from '../parts/ZoneHead';
 
-const GOLD = '#D2BB81';
+const ACCENT = 'var(--c-accent)';
 
 /** Zona 2 · Arrecife (Tocar y crear): visor 3D de especies con su ficha científica. */
 export function ArrecifePage() {
@@ -29,7 +29,7 @@ export function ArrecifePage() {
   return (
     <section id="arrecife" className="zone" aria-labelledby="titulo-zona-2">
       <div className="wrap">
-        <ZoneHead index={2} accent={GOLD} />
+        <ZoneHead index={2} accent={ACCENT} />
 
         <article className="spread spread--viewer" aria-label={t.web.reef.viewerLabel}>
           <figure className="reef-viewer" data-reveal="" data-m="">
@@ -57,14 +57,14 @@ export function ArrecifePage() {
                   role="tab"
                   aria-selected={i === pick}
                   className={`tab ${i === pick ? 'is-on' : ''}`}
-                  style={i === pick ? { boxShadow: `inset 0 -2px 0 ${GOLD}` } : undefined}
+                  style={i === pick ? { boxShadow: `inset 0 -2px 0 ${ACCENT}` } : undefined}
                   onClick={() => choose(i)}
                 >
                   {s.name}
                 </button>
               ))}
             </div>
-            <p className="eyebrow exp-eyebrow" style={{ color: GOLD, marginTop: 14 }}>
+            <p className="eyebrow exp-eyebrow" style={{ color: ACCENT, marginTop: 14 }}>
               <span className="n">02</span>
               {t.species.eyebrow}
             </p>

@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import { CONTENT, useContent } from '../../content';
 import { LANGS, ZONE_COLORS, zonePath } from '../../content/zones';
 import { trackEvent } from '../../shared/analytics';
+import { BrandLogo } from '../../shared/components/BrandLogo';
 import { ArrowDown } from '../../shared/components/Icons';
 import { Rich } from '../../shared/components/Rich';
 import { useDive } from '../dive';
@@ -24,8 +25,9 @@ export function SuperficiePage() {
             <span className="rule" />
             {t.brand.kicker}
           </p>
-          <h1 className="disp hero-title" data-reveal="">
-            <Rich text="Caribe *Blue* Lab" split />
+          <h1 className="hero-logo" data-reveal="">
+            <span className="sr-only">Caribe Blue Lab</span>
+            <BrandLogo variant="stacked" title="" />
           </h1>
           <p className="disp hero-tagline" data-reveal="">
             <Rich text={t.brand.tagline} split />

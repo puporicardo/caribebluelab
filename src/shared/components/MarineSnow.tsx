@@ -4,6 +4,8 @@ import type { Box } from '../ocean/types';
 interface MarineSnowProps {
   /** Tiempo de la película (0–6): decide la luz y el color de las partículas. */
   film: Box<number>;
+  /** Qué mueve la cámara: el scroll (web) o la película (kiosco). */
+  drive?: 'scroll' | 'film';
 }
 
 interface Speck {
@@ -69,7 +71,7 @@ function makeFlakes(n: number): HTMLCanvasElement[] {
  * en el ascenso caen (la cámara sube entre ellas). Arena cálida arriba, nieve marina azulada
  * en lo profundo, motas doradas al subir hacia el sol. Nada sobre el agua.
  */
-export function MarineSnow({ film }: MarineSnowProps) {
+export function MarineSnow({ film, drive = 'scroll' }: MarineSnowProps) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -139,7 +141,7 @@ export function MarineSnow({ film }: MarineSnowProps) {
       lastY = sy;
       const dT = t - lastT;
       lastT = t;
-      const camV = t >= 5 ? -dT * 2.6 : dy * 0.55;
+      const camV = t >= 5 ? -dT * 2.6 : drive === 'film' ? (Math.abs(dT) < 0.2 ? dT * 1.4 : 0) : dy * 0.55;
       cam += (camV - cam) * 0.25;
 
       // Luz y color por profundidad.
@@ -194,7 +196,7 @@ export function MarineSnow({ film }: MarineSnowProps) {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', size);
     };
-  }, [film]);
+  }, [film, drive]);
 
   return <canvas ref={ref} className="marine-snow" aria-hidden="true" />;
 }

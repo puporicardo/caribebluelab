@@ -52,13 +52,6 @@
   }
 }
 
-@media (max-width: 860px) and (orientation: portrait) {
-  .film-poster,
-  .film-video {
-    object-position: 58% 45%;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .film {
     animation: none;

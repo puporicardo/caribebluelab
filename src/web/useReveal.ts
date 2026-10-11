@@ -26,7 +26,8 @@ export function useReveal(root: RefObject<HTMLElement | null>) {
           }
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+      // Apenas asoma (no hace falta que se vea un 12 %): los bloques altos no llegan tarde.
+      { threshold: 0, rootMargin: '0px 0px -6% 0px' },
     );
     const watch = () => pending().forEach((el) => io.observe(el));
     watch();
