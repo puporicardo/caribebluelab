@@ -4,15 +4,19 @@ import { CONTENT, ContentContext } from '../content';
 import { ZONE_SLUGS, zonePath, zoneRoute, type Lang, type ZoneIndex } from '../content/zones';
 import { SiteAnalytics, trackEvent } from '../shared/analytics';
 import { WaterRipples } from '../shared/components/WaterRipples';
+import { filmTime } from '../shared/config/film';
 import { createPointer, type OceanTarget } from '../shared/ocean/types';
 import { clamp01, DiveContext, parseWebPath, smooth, type DiveState, type NavState } from './dive';
 import { ZONE_PAGES } from './pages';
 import { DepthRail, MobileDepthLine } from './parts/DepthRail';
 import { Footer } from './parts/Footer';
 import { Header } from './parts/Header';
+import { LayerCaption } from './parts/LayerCaption';
 import { Stage } from './parts/Stage';
+import { useScrollMotion } from './useMotion';
 import { useReveal } from './useReveal';
 import './web.css';
+import './motion.css';
 
 /** Tiempo que una zona debe quedar en pantalla antes de cambiar la URL (evita “páginas” fugaces al hacer scroll rápido). */
 const URL_SETTLE_MS = 400;
@@ -34,12 +38,16 @@ export default function DiveLayout() {
   const [footerOn, setFooterOn] = useState(false);
 
   const rootRef = useRef<HTMLDivElement>(null);
+  /** Solo el contenido (no el escenario, donde nadan los peces) se vigila para el motion. */
+  const mainRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLElement>(null);
 
-  const target = useRef<OceanTarget>({ depth: routeZone / 5, ascent: 0 });
+  const target = useRef<OceanTarget>({ depth: routeZone / 5, ascent: 0, under: routeZone === 0 ? 0 : 1 });
+  /** Tiempo de la película del descenso (0–6) que pide el scroll. */
+  const film = useRef(0);
   const pointer = useRef(createPointer());
   const videoOk = useRef(false);
 
@@ -49,7 +57,8 @@ export default function DiveLayout() {
   const suppressUntil = useRef(0);
   const userMoved = useRef(false);
 
-  useReveal(rootRef);
+  useReveal(mainRef);
+  useScrollMotion(mainRef);
 
   /* ---------- Scroll → zona visible, profundidad del océano y URL ---------- */
   useEffect(() => {
@@ -76,8 +85,23 @@ export default function DiveLayout() {
         target.current.depth = 1 - e;
         target.current.ascent = clamp01((e - 0.3) / 0.7);
       }
+      // Película: el Ascenso dura hasta que el pie asoma (la cámara rompe la superficie justo ahí).
+      const footTop = (footerRef.current?.getBoundingClientRect().top ?? vh) + sy;
+      const g = z < 5 ? z + prog : 5 + clamp01((y - tops[5]) / Math.max(1, footTop - vh * 0.5 - tops[5]));
+      const T = filmTime(g);
+      film.current = T;
+      // Ascenso: el sol crece arriba a medida que la cámara sube hacia la superficie.
+      const asc = smooth(clamp01((T - 5.05) / 0.68));
+      // Velo de lectura del Ascenso: entra poco a poco al cruzar a la zona (nunca de golpe).
+      stageRef.current?.style.setProperty('--veil', smooth(clamp01((g - 4.96) / 0.2)).toFixed(4));
+      stageRef.current?.style.setProperty('--asc', (asc * (1 - 0.45 * smooth(clamp01((T - 5.8) / 0.15)))).toFixed(4));
+      // Bajo el agua entre el cruce del tramo 1 (~37 %) y la salida del tramo 6 (~78 %).
+      target.current.under = smooth(clamp01((T - 0.3) / 0.12)) * (1 - smooth(clamp01((T - 5.7) / 0.1)));
+
       const gauge = clamp01((z + prog) / 6).toFixed(4);
       stageRef.current?.style.setProperty('--p', prog.toFixed(4));
+      // Pantallas recorridas desde arriba (la portada se hunde con esto).
+      rootRef.current?.style.setProperty('--sy', Math.min(3, sy / vh).toFixed(4));
       railRef.current?.style.setProperty('--d', gauge);
       lineRef.current?.style.setProperty('--d', gauge);
       setZone(z as ZoneIndex);
@@ -202,7 +226,7 @@ export default function DiveLayout() {
   // Las páginas no dependen de la zona visible: se memorizan para que el scroll no las re-renderice.
   const pages = useMemo(
     () => (
-      <main id="contenido">
+      <main id="contenido" ref={mainRef}>
         {ZONE_PAGES.map((Page, i) => (
           <Page key={i} />
         ))}
@@ -221,9 +245,10 @@ export default function DiveLayout() {
           <a className="skip" href="#contenido">
             {content.ui.skip}
           </a>
-          <Stage zone={zone} stageRef={stageRef} target={target} pointer={pointer} videoOk={videoOk} />
+          <Stage zone={zone} stageRef={stageRef} target={target} pointer={pointer} videoOk={videoOk} film={film} />
           <Header solid={solid} />
           <DepthRail railRef={railRef} hidden={footerOn} />
+          <LayerCaption film={film} />
           {pages}
           <Footer ref={footerRef} />
           <MobileDepthLine lineRef={lineRef} hidden={footerOn} />

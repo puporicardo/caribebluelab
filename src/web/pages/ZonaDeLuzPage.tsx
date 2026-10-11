@@ -28,7 +28,9 @@ export function ZonaDeLuzPage() {
               <span className="n">01</span>
               {t.ui.experience(1, 2)}
             </p>
-            <h3 className="disp exp-title">{art.title}</h3>
+            <h3 className="disp exp-title">
+              <Rich text={art.title} split />
+            </h3>
             <p className="body">{art.body}</p>
             <Ficha rows={art.ficha} />
             <div className="links-row">
@@ -40,7 +42,7 @@ export function ZonaDeLuzPage() {
               </ExternalLink>
             </div>
           </div>
-          <figure className="art-figs" data-reveal="">
+          <figure className="art-figs" data-reveal="" data-m="">
             <div>
               <div className="hatch frame frame--4x5">
                 <span className="crop" />
@@ -60,7 +62,7 @@ export function ZonaDeLuzPage() {
                 {art.fig2}
               </p>
               <p className="eyebrow network-title">{art.network}</p>
-              <svg viewBox="0 0 220 70" aria-hidden="true" className="network-arc">
+              <svg viewBox="0 0 220 70" aria-hidden="true" className="network-arc draw-wipe">
                 <path d="M10 56 Q110 -8 210 56" fill="none" stroke="#6FE3D6" strokeWidth="1.2" strokeDasharray="4 6" className="dash" />
                 <circle cx="10" cy="56" r="3.5" fill="#F5F3F0" />
                 <circle cx="210" cy="56" r="3.5" fill="#F5F3F0" />
@@ -80,13 +82,13 @@ export function ZonaDeLuzPage() {
               {t.ui.experience(2, 2)}
             </p>
             <h3 className="disp exp-title exp-title--sm">
-              <Rich text={films.title} />
+              <Rich text={films.title} split />
             </h3>
             <p className="body">{films.body}</p>
             <Ficha rows={films.ficha} />
             <p className="note">{films.note}</p>
           </div>
-          <figure className="films" data-reveal="">
+          <figure className="films" data-reveal="" data-m="">
             <div className="films-screen">
               <span className="crop" />
               <p className="eyebrow films-count">{films.screen(current.n.slice(0, 2))}</p>
@@ -100,7 +102,7 @@ export function ZonaDeLuzPage() {
               </button>
               <p className="disp it films-title">{current.title}</p>
             </div>
-            <ol className="films-list">
+            <ol className="films-list stagger">
               {films.items.map((item, i) => (
                 <li key={item.n}>
                   <button type="button" aria-current={i === film ? 'true' : undefined} className={i === film ? 'is-on' : ''} onClick={() => setFilm(i)}>

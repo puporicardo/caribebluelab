@@ -1,0 +1,400 @@
+/* ============================================================
+   Motion graphics de la web
+   Dos mecanismos:
+   · .is-in (una vez, al entrar): palabras que suben desde una máscara, filetes que se
+     extienden, listas escalonadas, enfoque desde el desenfoque del agua.
+   · --v / --e (continuo, ligado al scroll; ver useMotion.ts): parallax, numerales que se
+     dibujan trazo a trazo, trazos de gráficos que se completan, la portada que se hunde.
+   Lo continuo usa las propiedades `translate`/`scale` (sin transición) para no pelear con
+   el `transform` de las apariciones.
+   ============================================================ */
+
+@property --cm {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 18px;
+}
+
+.web {
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ---------- 1. Aparición base: del desenfoque del agua al foco ---------- */
+html.cbl-js .web [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+  filter: blur(9px);
+  transition:
+    opacity 1.1s var(--ease-soft) var(--d, 0ms),
+    transform 1.4s var(--ease-expo) var(--d, 0ms),
+    filter 1.2s var(--ease-soft) var(--d, 0ms);
+}
+
+html.cbl-js .web [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* Titulares partidos en palabras: el contenedor queda quieto, entran las palabras. */
+html.cbl-js .web [data-reveal]:is(h1, h2, h3, p):has(.wi),
+html.cbl-js .web .stack[data-reveal],
+html.cbl-js .web .species-swap[data-reveal] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* ---------- 2. Palabras desde una máscara ---------- */
+.web .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* margen para ascendentes, descendentes y la caída de las cursivas */
+  padding: 0.1em 0.14em 0.16em 0.02em;
+  margin: -0.1em -0.14em -0.16em -0.02em;
+}
+
+.web .wi {
+  display: inline-block;
+}
+
+html.cbl-js .web .wi {
+  opacity: 0;
+  transform: translate3d(0, 112%, 0) rotate(4deg);
+  transform-origin: 0 100%;
+  transition:
+    transform 1.3s var(--ease-expo),
+    opacity 0.9s var(--ease-soft);
+  transition-delay: calc(var(--i, 0) * 52ms + var(--d, 0ms));
+}
+
+html.cbl-js .web .is-in .wi {
+  opacity: 1;
+  transform: none;
+}
+
+/* Las eyebrow (versalitas) entran más rápido y sin giro. */
+html.cbl-js .web .eyebrow .wi {
+  transform: translate3d(0, 110%, 0);
+  transition-delay: calc(var(--i, 0) * 30ms + 220ms + var(--d, 0ms));
+}
+
+html.cbl-js .web .is-in.eyebrow .wi,
+html.cbl-js .web .is-in .eyebrow .wi {
+  transform: none;
+}
+
+/* En contenedores flex (eyebrow, verbo) las palabras van juntas en un solo hijo. */
+.web .split {
+  display: inline;
+}
+
+/* ---------- 3. Escalonado dentro de cada bloque de texto ---------- */
+html.cbl-js .web .stack[data-reveal] > *,
+html.cbl-js .web .species-swap[data-reveal] > * {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  filter: blur(6px);
+  transition:
+    opacity 1s var(--ease-soft) var(--d),
+    transform 1.3s var(--ease-expo) var(--d),
+    filter 1s var(--ease-soft) var(--d);
+}
+
+html.cbl-js .web .stack[data-reveal] > :has(.wi),
+html.cbl-js .web .species-swap[data-reveal] > :has(.wi) {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+html.cbl-js .web .stack.is-in > *,
+html.cbl-js .web .species-swap.is-in > * {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.web .stack > :nth-child(1),
+.web .species-swap > :nth-child(1) {
+  --d: 0ms;
+}
+.web .stack > :nth-child(2),
+.web .species-swap > :nth-child(2) {
+  --d: 140ms;
+}
+.web .stack > :nth-child(3),
+.web .species-swap > :nth-child(3) {
+  --d: 280ms;
+}
+.web .stack > :nth-child(4) {
+  --d: 400ms;
+}
+.web .stack > :nth-child(5) {
+  --d: 500ms;
+}
+.web .stack > :nth-child(n + 6) {
+  --d: 600ms;
+}
+
+/* ---------- 4. Filetes que se extienden ---------- */
+html.cbl-js .web [data-reveal] .rule {
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 1.4s var(--ease-expo) calc(var(--d, 0ms) + 80ms);
+}
+
+html.cbl-js .web .is-in .rule {
+  transform: none;
+}
+
+/* Fichas: cada fila entra y su filete se dibuja de izquierda a derecha. */
+.web .ficha {
+  --fl: var(--line);
+}
+
+.web .lt .ficha {
+  --fl: rgba(11, 27, 51, 0.2);
+}
+
+html.cbl-js .web .ficha dt,
+html.cbl-js .web .ficha dd {
+  border-bottom-color: transparent;
+  background: linear-gradient(var(--fl), var(--fl)) 0 100% / 0% 1px no-repeat;
+  opacity: 0;
+  transform: translate3d(-10px, 0, 0);
+  transition:
+    background-size 1.4s var(--ease-expo) calc(var(--k, 0) * 70ms + 300ms),
+    opacity 0.9s var(--ease-soft) calc(var(--k, 0) * 70ms + 360ms),
+    transform 1.1s var(--ease-expo) calc(var(--k, 0) * 70ms + 360ms);
+}
+
+html.cbl-js .web .is-in .ficha dt,
+html.cbl-js .web .is-in .ficha dd {
+  background-size: 100% 1px;
+  opacity: 1;
+  transform: none;
+}
+
+.web .ficha > :nth-child(-n + 2) {
+  --k: 0;
+}
+.web .ficha > :nth-child(n + 3):nth-child(-n + 4) {
+  --k: 1;
+}
+.web .ficha > :nth-child(n + 5):nth-child(-n + 6) {
+  --k: 2;
+}
+.web .ficha > :nth-child(n + 7):nth-child(-n + 8) {
+  --k: 3;
+}
+.web .ficha > :nth-child(n + 9):nth-child(-n + 10) {
+  --k: 4;
+}
+.web .ficha > :nth-child(n + 11):nth-child(-n + 12) {
+  --k: 5;
+}
+.web .ficha > :nth-child(n + 13):nth-child(-n + 14) {
+  --k: 6;
+}
+.web .ficha > :nth-child(n + 15):nth-child(-n + 16) {
+  --k: 7;
+}
+.web .ficha > :nth-child(n + 17) {
+  --k: 8;
+}
+
+/* ---------- 5. Listas escalonadas ---------- */
+html.cbl-js .web .stagger > * {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition:
+    opacity 0.9s var(--ease-soft) calc(var(--k, 0) * 75ms + 240ms),
+    transform 1.3s var(--ease-expo) calc(var(--k, 0) * 75ms + 240ms);
+}
+
+html.cbl-js .web .is-in .stagger > *,
+html.cbl-js .web .stagger.is-in > * {
+  opacity: 1;
+  transform: none;
+}
+
+.web .stagger > :nth-child(2) {
+  --k: 1;
+}
+.web .stagger > :nth-child(3) {
+  --k: 2;
+}
+.web .stagger > :nth-child(4) {
+  --k: 3;
+}
+.web .stagger > :nth-child(5) {
+  --k: 4;
+}
+.web .stagger > :nth-child(6) {
+  --k: 5;
+}
+.web .stagger > :nth-child(7) {
+  --k: 6;
+}
+.web .stagger > :nth-child(8) {
+  --k: 7;
+}
+.web .stagger > :nth-child(9) {
+  --k: 8;
+}
+.web .stagger > :nth-child(n + 10) {
+  --k: 9;
+}
+
+/* Estantería: los libros se abren en abanico, como si salieran del estante. */
+html.cbl-js .web .shelf.stagger > * {
+  transform: perspective(900px) rotateY(-78deg) translate3d(-12px, 0, 0);
+  transform-origin: 0 50%;
+  transition:
+    opacity 0.8s var(--ease-soft) calc(var(--k, 0) * 85ms + 200ms),
+    transform 1.6s var(--ease-expo) calc(var(--k, 0) * 85ms + 200ms);
+}
+
+html.cbl-js .web .is-in .shelf.stagger > * {
+  transform: none;
+}
+
+/* Barras de audio: crecen desde la base una tras otra. */
+html.cbl-js .web [data-reveal] :is(.eq, .sound-wave) > span:not(.crop) {
+  scale: 1 0;
+  transition: scale 1.2s var(--ease-expo) calc(var(--bi, 0) * 14ms + 300ms);
+}
+
+html.cbl-js .web .is-in :is(.eq, .sound-wave) > span:not(.crop) {
+  scale: 1 1;
+}
+
+/* ---------- 6. Figuras: flotan a otra velocidad y se asientan ---------- */
+.web figure[data-m] {
+  translate: 0 calc((0.5 - var(--v, 0.5)) * 64px);
+}
+
+/* Marcas de corte: las esquinas se dibujan al entrar. */
+html.cbl-js .web [data-reveal] .crop {
+  --cm: 0px;
+  opacity: 0;
+  transition:
+    --cm 1.2s var(--ease-expo) 450ms,
+    opacity 0.6s ease 450ms;
+}
+
+html.cbl-js .web .is-in .crop {
+  --cm: 18px;
+  opacity: 1;
+}
+
+/* Trazos de gráficos (red de territorios, series de ríos): se completan con el scroll. */
+.web .draw-wipe {
+  clip-path: inset(-4px calc((1 - var(--e, 1)) * 100%) -4px 0);
+}
+
+/* ---------- 7. Apertura de zona: numeral que se dibuja + parallax ---------- */
+.web .zhead {
+  opacity: min(1, calc((1 - var(--v, 0.5)) * 3.4));
+}
+
+.web svg.num {
+  position: absolute;
+  right: -1%;
+  top: -96px;
+  width: clamp(300px, 46vw, 640px);
+  height: auto;
+  overflow: visible;
+  -webkit-text-stroke: 0;
+  translate: 0 calc((0.5 - var(--v, 0.5)) * 260px);
+  pointer-events: none;
+}
+
+.web svg.num text {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-weight: 300;
+  font-variation-settings: 'opsz' 144;
+  font-size: 440px;
+  letter-spacing: -0.04em;
+  fill: transparent;
+  stroke: rgba(245, 243, 240, 0.26);
+  stroke-width: 1.2px;
+  vector-effect: non-scaling-stroke;
+  /* Se dibuja mientras la apertura sube de abajo hasta el centro de la pantalla. */
+  stroke-dasharray: 4200;
+  stroke-dashoffset: calc(4200 * clamp(0, (0.5 - var(--v, 0.5)) * 2.4, 1));
+}
+
+.web .zhead-title {
+  translate: 0 calc((0.5 - var(--v, 0.5)) * 46px);
+}
+
+/* ---------- 8. Portada: al bajar, el título se hunde, se desenfoca y se apaga ---------- */
+.web .hero-inner {
+  --out: clamp(0, var(--sy, 0), 1.2);
+  translate: 0 calc(var(--out) * -16vh);
+  opacity: calc(1 - var(--out) * 1.15);
+  filter: blur(calc(var(--out) * 9px));
+}
+
+/* ---------- 9. Cierre: brillo que recorre el botón al aparecer ---------- */
+.web .close .btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.web .close .btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(245, 243, 240, 0.4) 50%, transparent 70%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+html.cbl-js .web .close.is-in .btn::after {
+  animation: cbl-sheen 1.6s var(--ease-soft) 1.1s both;
+}
+
+@keyframes cbl-sheen {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@media (max-width: 760px) {
+  .web figure[data-m] {
+    translate: 0 calc((0.5 - var(--v, 0.5)) * 30px);
+  }
+  .web svg.num {
+    top: -40px;
+    width: 70vw;
+    translate: 0 calc((0.5 - var(--v, 0.5)) * 120px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.cbl-js .web [data-reveal],
+  html.cbl-js .web .wi,
+  html.cbl-js .web .stack[data-reveal] > *,
+  html.cbl-js .web .stagger > *,
+  html.cbl-js .web .ficha dt,
+  html.cbl-js .web .ficha dd {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    background-size: 100% 1px;
+  }
+  .web .hero-inner,
+  .web figure[data-m],
+  .web svg.num,
+  .web .zhead-title {
+    translate: none;
+    filter: none;
+    opacity: 1;
+  }
+}

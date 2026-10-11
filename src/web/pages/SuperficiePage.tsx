@@ -3,6 +3,7 @@ import { CONTENT, useContent } from '../../content';
 import { LANGS, ZONE_COLORS, zonePath } from '../../content/zones';
 import { trackEvent } from '../../shared/analytics';
 import { ArrowDown } from '../../shared/components/Icons';
+import { Rich } from '../../shared/components/Rich';
 import { useDive } from '../dive';
 
 /** Zona 0 · Superficie: portada, elección de idioma y manifiesto con el índice de profundidades. */
@@ -18,16 +19,16 @@ export function SuperficiePage() {
   return (
     <>
       <section id="superficie" className="hero" aria-label={t.zones[0].name}>
-        <div className="wrap hero-inner">
+        <div className="wrap hero-inner" data-m="">
           <p className="eyebrow" data-reveal="">
             <span className="rule" />
             {t.brand.kicker}
           </p>
           <h1 className="disp hero-title" data-reveal="">
-            Caribe <em>Blue</em> Lab
+            <Rich text="Caribe *Blue* Lab" split />
           </h1>
           <p className="disp hero-tagline" data-reveal="">
-            {t.brand.tagline}
+            <Rich text={t.brand.tagline} split />
           </p>
 
           <div className="hero-actions" data-reveal="">
@@ -70,12 +71,12 @@ export function SuperficiePage() {
             {t.web.howTo.eyebrow}
           </p>
           <p className="disp howto-quote" data-reveal="">
-            {t.web.howTo.quote}
+            <Rich text={t.web.howTo.quote} split />
           </p>
           <p className="body howto-body" data-reveal="">
             {t.web.howTo.body}
           </p>
-          <ol aria-label={t.web.howTo.indexLabel} className="howto-index" data-reveal="">
+          <ol aria-label={t.web.howTo.indexLabel} className="howto-index stagger" data-reveal="">
             {t.zones.slice(1).map((z, k) => {
               const i = k + 1;
               return (

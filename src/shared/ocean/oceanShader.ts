@@ -15,7 +15,7 @@ export const OCEAN_FRAGMENT = `
 precision highp float;
 varying vec2 vUv;
 uniform vec2 uRes; uniform float uTime; uniform float uDepth; uniform float uAscent; uniform float uFlow;
-uniform vec2 uMouse; uniform float uMouseOn; uniform float uOverlay;
+uniform vec2 uMouse; uniform float uMouseOn; uniform float uOverlay; uniform float uUnder;
 
 float hash(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
 float noise(vec2 p){ vec2 i = floor(p); vec2 f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f);
@@ -66,9 +66,17 @@ void main(){
   float ml = exp(-length(st - m) * 4.0) * uMouseOn;
   col += mix(cream * 0.12, bio * 0.14, deep) * ml;
   if (uOverlay > 0.5) {
-    float pa = (p1 * 0.55 + p2 * 0.8 + p3 * 0.6) * mix(1.0, pulse * 1.8, deep) * (1.0 - uAscent * 0.7);
-    float a = clamp(pa + ml * 0.16, 0.0, 0.85);
-    gl_FragColor = vec4(mix(pc, cream, clamp(ml * 2.0, 0.0, 1.0) * (1.0 - deep)), a);
+    // Sobre video real: partículas, luz del puntero y óptica del agua (rayos y red de cáusticas
+    // que se mueve sobre la escena). Nada de esto se dibuja con la cámara sobre el agua.
+    // Pocas motas redondas (el polvo y la arena los dibuja MarineSnow); en lo profundo quedan como bioluminiscencia.
+    float pa = (p1 * 0.22 + p2 * mix(0.12, 0.55, deep) + p3 * mix(0.03, 0.2, deep)) * mix(1.0, pulse * 1.8, deep) * (1.0 - uAscent * 0.85) * uUnder;
+    float shine = 1.0 - smoothstep(0.0, 0.7, d);
+    float ra = rays * (0.22 * shine + uAscent * 0.18) * uUnder;
+    float cn = caustic(st * 1.15 + vec2(t * 0.015, t * 0.03), t * 0.42 + 7.0);
+    float ca = cn * (0.06 + 0.16 * smoothstep(0.35, 1.0, uv.y)) * (1.0 - smoothstep(0.0, 0.42, d)) * uUnder;
+    float a = clamp(pa + ra + ca + ml * 0.16 * uUnder, 0.0, 0.85);
+    vec3 lc = mix(pc, cream, clamp((ra + ca) * 3.0 + ml * 2.0 * (1.0 - deep), 0.0, 1.0));
+    gl_FragColor = vec4(lc, a);
     return;
   }
   vec3 asc = mix(mix(pal(0.0), gold, 0.55), mix(gold, cream, smoothstep(0.55, 1.0, uv.y)), smoothstep(0.0, 0.7, uv.y));

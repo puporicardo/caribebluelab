@@ -46,11 +46,11 @@ export function PraderaMarinaPage() {
         <article aria-label={shelf.title.replace(/\*/g, '')} data-reveal="">
           <div className="shelf-head">
             <h3 className="disp shelf-title">
-              <Rich text={shelf.title} />
+              <Rich text={shelf.title} split />
             </h3>
             <span className="shelf-note">{shelf.note}</span>
           </div>
-          <ul className="shelf">
+          <ul className="shelf stagger">
             {shelf.books.map((b, i) => {
               const tone = BOOK_TONES[i % BOOK_TONES.length];
               return (
@@ -79,12 +79,12 @@ export function PraderaMarinaPage() {
               {corner.eyebrow}
             </p>
             <h3 className="disp exp-title">
-              <Rich text={corner.title} />
+              <Rich text={corner.title} split />
             </h3>
             <p className="note">{corner.sources}</p>
           </div>
           <div data-reveal="">
-            <ol className="songs">
+            <ol className="songs stagger">
               {corner.songs.map((s, i) => {
                 const on = i === song && playing;
                 return (
@@ -100,7 +100,7 @@ export function PraderaMarinaPage() {
             </ol>
             <div className={`eq ${playing ? '' : 'is-paused'}`} aria-hidden="true">
               {bars.map((b, i) => (
-                <span key={i} style={{ height: b.h, background: GOLD, opacity: 0.8, animationDuration: `${b.d}s`, animationDelay: `${b.dl}s` }} />
+                <span key={i} style={cssVars({ '--bi': i }, { height: b.h, background: GOLD, opacity: 0.8, animationDuration: `${b.d}s`, animationDelay: `${b.dl}s` })} />
               ))}
             </div>
           </div>

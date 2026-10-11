@@ -5,6 +5,7 @@ import { Ficha } from '../../shared/components/Ficha';
 import { PauseIcon, PlayIcon } from '../../shared/components/Icons';
 import { Rich, plain } from '../../shared/components/Rich';
 import { makeBars } from '../../shared/bars';
+import { cssVars } from '../../shared/css';
 import { ZoneHead } from '../parts/ZoneHead';
 
 const BIO = '#6FE3D6';
@@ -48,12 +49,12 @@ export function ZonaOscuraPage() {
               {t.ui.experience(1, 2)}
             </p>
             <h3 className="disp exp-title">
-              <Rich text={sounds.title} />
+              <Rich text={sounds.title} split />
             </h3>
             <p className="body">{sounds.body}</p>
             <Ficha rows={sounds.ficha} />
           </div>
-          <figure className="sound" data-reveal="">
+          <figure className="sound" data-reveal="" data-m="">
             <div role="tablist" aria-label={sounds.tracksLabel} className="tabs">
               {sounds.tracks.map((label, i) => (
                 <button
@@ -72,7 +73,7 @@ export function ZonaOscuraPage() {
             <div className={`sound-wave ${playing ? '' : 'is-paused'}`} aria-hidden="true">
               <span className="crop" style={{ color: 'rgba(111,227,214,.6)' }} />
               {bars.map((b, i) => (
-                <span key={i} style={{ height: b.h, animationDuration: `${b.d}s`, animationDelay: `${b.dl}s` }} />
+                <span key={i} style={cssVars({ '--bi': i }, { height: b.h, animationDuration: `${b.d}s`, animationDelay: `${b.dl}s` })} />
               ))}
             </div>
             <div className="sound-controls">
@@ -100,12 +101,12 @@ export function ZonaOscuraPage() {
               {t.ui.experience(2, 2)}
             </p>
             <h3 className="disp exp-title">
-              <Rich text={creatures.title} />
+              <Rich text={creatures.title} split />
             </h3>
             <p className="body">{creatures.body}</p>
             <Ficha rows={creatures.ficha} />
           </div>
-          <figure className="creatures" data-reveal="">
+          <figure className="creatures" data-reveal="" data-m="">
             <div className="creatures-box" onPointerMove={light} onPointerDown={light}>
               {PLATES.map((p, i) => (
                 <div

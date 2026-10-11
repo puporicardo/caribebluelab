@@ -27,19 +27,19 @@ export function AscensoPage() {
               {t.ui.experience(1, 2)}
             </p>
             <h3 className="disp exp-title exp-title--xl">
-              <Rich text={faro.title} />
+              <Rich text={faro.title} split />
             </h3>
             <p className="body">{faro.body}</p>
             <ExternalLink href={LINKS.granFaro} name="gran_faro" className="link link--start">
               {faro.link} <ArrowRight />
             </ExternalLink>
           </div>
-          <figure className="faro" data-reveal="">
+          <figure className="faro" data-reveal="" data-m="">
             <p className="eyebrow faro-panel" style={{ color: GOLD_INK }}>
               {faro.panel}
             </p>
             <div className="faro-table">
-              <div className="faro-grid">
+              <div className="faro-grid stagger">
                 <div className="faro-row faro-row--head">
                   {faro.cols.map((c) => (
                     <span key={c}>{c}</span>
@@ -49,7 +49,7 @@ export function AscensoPage() {
                   <div key={river} className="faro-row">
                     <span className="disp faro-river">{river}</span>
                     <span className="faro-live">{faro.live}</span>
-                    <svg viewBox="0 0 200 40" aria-hidden="true" className="faro-series">
+                    <svg viewBox="0 0 200 40" aria-hidden="true" className="faro-series draw-wipe">
                       <path d={RIVER_SERIES[i]} fill="none" stroke="#0B1B33" strokeWidth="1.2" strokeDasharray="3 5" />
                     </svg>
                   </div>
@@ -70,11 +70,11 @@ export function AscensoPage() {
           </p>
           <div className="challenge-head">
             <h3 className="disp exp-title">
-              <Rich text={challenge.title} />
+              <Rich text={challenge.title} split />
             </h3>
             <span className="challenge-note">{challenge.note}</span>
           </div>
-          <ol className="challenge-grid">
+          <ol className="challenge-grid stagger">
             {NUMERALS.map((n) => (
               <li key={n}>
                 <span className="disp it challenge-n">{n}</span>
@@ -93,7 +93,7 @@ export function AscensoPage() {
               {close.eyebrow}
             </p>
             <p className="disp close-title">
-              <Rich text={close.title} />
+              <Rich text={close.title} split />
             </p>
           </div>
           <ExternalLink href={LINKS.incubAzul} name="incubazul" className="btn btn--ink">

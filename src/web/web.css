@@ -101,19 +101,7 @@
   top: 16px;
 }
 
-/* ---------- Revelado al entrar en pantalla ---------- */
-html.cbl-js .web [data-reveal] {
-  opacity: 0;
-  transform: translateY(36px);
-  transition:
-    opacity 1.2s var(--ease-out),
-    transform 1.2s var(--ease-out);
-}
-
-html.cbl-js .web [data-reveal].is-in {
-  opacity: 1;
-  transform: none;
-}
+/* Apariciones y motion ligado al scroll: ver motion.css */
 
 /* ---------- Escenario fijo ---------- */
 .stage {
@@ -128,7 +116,8 @@ html.cbl-js .web [data-reveal].is-in {
 .stage-grade,
 .stage-wash,
 .stage-ocean,
-.stage-scrim {
+.stage-scrim,
+.stage-lens {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -137,23 +126,57 @@ html.cbl-js .web [data-reveal].is-in {
 
 .stage-grade {
   mix-blend-mode: soft-light;
-  opacity: 0.55;
+  opacity: 0.22;
   transition: background 2.5s ease;
 }
 
+/* Ascenso: velo claro solo bajo el texto (izquierda); a la derecha se ve la subida entera. */
 .stage-wash {
-  background: linear-gradient(180deg, var(--c-cream) 0%, var(--c-cream) 35%, var(--c-ascent) 100%);
-  transition: opacity 2s ease;
+  /* Luz cálida, no gris: como la que se filtra al acercarse a la superficie. */
+  background:
+    radial-gradient(130% 105% at 0% 62%, rgba(246, 239, 222, 0.84), rgba(240, 228, 200, 0.58) 44%, rgba(232, 214, 176, 0) 76%);
+  opacity: var(--veil, 0);
+}
+
+/* El sol que se acerca: luz cálida desde arriba que crece con la subida. */
+.stage-sun {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 46% at 64% -6%, rgba(255, 236, 190, 0.85), rgba(255, 220, 160, 0.25) 45%, rgba(255, 210, 150, 0) 72%),
+    linear-gradient(180deg, rgba(210, 187, 129, 0.28), rgba(210, 187, 129, 0) 55%);
+  mix-blend-mode: screen;
+  opacity: var(--asc, 0);
+}
+
+@media (max-width: 760px) {
+  .stage-wash {
+    background: linear-gradient(180deg, rgba(246, 239, 222, 0.74), rgba(240, 228, 200, 0.6));
+  }
+}
+
+/* Lente bajo el agua: viñeta fría y un leve halo cristalino en los bordes. */
+.marine-snow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.stage-lens {
+  background:
+    radial-gradient(120% 90% at 50% 45%, transparent 58%, rgba(4, 18, 34, 0.42) 100%),
+    radial-gradient(140% 110% at 50% 50%, transparent 72%, rgba(170, 236, 255, 0.07) 88%, transparent 100%);
 }
 
 .stage-scrim {
   background: linear-gradient(90deg, rgba(11, 27, 51, 0.62) 0%, rgba(11, 27, 51, 0.38) 60%, rgba(11, 27, 51, 0.28) 100%);
-  transition: background 1s ease;
+  /* En el Ascenso el velo oscuro de lectura cede, poco a poco, al velo claro. */
+  opacity: calc(1 - var(--veil, 0));
 }
 
-.stage-scrim.is-light {
-  background: linear-gradient(90deg, rgba(245, 243, 240, 0.5) 0%, rgba(245, 243, 240, 0.12) 70%, rgba(245, 243, 240, 0) 100%);
-}
 
 .web main,
 .site-footer {
@@ -440,6 +463,80 @@ html.cbl-js .web [data-reveal].is-in {
 
 .mline.is-hidden {
   opacity: 0;
+}
+
+/* ---------- Rótulo de capa (llegada a cada profundidad) ---------- */
+.caption {
+  position: fixed;
+  left: 50%;
+  bottom: calc(34px + env(safe-area-inset-bottom));
+  z-index: 26;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.caption-card {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, calc(var(--x, 0) * -10px));
+  letter-spacing: calc(0.32em + var(--x, 0) * 0.04em);
+  text-transform: uppercase;
+  font-size: 11px;
+  color: var(--c-cream);
+  text-shadow: 0 1px 14px rgba(4, 18, 34, 0.7);
+}
+
+.caption-card::before,
+.caption-card::after {
+  content: '';
+  align-self: center;
+  width: 46px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+.caption-n {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: 15px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--c-accent);
+}
+
+.caption-name {
+  font-family: var(--f-display);
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.caption-verb {
+  opacity: 0.75;
+}
+
+.web.is-light .caption-card {
+  color: var(--c-ink);
+  text-shadow: none;
+}
+
+@media (max-width: 760px) {
+  .caption {
+    bottom: calc(22px + env(safe-area-inset-bottom));
+  }
+  .caption-card::before,
+  .caption-card::after,
+  .caption-verb {
+    display: none;
+  }
 }
 
 /* ---------- Superficie ---------- */
@@ -955,15 +1052,44 @@ html.cbl-js .web [data-reveal].is-in {
 }
 
 .reef-viewer-frame {
+  /* Sin caja: el pez flota en el agua de la película. */
   position: relative;
   aspect-ratio: 4 / 3;
-  background:
-    radial-gradient(ellipse at 50% 45%, rgba(76, 134, 174, 0.35), rgba(11, 27, 51, 0) 65%),
-    linear-gradient(180deg, rgba(11, 27, 51, 0.5), rgba(11, 27, 51, 0.85));
 }
 
-.reef-viewer-frame > .crop {
-  inset: 0;
+/* Luz que baja de la superficie sobre el pez y una sombra difusa en el agua. */
+.reef-viewer-light {
+  position: absolute;
+  inset: -12% -8%;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 46% 34% at 50% 40%, rgba(150, 220, 235, 0.16), rgba(150, 220, 235, 0) 70%),
+    radial-gradient(ellipse 34% 7% at 50% 80%, rgba(2, 14, 26, 0.38), rgba(2, 14, 26, 0) 70%);
+  animation: reef-light 9s ease-in-out infinite alternate;
+}
+
+@keyframes reef-light {
+  from {
+    opacity: 0.75;
+    transform: translateX(-2%) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(2%) scale(1.03);
+  }
+}
+
+.reef-viewer-frame canvas {
+  /* Velo de agua: un poco menos de contraste y saturación, y sombra que sigue la silueta. */
+  filter: saturate(0.85) contrast(0.86) brightness(0.94) drop-shadow(0 26px 30px rgba(2, 14, 26, 0.4));
+}
+
+.reef-viewer-frame .viewer-toolbar {
+  border-color: rgba(245, 243, 240, 0.16);
+}
+
+.reef-viewer-frame .viewer-toolbar button {
+  border-color: rgba(245, 243, 240, 0.12);
 }
 
 .reef-viewer-frame .viewer {
@@ -980,6 +1106,12 @@ html.cbl-js .web [data-reveal].is-in {
 
 .reef-viewer {
   padding-bottom: 76px;
+}
+
+.species-swap {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
 .species-latin {

@@ -25,7 +25,9 @@ Requiere Node 20.19 o superior.
 | Qué | Dónde | Nota |
 | --- | --- | --- |
 | Modelo del mero guasa | `public/models/mero-guasa.glb` | Primer ejemplo del visor 3D (web `/arrecife` y kiosco, escena 2). Versión optimizada (~3 MB) del original `Mero_lomo_vientre_corregidos.glb` (85 MB). |
-| Videos de fondo | `public/media/00-superficie.mp4` … `05-ascenso.mp4` | `pnpm videos` los baja de Magnific. Si faltan, se usan las URLs firmadas y, como último recurso, el océano WebGL. |
+| Videos de fondo del kiosco | `public/media/00-superficie.mp4` … `05-ascenso.mp4` | `pnpm videos` los baja de Magnific. Si faltan, se usan las URLs firmadas y, como último recurso, el océano WebGL. |
+| Película del descenso (web) | `public/film/leg1…6.mp4` (+ `-m.mp4` y `.webp`) | Una toma continua recorrida con el scroll. Cómo se generó y cómo regenerarla: [docs/descenso.md](docs/descenso.md). |
+| Fauna animada (web) | `public/sea/*.webp` | Peces, tortuga, raya y medusa reales, sin fondo. |
 
 ## Rutas
 
@@ -75,8 +77,9 @@ src/
     beats/                 18 momentos (6 escenas × 3)
     parts/                 regla de profundidad, escenografía, mero 3D
   shared/
-    ocean/                 océano WebGL (shader) compartido
-    components/            VideoStack, WaterRipples, Ficha, Rich, visor 3D (species/)
+    ocean/                 océano WebGL (shader) compartido: partículas, rayos y cáusticas
+    config/                film.ts (tramos y mapa scroll → película), sealife.ts (fauna por capa), media.ts (kiosco)
+    components/            DiveFilm (película por scroll), SeaLife (fauna), VideoStack, WaterRipples, Ficha, Rich, visor 3D (species/)
     analytics.tsx          Vercel Analytics + Speed Insights + trackEvent()
 ```
 

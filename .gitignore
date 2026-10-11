@@ -9,3 +9,7 @@ dist
 
 # Originales de modelos 3D (pesados): solo se publica la versión optimizada en public/models
 /*.glb
+
+# Masters de la película del descenso (fuentes de Magnific, fotogramas de costura, PNG sin recortar).
+# Lo publicado está en public/film y public/sea; ver docs/descenso.md para regenerarlo.
+/media-src/

@@ -39,9 +39,27 @@ interface Controls {
 const IDLE_AFTER_INTERACTION_MS = 6000;
 
 /* ---------- Modelo normalizado: centrado, escalado y de perfil ---------- */
-function Model({ url }: { url: string }) {
+function Model({ url, swim = false }: { url: string; swim?: boolean }) {
   const gltf = useGLTF(url);
   const group = useRef<Group>(null);
+  const body = useRef<Group>(null);
+  const turn = useRef({ y: 0, last: typeof window === 'undefined' ? 0 : window.scrollY });
+
+  // Web: el pez nada en su sitio (cabeceo y balanceo lentos) y gira con el scroll.
+  // Es independiente de la cámara, así que arrastrar para girarlo sigue funcionando.
+  useFrame((state, delta) => {
+    const b = body.current;
+    if (!swim || !b) return;
+    const sy = window.scrollY;
+    const dy = sy - turn.current.last;
+    turn.current.last = sy;
+    if (Math.abs(dy) < 400) turn.current.y += dy * 0.0016;
+    b.rotation.y += (turn.current.y - b.rotation.y) * Math.min(1, delta * 3);
+    const t = state.clock.elapsedTime;
+    b.rotation.z = Math.sin(t * 0.7) * 0.035;
+    b.rotation.x = Math.sin(t * 0.45 + 1) * 0.025;
+    b.position.y = Math.sin(t * 0.8) * 0.05;
+  });
   const { actions, names } = useAnimations(gltf.animations, group);
 
   const fit = useMemo(() => {
@@ -73,8 +91,10 @@ function Model({ url }: { url: string }) {
   }, [actions, names]);
 
   return (
-    <group ref={group} scale={fit.scale} rotation={[0, fit.yaw, 0]}>
-      <primitive object={gltf.scene} position={[-fit.center.x, -fit.center.y, -fit.center.z]} />
+    <group ref={body}>
+      <group ref={group} scale={fit.scale} rotation={[0, fit.yaw, 0]}>
+        <primitive object={gltf.scene} position={[-fit.center.x, -fit.center.y, -fit.center.z]} />
+      </group>
     </group>
   );
 }
@@ -182,7 +202,7 @@ export default function SpeciesViewer({ url, label, labels, mode, active = true,
 
   const scene = (
     <Suspense fallback={<Loading text={labels.loading} />}>
-      <Model url={url} />
+      <Model url={url} swim={interactive} />
     </Suspense>
   );
 
@@ -198,14 +218,15 @@ export default function SpeciesViewer({ url, label, labels, mode, active = true,
             aria-label={labels.canvasLabel(label)}
             role="img"
           >
-            <hemisphereLight args={['#F5F3F0', '#0B1B33', 0.85]} />
-            <directionalLight position={[3, 5, 4]} intensity={2.1} color="#F5F3F0" />
-            <directionalLight position={[-4, 1.5, -3]} intensity={1.2} color="#6FE3D6" />
-            <directionalLight position={[0, -3, 2]} intensity={0.35} color="#D2BB81" />
+            {/* Luz submarina: cenital fría que se filtra desde la superficie, rebote turquesa y vientre en sombra. */}
+            <hemisphereLight args={['#A9DDEB', '#04192A', 0.7]} />
+            <directionalLight position={[1.5, 6, 2.5]} intensity={1.3} color="#C9EEF6" />
+            <directionalLight position={[-4, 1.5, -3]} intensity={1.1} color="#6FE3D6" />
+            <directionalLight position={[3, -2, 3]} intensity={0.22} color="#2A6F86" />
             <Environment resolution={256} frames={1}>
-              <Lightformer form="rect" intensity={2.2} color="#F5F3F0" position={[0, 5, 1]} rotation={[Math.PI / 2, 0, 0]} scale={[10, 6, 1]} />
-              <Lightformer form="rect" intensity={1.1} color="#6FE3D6" position={[-5, 1, -2]} rotation={[0, Math.PI / 2, 0]} scale={[6, 4, 1]} />
-              <Lightformer form="rect" intensity={0.8} color="#D2BB81" position={[5, -1, 2]} rotation={[0, -Math.PI / 2, 0]} scale={[6, 3, 1]} />
+              <Lightformer form="rect" intensity={1.6} color="#CDEFF7" position={[0, 5, 1]} rotation={[Math.PI / 2, 0, 0]} scale={[10, 6, 1]} />
+              <Lightformer form="rect" intensity={0.9} color="#6FE3D6" position={[-5, 1, -2]} rotation={[0, Math.PI / 2, 0]} scale={[6, 4, 1]} />
+              <Lightformer form="rect" intensity={0.5} color="#1D5A78" position={[5, -1, 2]} rotation={[0, -Math.PI / 2, 0]} scale={[6, 3, 1]} />
             </Environment>
             {interactive ? (
               scene

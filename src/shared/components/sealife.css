@@ -1,0 +1,183 @@
+/* Fauna viva (SeaLife): fotos reales animadas, veladas por el agua */
+.sealife {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sealife--front {
+  position: fixed;
+  z-index: 30;
+}
+
+.sl {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: var(--sl-op, 1);
+  filter: blur(var(--sl-blur, 0)) brightness(var(--sl-light, 1)) saturate(var(--sl-sat, 1));
+  /* Sin apariciones ni desapariciones: solo la luz cambia (al pasar de una capa a otra). */
+  transition: filter 2.4s ease;
+  will-change: transform;
+}
+
+.sl-haze {
+  transition: opacity 2.4s ease;
+}
+
+.sl-bob {
+  animation: sl-bob var(--sl-bob, 4s) ease-in-out var(--sl-delay, 0s) infinite alternate;
+}
+
+.sl-flip.is-left {
+  transform: scaleX(-1);
+}
+
+.sl-body {
+  position: relative;
+  width: 100%;
+  perspective: 700px;
+}
+
+.sl-part {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.sl-part img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Velo de agua con la silueta del animal: luz cenital arriba, vientre en sombra. */
+.sl-haze {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(235, 252, 255, 0.16) 0%,
+    var(--sl-water) 55%,
+    color-mix(in srgb, var(--sl-water) 62%, #020a14) 100%
+  );
+  opacity: var(--sl-haze, 0.3);
+  -webkit-mask: var(--sl-src) center / 100% 100% no-repeat;
+  mask: var(--sl-src) center / 100% 100% no-repeat;
+}
+
+/* Peces: la cola bate en 3D sobre su base y la cabeza compensa un poco. */
+.sl-tail {
+  clip-path: inset(0 calc(100% - var(--sl-split) - 1.5%) 0 0);
+  transform-origin: var(--sl-split) 52%;
+  animation: sl-tail var(--sl-beat, 0.55s) ease-in-out var(--sl-delay, 0s) infinite alternate;
+}
+
+.sl-head {
+  clip-path: inset(0 0 0 var(--sl-split));
+  transform-origin: 78% 50%;
+  animation: sl-head var(--sl-beat, 0.55s) ease-in-out var(--sl-delay, 0s) infinite alternate;
+}
+
+.sl--turtle .sl-whole {
+  transform-origin: 60% 50%;
+  animation: sl-glide 4.6s ease-in-out var(--sl-delay, 0s) infinite alternate;
+}
+
+.sl--ray .sl-whole {
+  transform-origin: 50% 55%;
+  animation: sl-wing 2.6s ease-in-out var(--sl-delay, 0s) infinite;
+}
+
+.sl--jelly {
+  /* La imagen ya trae alfa real: el brillo sigue la silueta de la medusa, sin caja. */
+  filter: blur(var(--sl-blur, 0)) brightness(1.1) drop-shadow(0 0 12px rgba(111, 227, 214, 0.45));
+}
+
+.sl--jelly .sl-haze {
+  display: none;
+}
+
+.sl--jelly .sl-whole {
+  transform-origin: 50% 18%;
+  animation: sl-pulse 3.2s cubic-bezier(0.45, 0, 0.3, 1) var(--sl-delay, 0s) infinite;
+}
+
+/* Burbujas: fotos reales con alfa (reflejo plateado, brillo especular). */
+.sl-bubble {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform;
+}
+
+@keyframes sl-bob {
+  from {
+    transform: translateY(-0.4vh) rotate(-1.4deg);
+  }
+  to {
+    transform: translateY(0.4vh) rotate(1.4deg);
+  }
+}
+
+@keyframes sl-tail {
+  from {
+    transform: rotateY(-34deg) skewY(-2deg);
+  }
+  to {
+    transform: rotateY(34deg) skewY(2deg);
+  }
+}
+
+@keyframes sl-head {
+  from {
+    transform: rotateY(5deg);
+  }
+  to {
+    transform: rotateY(-5deg);
+  }
+}
+
+@keyframes sl-glide {
+  from {
+    transform: rotate(-3deg) translateY(-1%);
+  }
+  to {
+    transform: rotate(2deg) translateY(1.5%);
+  }
+}
+
+@keyframes sl-wing {
+  0%,
+  100% {
+    transform: perspective(600px) rotateX(0deg) scaleY(1);
+  }
+  50% {
+    transform: perspective(600px) rotateX(22deg) scaleY(0.8);
+  }
+}
+
+@keyframes sl-pulse {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  35% {
+    transform: scale(0.88, 1.07);
+  }
+  65% {
+    transform: scale(1.04, 0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sealife {
+    display: none;
+  }
+}

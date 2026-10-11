@@ -1,6 +1,8 @@
 import type { RefObject } from 'react';
 import { ZONE_COLORS } from '../../content/zones';
-import { VideoStack } from '../../shared/components/VideoStack';
+import { DiveFilm } from '../../shared/components/DiveFilm';
+import { MarineSnow } from '../../shared/components/MarineSnow';
+import { SeaLife } from '../../shared/components/SeaLife';
 import { OceanCanvas } from '../../shared/ocean/OceanCanvas';
 import type { Box, OceanTarget, PointerState } from '../../shared/ocean/types';
 
@@ -10,32 +12,34 @@ interface StageProps {
   target: Box<OceanTarget>;
   pointer: Box<PointerState>;
   videoOk: Box<boolean>;
+  /** Tiempo de la película que pide el scroll (0–6). */
+  film: Box<number>;
 }
 
 /**
- * Escenario fijo detrás de todo el sitio: video real de la zona activa (con fundido),
- * tinte de la paleta, lavado dorado del Ascenso, océano WebGL y velo de lectura.
- * El video se desplaza lento con el scroll (--p lo escribe el layout sin re-render).
+ * Escenario fijo detrás de todo el sitio:
+ *  1. la película del descenso, recorrida con el scroll (una sola toma, sin cortes);
+ *  2. la fauna viva encima (peces, tortuga, raya, medusas) velada por el agua;
+ *  3. polvo, arena y copos en suspensión que revolotean con la corriente;
+ *  4. un leve tinte de la paleta; en el Ascenso, el sol que crece arriba y un velo claro
+ *     solo donde va el texto (el resto deja ver la subida);
+ *  5. la óptica del agua en WebGL (rayos, cáusticas, bioluminiscencia);
+ *  6. el velo de lectura y una viñeta de lente.
+ * Si la película no carga, el océano WebGL dibuja el fondo completo.
  */
-export function Stage({ zone, stageRef, target, pointer, videoOk }: StageProps) {
+export function Stage({ zone, stageRef, target, pointer, videoOk, film }: StageProps) {
   const light = zone === 5;
   return (
     <div ref={stageRef} className="stage" aria-hidden="true">
-      <VideoStack
-        active={zone}
-        playing={videoOk}
-        layerStyle={(i) => ({
-          transform:
-            i === 5
-              ? 'translate3d(0, calc(-4% + var(--p, 0) * 8%), 0) scale(1.12)'
-              : 'translate3d(0, calc(4% - var(--p, 0) * 8%), 0) scale(1.12)',
-          transition: 'opacity 2.5s ease',
-        })}
-      />
+      <DiveFilm film={film} playing={videoOk} />
+      <SeaLife film={film} pointer={pointer} />
+      <MarineSnow film={film} />
       <div className="stage-grade" style={{ background: ZONE_COLORS[zone] }} />
-      <div className="stage-wash" style={{ opacity: light ? 0.78 : 0 }} />
+      <div className="stage-sun" />
+      <div className="stage-wash" />
       <OceanCanvas target={target} pointer={pointer} overlay={videoOk} ease={0.06} className="stage-ocean" />
       <div className={`stage-scrim ${light ? 'is-light' : ''}`} />
+      <div className="stage-lens" />
     </div>
   );
 }

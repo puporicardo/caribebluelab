@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useContent } from '../../content';
 import { trackEvent } from '../../shared/analytics';
 import { Ficha } from '../../shared/components/Ficha';
+import { Rich } from '../../shared/components/Rich';
 import { SPECIES_IDS, SPECIES_MODELS } from '../../shared/components/species/models';
 import { SpeciesStage, type ViewerAction } from '../../shared/components/species/SpeciesStage';
 import { ZoneHead } from '../parts/ZoneHead';
@@ -31,9 +32,9 @@ export function ArrecifePage() {
         <ZoneHead index={2} accent={GOLD} />
 
         <article className="spread spread--viewer" aria-label={t.web.reef.viewerLabel}>
-          <figure className="reef-viewer" data-reveal="">
+          <figure className="reef-viewer" data-reveal="" data-m="">
             <div ref={ref} className="reef-viewer-frame">
-              <span className="crop" />
+              <span className="reef-viewer-light" aria-hidden="true" />
               {near ? (
                 <SpeciesStage
                   url={SPECIES_MODELS[pick]}
@@ -67,9 +68,13 @@ export function ArrecifePage() {
               <span className="n">02</span>
               {t.species.eyebrow}
             </p>
-            <h3 className="disp exp-title">{species.name}</h3>
-            <p className="disp it species-latin">{species.latin}</p>
-            <Ficha rows={species.ficha} />
+            <div key={species.name} className="species-swap" data-reveal="">
+              <h3 className="disp exp-title">
+                <Rich text={species.name} split />
+              </h3>
+              <p className="disp it species-latin">{species.latin}</p>
+              <Ficha rows={species.ficha} />
+            </div>
           </div>
         </article>
       </div>

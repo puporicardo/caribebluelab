@@ -15,7 +15,7 @@ interface OceanCanvasProps {
   style?: CSSProperties;
 }
 
-const UNIFORMS = ['uRes', 'uTime', 'uDepth', 'uAscent', 'uFlow', 'uMouse', 'uMouseOn', 'uOverlay'] as const;
+const UNIFORMS = ['uRes', 'uTime', 'uDepth', 'uAscent', 'uFlow', 'uMouse', 'uMouseOn', 'uOverlay', 'uUnder'] as const;
 
 export function OceanCanvas({ target, pointer, overlay, ease = 0.06, resolution, className, style }: OceanCanvasProps) {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -75,7 +75,7 @@ export function OceanCanvas({ target, pointer, overlay, ease = 0.06, resolution,
     gl.clearColor(0, 0, 0, 0);
 
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
-    const o = { depth: target.current.depth, ascent: target.current.ascent, mx: 0.5, my: 0.5, mon: 0 };
+    const o = { depth: target.current.depth, ascent: target.current.ascent, under: target.current.under ?? 1, mx: 0.5, my: 0.5, mon: 0 };
     const t0 = performance.now();
     let raf = 0;
 
@@ -101,6 +101,7 @@ export function OceanCanvas({ target, pointer, overlay, ease = 0.06, resolution,
       const tg = target.current;
       o.depth += (tg.depth - o.depth) * ease;
       o.ascent += (tg.ascent - o.ascent) * ease;
+      o.under += ((tg.under ?? 1) - o.under) * 0.12;
       const pt = pointer.current;
       const on = pt.active && performance.now() - pt.seen < 2500;
       o.mon += ((on ? 1 : 0) - o.mon) * 0.05;
@@ -115,6 +116,7 @@ export function OceanCanvas({ target, pointer, overlay, ease = 0.06, resolution,
       gl!.uniform2f(U.uMouse, o.mx, o.my);
       gl!.uniform1f(U.uMouseOn, o.mon);
       gl!.uniform1f(U.uOverlay, overlay.current ? 1 : 0);
+      gl!.uniform1f(U.uUnder, o.under);
       gl!.clear(gl!.COLOR_BUFFER_BIT);
       gl!.drawArrays(gl!.TRIANGLES, 0, 6);
       raf = requestAnimationFrame(frame);

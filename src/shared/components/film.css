@@ -1,0 +1,69 @@
+/* Película del descenso (DiveFilm) */
+.film {
+  position: absolute;
+  inset: -2%;
+  /* Flotabilidad: la cámara “respira” con el agua aunque el scroll esté quieto. */
+  animation: film-float 13s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.film-leg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  will-change: opacity;
+}
+
+.film-poster,
+.film-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 45%;
+}
+
+.film-video {
+  z-index: 1;
+}
+
+/* El <video> solo decodifica; lo que se ve es su copia en el canvas. */
+.film-source {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 2px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.film-leg.has-clip .film-poster {
+  opacity: 0;
+}
+
+@keyframes film-float {
+  0% {
+    transform: translate3d(-0.35%, -0.45%, 0) scale(1.012) rotate(-0.18deg);
+  }
+  100% {
+    transform: translate3d(0.35%, 0.45%, 0) scale(1.02) rotate(0.18deg);
+  }
+}
+
+@media (max-width: 860px) and (orientation: portrait) {
+  .film-poster,
+  .film-video {
+    object-position: 58% 45%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film {
+    animation: none;
+  }
+  .film-leg {
+    transition: opacity 0.6s ease;
+  }
+}

@@ -7,6 +7,8 @@ export interface Box<T> {
 export interface OceanTarget {
   depth: number;
   ascent: number;
+  /** 0 = cámara sobre el agua, 1 = bajo el agua (cáusticas y rayos sobre el video). Opcional: 1 si falta. */
+  under?: number;
 }
 
 /** Puntero normalizado al espacio de la escena (0–1, y hacia abajo). */
