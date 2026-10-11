@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "id": "tiburon-enano",
+  "language": "es",
+  "name": "Tiburón enano",
+  "latin": "Etmopterus perryi",
+  "description": "Pequeño tiburón linterna del Caribe, con grandes ojos y órganos que emiten luz.",
+  "ficha": [
+    [
+      "Familia",
+      "Etmopteridae"
+    ],
+    [
+      "Estado",
+      "Preocupación menor (LC) · UICN, evaluación publicada en 2020"
+    ],
+    [
+      "Distribución",
+      "Caribe frente a Colombia y Venezuela"
+    ],
+    [
+      "Hábitat",
+      "Plataforma continental externa y talud"
+    ],
+    [
+      "Profundidad",
+      "189–598 m, según UICN"
+    ],
+    [
+      "Tamaño",
+      "Hasta unos 21 cm de longitud total"
+    ],
+    [
+      "Dieta",
+      "Poco documentada; captura pequeños animales marinos"
+    ],
+    [
+      "Rasgos",
+      "Fotóforos en vientre y aletas; ojos grandes"
+    ],
+    [
+      "Autoría",
+      "Por confirmar"
+    ],
+    [
+      "Formato",
+      "Modelo 3D interactivo · público general"
+    ]
+  ],
+  "translations": {
+    "en": {
+      "name": "Dwarf lanternshark",
+      "latin": "Etmopterus perryi",
+      "description": "A small Caribbean lanternshark with large eyes and light-emitting organs.",
+      "ficha": [
+        [
+          "Family",
+          "Etmopteridae"
+        ],
+        [
+          "Status",
+          "Least Concern (LC) · IUCN assessment published in 2020"
+        ],
+        [
+          "Distribution",
+          "Caribbean waters off Colombia and Venezuela"
+        ],
+        [
+          "Habitat",
+          "Outer continental shelf and slope"
+        ],
+        [
+          "Depth",
+          "189–598 m, according to IUCN"
+        ],
+        [
+          "Size",
+          "Up to about 21 cm total length"
+        ],
+        [
+          "Diet",
+          "Poorly documented; preys on small marine animals"
+        ],
+        [
+          "Features",
+          "Photophores on the belly and fins; large eyes"
+        ],
+        [
+          "Authorship",
+          "To be confirmed"
+        ],
+        [
+          "Format",
+          "Interactive 3D model · general audience"
+        ]
+      ]
+    }
+  },
+  "assets": {
+    "model": "tiburon-enano.glb",
+    "format": "glb",
+    "pathsRelativeTo": "tiburon-enano.json"
+  },
+  "identification": {
+    "status": "confirmed_from_local_label",
+    "basis": "La etiqueta de la foto dice Tiburón linterna enano (Etmopterus perryi).",
+    "localEvidence": "UMC07729.ARW",
+    "requiresReview": false
+  },
+  "conservation": {
+    "system": "IUCN Red List",
+    "category": "LC",
+    "scope": "global",
+    "publicationYear": 2020,
+    "checkedAt": "2026-10-10",
+    "note": "Categoría reportada por la fuente citada; no equivale a una evaluación de la población colombiana."
+  },
+  "sources": [
+    {
+      "id": "iucn",
+      "title": "UICN · Etmopterus perryi · Pollom et al., 2020",
+      "url": "https://doi.org/10.2305/IUCN.UK.2020-3.RLTS.T60240A124455061.en",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "latin",
+        "ficha.Familia",
+        "ficha.Estado",
+        "ficha.Distribución",
+        "ficha.Hábitat",
+        "ficha.Profundidad",
+        "ficha.Tamaño"
+      ]
+    },
+    {
+      "id": "smithsonian",
+      "title": "Smithsonian Ocean · Dwarf Lantern Shark",
+      "url": "https://ocean.si.edu/ocean-life/sharks-rays/dwarf-lantern-shark",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "description",
+        "ficha.Dieta",
+        "ficha.Rasgos"
+      ]
+    }
+  ],
+  "credits": {
+    "modelAuthor": null,
+    "originalPaintingAuthor": null,
+    "modelLicense": null,
+    "status": "pending_confirmation"
+  },
+  "updatedAt": "2026-10-10"
+}

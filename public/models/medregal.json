@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "id": "medregal",
+  "language": "es",
+  "name": "Medregal",
+  "latin": "Seriola rivoliana",
+  "description": "Medregal limón: depredador marino de cuerpo alto y aletas dorsal y anal elevadas.",
+  "ficha": [
+    [
+      "Familia",
+      "Carangidae"
+    ],
+    [
+      "Estado",
+      "Preocupación menor (LC) · UICN, según Smithsonian STRI"
+    ],
+    [
+      "Distribución",
+      "Mares tropicales, incluido el Caribe"
+    ],
+    [
+      "Hábitat",
+      "Aguas abiertas y zonas asociadas a arrecifes"
+    ],
+    [
+      "Profundidad",
+      "3–340 m"
+    ],
+    [
+      "Tamaño",
+      "Hasta 1,6 m; habitualmente alrededor de 60 cm"
+    ],
+    [
+      "Dieta",
+      "Peces, crustáceos y cefalópodos"
+    ],
+    [
+      "Rasgos",
+      "Cuerpo alto; lóbulos dorsal y anal alargados"
+    ],
+    [
+      "Autoría",
+      "Por confirmar"
+    ],
+    [
+      "Formato",
+      "Modelo 3D interactivo · público general"
+    ]
+  ],
+  "translations": {
+    "en": {
+      "name": "Almaco jack",
+      "latin": "Seriola rivoliana",
+      "description": "Almaco jack: a marine predator with a deep body and elevated dorsal and anal fins.",
+      "ficha": [
+        [
+          "Family",
+          "Carangidae"
+        ],
+        [
+          "Status",
+          "Least Concern (LC) · IUCN, as reported by Smithsonian STRI"
+        ],
+        [
+          "Distribution",
+          "Tropical seas, including the Caribbean"
+        ],
+        [
+          "Habitat",
+          "Open water and reef-associated areas"
+        ],
+        [
+          "Depth",
+          "3–340 m"
+        ],
+        [
+          "Size",
+          "Up to 1.6 m; commonly around 60 cm"
+        ],
+        [
+          "Diet",
+          "Fish, crustaceans and cephalopods"
+        ],
+        [
+          "Features",
+          "Deep body; elongated dorsal and anal fin lobes"
+        ],
+        [
+          "Authorship",
+          "To be confirmed"
+        ],
+        [
+          "Format",
+          "Interactive 3D model · general audience"
+        ]
+      ]
+    }
+  },
+  "assets": {
+    "model": "medregal.glb",
+    "format": "glb",
+    "pathsRelativeTo": "medregal.json"
+  },
+  "identification": {
+    "status": "confirmed_from_local_label",
+    "basis": "La etiqueta de la pieza fotografiada dice Medregal limón (Seriola rivoliana).",
+    "localEvidence": "medregal.jpeg",
+    "requiresReview": false
+  },
+  "conservation": {
+    "system": "IUCN Red List",
+    "category": "LC",
+    "scope": "global",
+    "publicationYear": null,
+    "checkedAt": "2026-10-10",
+    "note": "Categoría reportada por la fuente citada; no equivale a una evaluación de la población colombiana."
+  },
+  "sources": [
+    {
+      "id": "stri",
+      "title": "Smithsonian STRI · Seriola rivoliana",
+      "url": "https://biogeodb.stri.si.edu/caribbean/en/thefishes/species/1283",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "latin",
+        "description",
+        "ficha.Estado",
+        "ficha.Distribución",
+        "ficha.Hábitat",
+        "ficha.Profundidad",
+        "ficha.Tamaño",
+        "ficha.Dieta",
+        "ficha.Rasgos"
+      ]
+    },
+    {
+      "id": "fwc",
+      "title": "Florida Fish and Wildlife Conservation Commission · Almaco Jack",
+      "url": "https://myfwc.com/wildlifehabitats/profiles/saltwater/jacks/almaco-jack/",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "description",
+        "ficha.Rasgos"
+      ]
+    }
+  ],
+  "credits": {
+    "modelAuthor": null,
+    "originalPaintingAuthor": null,
+    "modelLicense": null,
+    "status": "pending_confirmation"
+  },
+  "updatedAt": "2026-10-10"
+}

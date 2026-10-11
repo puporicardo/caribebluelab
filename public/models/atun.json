@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "id": "atun",
+  "language": "es",
+  "name": "Atún",
+  "latin": "Thunnus albacares",
+  "description": "Atún de aletas amarillas, migratorio y adaptado a nadar en aguas abiertas.",
+  "ficha": [
+    [
+      "Familia",
+      "Scombridae"
+    ],
+    [
+      "Estado",
+      "Preocupación menor (LC) · UICN, evaluación global de 2021"
+    ],
+    [
+      "Distribución",
+      "Océanos tropicales y subtropicales, incluido el Caribe"
+    ],
+    [
+      "Hábitat",
+      "Aguas abiertas, principalmente cerca de la superficie"
+    ],
+    [
+      "Tamaño",
+      "Puede alcanzar aproximadamente 180 kg"
+    ],
+    [
+      "Vida",
+      "Alrededor de 7 años"
+    ],
+    [
+      "Dieta",
+      "Peces, calamares y crustáceos"
+    ],
+    [
+      "Rasgos",
+      "Cuerpo fusiforme; aletas y aletillas amarillas"
+    ],
+    [
+      "Autoría",
+      "Por confirmar"
+    ],
+    [
+      "Formato",
+      "Modelo 3D interactivo · público general"
+    ]
+  ],
+  "translations": {
+    "en": {
+      "name": "Yellowfin tuna",
+      "latin": "Thunnus albacares",
+      "description": "A migratory tuna with yellow fins, adapted to swimming in open water.",
+      "ficha": [
+        [
+          "Family",
+          "Scombridae"
+        ],
+        [
+          "Status",
+          "Least Concern (LC) · IUCN, 2021 global assessment"
+        ],
+        [
+          "Distribution",
+          "Tropical and subtropical oceans, including the Caribbean"
+        ],
+        [
+          "Habitat",
+          "Open water, mainly near the surface"
+        ],
+        [
+          "Size",
+          "Can reach approximately 180 kg"
+        ],
+        [
+          "Lifespan",
+          "Around 7 years"
+        ],
+        [
+          "Diet",
+          "Fish, squid and crustaceans"
+        ],
+        [
+          "Features",
+          "Streamlined body; yellow fins and finlets"
+        ],
+        [
+          "Authorship",
+          "To be confirmed"
+        ],
+        [
+          "Format",
+          "Interactive 3D model · general audience"
+        ]
+      ]
+    }
+  },
+  "assets": {
+    "model": "atun.glb",
+    "format": "glb",
+    "pathsRelativeTo": "atun.json"
+  },
+  "identification": {
+    "status": "supported_by_source_model_name",
+    "basis": "El archivo original se llama Yellowfin+Tuna+3d+++stand.3mf; yellowfin tuna corresponde a Thunnus albacares.",
+    "localEvidence": "Yellowfin+Tuna+3d+++stand.3mf",
+    "requiresReview": false
+  },
+  "conservation": {
+    "system": "IUCN Red List",
+    "category": "LC",
+    "scope": "global",
+    "publicationYear": 2021,
+    "checkedAt": "2026-10-10",
+    "note": "Categoría reportada por la fuente citada; no equivale a una evaluación de la población colombiana."
+  },
+  "sources": [
+    {
+      "id": "noaa",
+      "title": "NOAA Fisheries · Atlantic Yellowfin Tuna",
+      "url": "https://www.fisheries.noaa.gov/species/atlantic-yellowfin-tuna",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "latin",
+        "description",
+        "ficha.Familia",
+        "ficha.Distribución",
+        "ficha.Hábitat",
+        "ficha.Tamaño",
+        "ficha.Vida",
+        "ficha.Dieta",
+        "ficha.Rasgos"
+      ]
+    },
+    {
+      "id": "iucn",
+      "title": "UICN · Actualización de la Lista Roja, 2021",
+      "url": "https://iucn.org/news/species/202109/tuna-species-recovering-despite-growing-pressures-marine-life-iucn-red-list",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "ficha.Estado"
+      ]
+    }
+  ],
+  "credits": {
+    "modelAuthor": null,
+    "originalPaintingAuthor": null,
+    "modelLicense": null,
+    "status": "pending_confirmation"
+  },
+  "updatedAt": "2026-10-10"
+}

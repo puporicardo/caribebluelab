@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "id": "cojinua",
+  "language": "es",
+  "name": "Cojinúa",
+  "latin": "Caranx crysos",
+  "description": "Pez costero de cola ahorquillada que consume peces pequeños, crustáceos y zooplancton.",
+  "ficha": [
+    [
+      "Identificación",
+      "Propuesta según el nombre común en el Caribe colombiano"
+    ],
+    [
+      "Familia",
+      "Carangidae"
+    ],
+    [
+      "Estado",
+      "Preocupación menor (LC) · UICN, según Smithsonian STRI"
+    ],
+    [
+      "Distribución",
+      "Atlántico, incluido el Caribe"
+    ],
+    [
+      "Hábitat",
+      "Aguas costeras, fondos blandos y praderas marinas"
+    ],
+    [
+      "Profundidad",
+      "0–130 m"
+    ],
+    [
+      "Tamaño",
+      "Hasta 76 cm"
+    ],
+    [
+      "Dieta",
+      "Peces pequeños, crustáceos y zooplancton"
+    ],
+    [
+      "Rasgos",
+      "Cola ahorquillada; escudetes en la línea lateral"
+    ],
+    [
+      "Autoría",
+      "Por confirmar"
+    ],
+    [
+      "Formato",
+      "Modelo 3D interactivo · público general"
+    ]
+  ],
+  "translations": {
+    "en": {
+      "name": "Blue runner",
+      "latin": "Caranx crysos",
+      "description": "A coastal fish with a forked tail that feeds on small fish, crustaceans and zooplankton.",
+      "ficha": [
+        [
+          "Identification",
+          "Proposed from its common name in the Colombian Caribbean"
+        ],
+        [
+          "Family",
+          "Carangidae"
+        ],
+        [
+          "Status",
+          "Least Concern (LC) · IUCN, as reported by Smithsonian STRI"
+        ],
+        [
+          "Distribution",
+          "Atlantic Ocean, including the Caribbean"
+        ],
+        [
+          "Habitat",
+          "Coastal waters, soft bottoms and seagrass beds"
+        ],
+        [
+          "Depth",
+          "0–130 m"
+        ],
+        [
+          "Size",
+          "Up to 76 cm"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans and zooplankton"
+        ],
+        [
+          "Features",
+          "Forked tail; scutes along the lateral line"
+        ],
+        [
+          "Authorship",
+          "To be confirmed"
+        ],
+        [
+          "Format",
+          "Interactive 3D model · general audience"
+        ]
+      ]
+    }
+  },
+  "assets": {
+    "model": "cojinua.glb",
+    "format": "glb",
+    "pathsRelativeTo": "cojinua.json"
+  },
+  "identification": {
+    "status": "provisional",
+    "basis": "Smithsonian STRI e INVEMAR relacionan cojinúa con Caranx crysos. El mismo nombre también se aplica a otros carángidos; no hay una etiqueta científica legible de esta pieza.",
+    "alternatives": [
+      "Caranx ruber",
+      "Caranx bartholomaei"
+    ],
+    "requiresReview": true
+  },
+  "conservation": {
+    "system": "IUCN Red List",
+    "category": "LC",
+    "scope": "global",
+    "publicationYear": null,
+    "checkedAt": "2026-10-10",
+    "note": "Categoría reportada por la fuente citada; no equivale a una evaluación de la población colombiana."
+  },
+  "sources": [
+    {
+      "id": "stri",
+      "title": "Smithsonian STRI · Peces Costeros del Gran Caribe · Caranx crysos",
+      "url": "https://biogeodb.stri.si.edu/caribbean/es/thefishes/species/3638",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "latin",
+        "description",
+        "ficha.Estado",
+        "ficha.Distribución",
+        "ficha.Hábitat",
+        "ficha.Profundidad",
+        "ficha.Tamaño",
+        "ficha.Dieta",
+        "ficha.Rasgos"
+      ]
+    },
+    {
+      "id": "invemar",
+      "title": "INVEMAR · Informe técnico CGSM 2022",
+      "url": "https://portal.invemar.org.co/documents/10182/0/ITF_CGSM_Vol.21_2022.pdf",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "identification"
+      ]
+    }
+  ],
+  "credits": {
+    "modelAuthor": null,
+    "originalPaintingAuthor": null,
+    "modelLicense": null,
+    "status": "pending_confirmation"
+  },
+  "updatedAt": "2026-10-10"
+}

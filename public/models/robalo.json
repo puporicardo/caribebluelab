@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "id": "robalo",
+  "language": "es",
+  "name": "Róbalo",
+  "latin": "Centropomus undecimalis",
+  "description": "Róbalo de línea lateral oscura que ocupa aguas costeras, manglares y estuarios.",
+  "ficha": [
+    [
+      "Identificación",
+      "Propuesta según el nombre común y la línea lateral de la pieza"
+    ],
+    [
+      "Familia",
+      "Centropomidae"
+    ],
+    [
+      "Estado",
+      "Preocupación menor (LC) · UICN, según Smithsonian STRI"
+    ],
+    [
+      "Distribución",
+      "Atlántico occidental, incluido el Caribe"
+    ],
+    [
+      "Hábitat",
+      "Costas, estuarios y manglares; tolera agua dulce"
+    ],
+    [
+      "Profundidad",
+      "0–25 m"
+    ],
+    [
+      "Tamaño",
+      "Hasta 1,4 m"
+    ],
+    [
+      "Dieta",
+      "Peces y crustáceos"
+    ],
+    [
+      "Rasgos",
+      "Boca grande; línea lateral oscura que llega a la cola"
+    ],
+    [
+      "Autoría",
+      "Por confirmar"
+    ],
+    [
+      "Formato",
+      "Modelo 3D interactivo · público general"
+    ]
+  ],
+  "translations": {
+    "en": {
+      "name": "Common snook",
+      "latin": "Centropomus undecimalis",
+      "description": "A snook with a dark lateral line that inhabits coastal waters, mangroves and estuaries.",
+      "ficha": [
+        [
+          "Identification",
+          "Proposed from its common name and the piece’s lateral line"
+        ],
+        [
+          "Family",
+          "Centropomidae"
+        ],
+        [
+          "Status",
+          "Least Concern (LC) · IUCN, as reported by Smithsonian STRI"
+        ],
+        [
+          "Distribution",
+          "Western Atlantic, including the Caribbean"
+        ],
+        [
+          "Habitat",
+          "Coasts, estuaries and mangroves; also enters fresh water"
+        ],
+        [
+          "Depth",
+          "0–25 m"
+        ],
+        [
+          "Size",
+          "Up to 1.4 m"
+        ],
+        [
+          "Diet",
+          "Fish and crustaceans"
+        ],
+        [
+          "Features",
+          "Large mouth; dark lateral line extending onto the tail"
+        ],
+        [
+          "Authorship",
+          "To be confirmed"
+        ],
+        [
+          "Format",
+          "Interactive 3D model · general audience"
+        ]
+      ]
+    }
+  },
+  "assets": {
+    "model": "robalo.glb",
+    "format": "glb",
+    "pathsRelativeTo": "robalo.json"
+  },
+  "identification": {
+    "status": "provisional",
+    "basis": "INVEMAR y Smithsonian STRI vinculan róbalo común/largo con Centropomus undecimalis; la línea lateral de la pieza es compatible. No se ha leído una etiqueta científica específica de esta pieza.",
+    "localEvidence": "Sujeto.png",
+    "alternatives": [
+      "Centropomus ensiferus",
+      "Centropomus pectinatus"
+    ],
+    "requiresReview": true
+  },
+  "conservation": {
+    "system": "IUCN Red List",
+    "category": "LC",
+    "scope": "global",
+    "publicationYear": null,
+    "checkedAt": "2026-10-10",
+    "note": "Categoría reportada por la fuente citada; no equivale a una evaluación de la población colombiana."
+  },
+  "sources": [
+    {
+      "id": "stri",
+      "title": "Smithsonian STRI · Peces Costeros del Gran Caribe · Centropomus undecimalis",
+      "url": "https://biogeodb.stri.si.edu/caribbean/es/thefishes/species/3462",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "latin",
+        "description",
+        "ficha.Estado",
+        "ficha.Distribución",
+        "ficha.Hábitat",
+        "ficha.Profundidad",
+        "ficha.Tamaño",
+        "ficha.Dieta",
+        "ficha.Rasgos"
+      ]
+    },
+    {
+      "id": "invemar",
+      "title": "INVEMAR · Informe técnico CGSM 2022",
+      "url": "https://portal.invemar.org.co/documents/10182/0/ITF_CGSM_Vol.21_2022.pdf",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "identification"
+      ]
+    }
+  ],
+  "credits": {
+    "modelAuthor": null,
+    "originalPaintingAuthor": null,
+    "modelLicense": null,
+    "status": "pending_confirmation"
+  },
+  "updatedAt": "2026-10-10"
+}

@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "id": "mojarra",
+  "language": "es",
+  "name": "Mojarra",
+  "latin": "Diapterus rhombeus",
+  "description": "Mojarra marina de cuerpo romboidal que busca pequeños invertebrados en el fondo.",
+  "ficha": [
+    [
+      "Identificación",
+      "Propuesta para la pieza; «mojarra» designa varias especies"
+    ],
+    [
+      "Familia",
+      "Gerreidae"
+    ],
+    [
+      "Estado",
+      "Preocupación menor (LC) · UICN, según Smithsonian STRI"
+    ],
+    [
+      "Distribución",
+      "Atlántico occidental: golfo de México, Caribe y Brasil"
+    ],
+    [
+      "Hábitat",
+      "Bahías, estuarios y lagunas de manglar"
+    ],
+    [
+      "Profundidad",
+      "0–70 m"
+    ],
+    [
+      "Tamaño",
+      "Hasta 40 cm"
+    ],
+    [
+      "Dieta",
+      "Crustáceos, moluscos y gusanos del fondo"
+    ],
+    [
+      "Rasgos",
+      "Boca protráctil; cuerpo comprimido y cola ahorquillada"
+    ],
+    [
+      "Autoría",
+      "Por confirmar"
+    ],
+    [
+      "Formato",
+      "Modelo 3D interactivo · público general"
+    ]
+  ],
+  "translations": {
+    "en": {
+      "name": "Rhombic mojarra",
+      "latin": "Diapterus rhombeus",
+      "description": "A diamond-shaped marine mojarra that feeds on small bottom-dwelling invertebrates.",
+      "ficha": [
+        [
+          "Identification",
+          "Proposed for this piece; “mojarra” refers to several species"
+        ],
+        [
+          "Family",
+          "Gerreidae"
+        ],
+        [
+          "Status",
+          "Least Concern (LC) · IUCN, as reported by Smithsonian STRI"
+        ],
+        [
+          "Distribution",
+          "Western Atlantic: Gulf of Mexico, Caribbean and Brazil"
+        ],
+        [
+          "Habitat",
+          "Bays, estuaries and mangrove lagoons"
+        ],
+        [
+          "Depth",
+          "0–70 m"
+        ],
+        [
+          "Size",
+          "Up to 40 cm"
+        ],
+        [
+          "Diet",
+          "Bottom-dwelling crustaceans, molluscs and worms"
+        ],
+        [
+          "Features",
+          "Protrusible mouth; compressed body and forked tail"
+        ],
+        [
+          "Authorship",
+          "To be confirmed"
+        ],
+        [
+          "Format",
+          "Interactive 3D model · general audience"
+        ]
+      ]
+    }
+  },
+  "assets": {
+    "model": "mojarra.glb",
+    "format": "glb",
+    "pathsRelativeTo": "mojarra.json"
+  },
+  "identification": {
+    "status": "provisional",
+    "basis": "Propuesta basada en el nombre común, el contexto marino de la colección y la forma romboidal. La etiqueta científica de la foto no es legible. La ficha describe Diapterus rhombeus, no una identificación taxonómica concluyente de la escultura.",
+    "localEvidence": "UMC08637.jpg",
+    "alternatives": [
+      "Eugerres plumieri"
+    ],
+    "requiresReview": true
+  },
+  "conservation": {
+    "system": "IUCN Red List",
+    "category": "LC",
+    "scope": "global",
+    "publicationYear": null,
+    "checkedAt": "2026-10-10",
+    "note": "Categoría reportada por la fuente citada; no equivale a una evaluación de la población colombiana."
+  },
+  "sources": [
+    {
+      "id": "stri",
+      "title": "Smithsonian STRI · Peces Costeros del Gran Caribe · Diapterus rhombeus",
+      "url": "https://biogeodb.stri.si.edu/caribbean/es/thefishes/species/3702",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "latin",
+        "description",
+        "ficha.Estado",
+        "ficha.Distribución",
+        "ficha.Hábitat",
+        "ficha.Profundidad",
+        "ficha.Tamaño",
+        "ficha.Dieta",
+        "ficha.Rasgos"
+      ]
+    },
+    {
+      "id": "invemar",
+      "title": "INVEMAR · Mojarras registradas en el Caribe colombiano",
+      "url": "https://observatorio.epacartagena.gov.co/ftp-uploads/ga-eco-caracterizacion-biofisica-socioeconomica-cienaga-de-las-quintas.pdf",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "identification"
+      ]
+    }
+  ],
+  "credits": {
+    "modelAuthor": null,
+    "originalPaintingAuthor": null,
+    "modelLicense": null,
+    "status": "pending_confirmation"
+  },
+  "updatedAt": "2026-10-10"
+}

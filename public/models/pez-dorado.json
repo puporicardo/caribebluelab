@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "id": "pez-dorado",
+  "language": "es",
+  "name": "Pez dorado",
+  "latin": "Coryphaena hippurus",
+  "description": "Dorado o mahi-mahi: pez de aguas abiertas, crecimiento rápido y colores intensos.",
+  "ficha": [
+    [
+      "Familia",
+      "Coryphaenidae"
+    ],
+    [
+      "Estado",
+      "Preocupación menor (LC) · UICN, según Fundación Charles Darwin"
+    ],
+    [
+      "Distribución",
+      "Aguas tropicales y subtropicales, incluido el Caribe"
+    ],
+    [
+      "Hábitat",
+      "Cerca de la superficie; a menudo junto a sargazo u objetos flotantes"
+    ],
+    [
+      "Tamaño",
+      "Hasta aproximadamente 2,1 m"
+    ],
+    [
+      "Vida",
+      "Hasta unos 5 años"
+    ],
+    [
+      "Dieta",
+      "Peces pequeños e invertebrados"
+    ],
+    [
+      "Rasgos",
+      "Dorsal larga; frente más alta en machos adultos"
+    ],
+    [
+      "Autoría",
+      "Por confirmar"
+    ],
+    [
+      "Formato",
+      "Modelo 3D interactivo · público general"
+    ]
+  ],
+  "translations": {
+    "en": {
+      "name": "Mahi-mahi",
+      "latin": "Coryphaena hippurus",
+      "description": "Mahi-mahi: a brightly coloured, fast-growing fish of open waters.",
+      "ficha": [
+        [
+          "Family",
+          "Coryphaenidae"
+        ],
+        [
+          "Status",
+          "Least Concern (LC) · IUCN, as reported by the Charles Darwin Foundation"
+        ],
+        [
+          "Distribution",
+          "Tropical and subtropical waters, including the Caribbean"
+        ],
+        [
+          "Habitat",
+          "Near the surface, often around sargassum or floating objects"
+        ],
+        [
+          "Size",
+          "Up to approximately 2.1 m"
+        ],
+        [
+          "Lifespan",
+          "Up to about 5 years"
+        ],
+        [
+          "Diet",
+          "Small fish and invertebrates"
+        ],
+        [
+          "Features",
+          "Long dorsal fin; taller forehead in adult males"
+        ],
+        [
+          "Authorship",
+          "To be confirmed"
+        ],
+        [
+          "Format",
+          "Interactive 3D model · general audience"
+        ]
+      ]
+    }
+  },
+  "assets": {
+    "model": "pez-dorado.glb",
+    "format": "glb",
+    "pathsRelativeTo": "pez-dorado.json"
+  },
+  "identification": {
+    "status": "supported_by_source_model_name",
+    "basis": "El archivo original se llama Mahi_Mahi.stl; mahi-mahi corresponde a Coryphaena hippurus.",
+    "localEvidence": "Mahi_Mahi.stl",
+    "requiresReview": false
+  },
+  "conservation": {
+    "system": "IUCN Red List",
+    "category": "LC",
+    "scope": "global",
+    "publicationYear": null,
+    "checkedAt": "2026-10-10",
+    "note": "Categoría reportada por la fuente citada; no equivale a una evaluación de la población colombiana."
+  },
+  "sources": [
+    {
+      "id": "noaa",
+      "title": "NOAA Fisheries · Atlantic Mahi Mahi",
+      "url": "https://www.fisheries.noaa.gov/species/atlantic-mahi-mahi",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "latin",
+        "description",
+        "ficha.Familia",
+        "ficha.Distribución",
+        "ficha.Hábitat",
+        "ficha.Tamaño",
+        "ficha.Vida",
+        "ficha.Dieta",
+        "ficha.Rasgos"
+      ]
+    },
+    {
+      "id": "cdf",
+      "title": "Fundación Charles Darwin · Coryphaena hippurus",
+      "url": "https://datazone.darwinfoundation.org/en/checklist/?species=11578",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "ficha.Estado"
+      ]
+    }
+  ],
+  "credits": {
+    "modelAuthor": null,
+    "originalPaintingAuthor": null,
+    "modelLicense": null,
+    "status": "pending_confirmation"
+  },
+  "updatedAt": "2026-10-10"
+}

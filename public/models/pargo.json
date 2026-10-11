@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "id": "pargo",
+  "language": "es",
+  "name": "Pargo",
+  "latin": "Lutjanus analis",
+  "description": "Pargo palmero de tonos rojizos, con un lunar oscuro en el costado.",
+  "ficha": [
+    [
+      "Familia",
+      "Lutjanidae"
+    ],
+    [
+      "Estado",
+      "Casi amenazado (NT) · UICN, según Smithsonian STRI"
+    ],
+    [
+      "Distribución",
+      "Atlántico occidental, de Nueva Inglaterra al sureste de Brasil"
+    ],
+    [
+      "Hábitat",
+      "Fondos arenosos, vegetación marina, manglares y bordes arrecifales"
+    ],
+    [
+      "Profundidad",
+      "1–168 m"
+    ],
+    [
+      "Tamaño",
+      "Hasta 94 cm"
+    ],
+    [
+      "Dieta",
+      "Peces, crustáceos y moluscos"
+    ],
+    [
+      "Rasgos",
+      "Mancha oscura sobre la línea lateral; aletas rojizas"
+    ],
+    [
+      "Autoría",
+      "Por confirmar"
+    ],
+    [
+      "Formato",
+      "Modelo 3D interactivo · público general"
+    ]
+  ],
+  "translations": {
+    "en": {
+      "name": "Mutton snapper",
+      "latin": "Lutjanus analis",
+      "description": "A reddish mutton snapper with a dark spot on its side.",
+      "ficha": [
+        [
+          "Family",
+          "Lutjanidae"
+        ],
+        [
+          "Status",
+          "Near Threatened (NT) · IUCN, as reported by Smithsonian STRI"
+        ],
+        [
+          "Distribution",
+          "Western Atlantic, from New England to southeastern Brazil"
+        ],
+        [
+          "Habitat",
+          "Sandy bottoms, marine vegetation, mangroves and reef edges"
+        ],
+        [
+          "Depth",
+          "1–168 m"
+        ],
+        [
+          "Size",
+          "Up to 94 cm"
+        ],
+        [
+          "Diet",
+          "Fish, crustaceans and molluscs"
+        ],
+        [
+          "Features",
+          "Dark spot above the lateral line; reddish fins"
+        ],
+        [
+          "Authorship",
+          "To be confirmed"
+        ],
+        [
+          "Format",
+          "Interactive 3D model · general audience"
+        ]
+      ]
+    }
+  },
+  "assets": {
+    "model": "pargo.glb",
+    "format": "glb",
+    "pathsRelativeTo": "pargo.json"
+  },
+  "identification": {
+    "status": "confirmed_from_local_label",
+    "basis": "La etiqueta visible en pargo.jpeg dice Pargo palmero (Lutjanus analis).",
+    "localEvidence": "pargo.jpeg",
+    "requiresReview": false
+  },
+  "conservation": {
+    "system": "IUCN Red List",
+    "category": "NT",
+    "scope": "global",
+    "publicationYear": null,
+    "checkedAt": "2026-10-10",
+    "note": "Categoría reportada por la fuente citada; no equivale a una evaluación de la población colombiana."
+  },
+  "sources": [
+    {
+      "id": "stri",
+      "title": "Smithsonian STRI · Peces Costeros del Gran Caribe · Lutjanus analis",
+      "url": "https://biogeodb.stri.si.edu/caribbean/es/thefishes/species/3683",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "latin",
+        "description",
+        "ficha.Estado",
+        "ficha.Distribución",
+        "ficha.Hábitat",
+        "ficha.Profundidad",
+        "ficha.Tamaño",
+        "ficha.Dieta",
+        "ficha.Rasgos"
+      ]
+    }
+  ],
+  "credits": {
+    "modelAuthor": null,
+    "originalPaintingAuthor": null,
+    "modelLicense": null,
+    "status": "pending_confirmation"
+  },
+  "updatedAt": "2026-10-10"
+}
