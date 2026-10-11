@@ -1719,3 +1719,90 @@
     padding-bottom: 96px;
   }
 }
+
+/* ---------- Especies del arrecife: una tras otra con el scroll ---------- */
+.specimens {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(90px, 16vh, 200px);
+}
+
+.specimen {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+
+/* Pez a la derecha: la ficha pasa a la izquierda. */
+.specimen--right {
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+}
+
+.specimen--right .specimen-fig {
+  order: 2;
+}
+
+.specimen-fig {
+  margin: 0;
+  padding-bottom: 70px; /* barra de controles del visor */
+  /* El pez acompaña a su ficha mientras se lee. */
+  position: sticky;
+  top: max(90px, 14vh);
+}
+
+/* Número gigante en contorno detrás de la ficha. */
+.specimen-n {
+  position: absolute;
+  top: -0.22em;
+  z-index: -1;
+  font-family: var(--f-display);
+  font-weight: 200;
+  font-stretch: 125%;
+  font-size: clamp(160px, 22vw, 340px);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(245, 243, 240, 0.14);
+  pointer-events: none;
+  user-select: none;
+}
+
+.specimen--left .specimen-n {
+  right: -2%;
+}
+
+.specimen--right .specimen-n {
+  left: -2%;
+}
+
+.species-count {
+  margin-left: auto;
+  color: var(--c-mist);
+}
+
+.species-desc {
+  margin-top: -6px;
+  max-width: 46ch;
+  color: rgba(245, 243, 240, 0.86);
+}
+
+@media (max-width: 860px) {
+  .specimen,
+  .specimen--right {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .specimen--right .specimen-fig {
+    order: 0;
+  }
+  .specimen-fig {
+    position: relative;
+    top: auto;
+  }
+  .specimen-n {
+    top: -0.1em;
+    font-size: 42vw;
+  }
+}

@@ -24,7 +24,7 @@ Requiere Node 20.19 o superior.
 
 | Qué | Dónde | Nota |
 | --- | --- | --- |
-| Modelo del mero guasa | `public/models/mero-guasa.glb` | Primer ejemplo del visor 3D (web `/arrecife` y kiosco, escena 2). Versión optimizada (~3 MB) del original `Mero_lomo_vientre_corregidos.glb` (85 MB). |
+| Modelos 3D de 9 especies | `public/models/<id>.glb` (+ fichas en `src/content/species/<id>.json`) | Visor 3D de la web (`/arrecife`: una especie tras otra con el scroll, cada pez entra desde su lado) y kiosco (una especie distinta en cada vuelta). Optimizados a 1–3 MB; originales en `media-src/models-originales/`. Ver `public/models/LEEME.txt`. |
 | Videos de fondo del kiosco | `public/media/00-superficie.mp4` … `05-ascenso.mp4` | `pnpm videos` los baja de Magnific. Si faltan, se usan las URLs firmadas y, como último recurso, el océano WebGL. |
 | Película del descenso (web y kiosco) | `public/film/leg1…6.mp4` (+ `-m.mp4`, `-v.mp4`, `-vm.mp4` y `.webp`) | Una toma continua recorrida con el scroll. Cómo se generó y cómo regenerarla: [docs/descenso.md](docs/descenso.md). |
 | Fauna animada (web) | `public/sea/*.webp` | Peces, tortuga, raya y medusa reales, sin fondo. |
@@ -55,7 +55,7 @@ El idioma se elige en la Superficie, y también en la cabecera y el pie. Al camb
 ### Kiosco
 
 - `/kiosco/es` (español) y `/kiosco/en` (inglés). `/kiosco` redirige a español.
-- Es la misma película, fauna y luz de la web, automática: baja sola, se detiene en cada profundidad con poco texto (eyebrow, titular con su coreografía y una franja gigante), muestra el mero 3D en el arrecife, sube hasta el atardecer, cierra con el logo y vuelve a empezar (~2,5 min).
+- Es la misma película, fauna y luz de la web, automática: baja sola, se detiene en cada profundidad con poco texto (eyebrow, titular con su coreografía y una franja gigante), muestra una especie 3D distinta en cada vuelta al pasar por el arrecife, sube hasta el atardecer, cierra con el logo y vuelve a empezar (~2,5 min).
 - **Un clic o toque en cualquier parte pone la pantalla completa** y pide mantener la pantalla encendida. No hay avisos ni instrucciones en pantalla. El cursor se esconde solo.
 - Funciona en TV horizontal y vertical (usa la película 9:16 en pantallas verticales).
 - Parámetros de revisión: `?escena=0–6` (parada inicial) y `?velocidad=x2|x6|pausa`.
@@ -73,7 +73,7 @@ src/
     pages/                 una página por zona (SuperficiePage, ZonaDeLuzPage, ArrecifePage…)
     parts/                 Header, DepthRail, Stage, Footer, ZoneHead…
   kiosk/
-    KioskApp.tsx           recorrido automático en bucle: película, fauna, textos por nivel, mero 3D
+    KioskApp.tsx           recorrido automático en bucle: película, fauna, textos por nivel, especie 3D por vuelta
     timeline.ts            paradas, pausas y viajes (el reloj del kiosco)
   shared/
     ocean/                 océano WebGL (shader) compartido: partículas, rayos y cáusticas
@@ -129,7 +129,6 @@ Conecta el repositorio en Vercel o ejecuta `vercel` en la carpeta del proyecto.
 Los textos entre `[corchetes]` son marcadores por confirmar:
 
 - Fichas, autorías y licencias.
-- Las especies 2 y 3.
 - Los títulos de los filminutos.
 - Las canciones de CUBI.
 - Los ganadores del Challenge.

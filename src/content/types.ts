@@ -21,6 +21,8 @@ export interface ZoneCopy {
 export interface SpeciesCopy {
   name: string;
   latin: string;
+  /** Una línea divulgativa bajo el nombre. */
+  description?: string;
   ficha: FichaRow[];
 }
 
@@ -74,7 +76,9 @@ export interface Content {
   species: {
     tabs: string;
     eyebrow: string;
-    items: [SpeciesCopy, SpeciesCopy, SpeciesCopy];
+    /** Contador del selector: «03 / 09». */
+    count: (n: number, total: number) => string;
+
   };
   web: {
     howTo: { eyebrow: string; quote: string; body: string; indexLabel: string };

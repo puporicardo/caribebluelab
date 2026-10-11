@@ -445,6 +445,43 @@ html.cbl-js .web .is-in .crop {
   translate: calc((1 - var(--e, 1)) * 30vw) 0;
 }
 
+/* ---------- 8b. Especies del arrecife: el pez nada desde su lado, la ficha desde el otro ---------- */
+.web .specimen {
+  --q: calc(1 - var(--e, 1));
+  --fs: -1; /* pez a la izquierda: entra desde la izquierda */
+}
+
+.web .specimen--right {
+  --fs: 1;
+}
+
+.web .specimen-fig {
+  /* mide su propia entrada (data-m): la animación ocurre a la vista */
+  --q: calc(1 - var(--e, 1));
+  translate: calc(var(--q) * var(--fs) * 48vw) 0;
+  rotate: calc(var(--q) * var(--fs) * -8deg);
+  scale: calc(0.82 + var(--e, 1) * 0.18);
+  opacity: clamp(0, calc(var(--e, 1) * 1.8), 1);
+}
+
+.web .specimen-copy {
+  translate: calc(var(--q) * var(--fs) * -20vw) 0;
+}
+
+.web .specimen-n {
+  translate: calc(var(--q) * var(--fs) * -12vw) calc((0.5 - var(--v, 0.5)) * -140px);
+  opacity: clamp(0, calc(var(--e, 1) * 1.4 - 0.2), 1);
+}
+
+@media (max-width: 760px) {
+  .web .specimen-fig {
+    translate: calc(var(--q) * var(--fs) * 60vw) 0;
+  }
+  .web .specimen-copy {
+    translate: calc(var(--q) * var(--fs) * -12vw) 0;
+  }
+}
+
 /* ---------- 9. Aperturas de zona: coreografía propia, ligada al scroll ---------- */
 .web .zhead {
   opacity: min(1, calc((1 - var(--v, 0.5)) * 3.4));
@@ -726,6 +763,9 @@ html.cbl-js .web .close.is-in .btn::after {
   .web .zhead,
   .web .hero-inner,
   .web .hero-logo g,
+  .web .specimen-fig,
+  .web .specimen-copy,
+  .web .specimen-n,
   .web .spread > *,
   .web svg.num,
   .web .zhead-title .w,

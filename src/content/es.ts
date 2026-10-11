@@ -58,41 +58,7 @@ export const es: Content = {
   species: {
     tabs: 'Especies',
     eyebrow: 'Ficha científica',
-    items: [
-      {
-        name: 'Mero guasa',
-        latin: 'Epinephelus itajara',
-        ficha: [
-          ['Estado', 'Vulnerable (VU) · Lista Roja UICN · En peligro crítico (CR) en el Libro Rojo de Colombia'],
-          ['Distribución', 'Atlántico occidental, de Florida al sur de Brasil · incluido el *Caribe colombiano*'],
-          ['Hábitat', 'Juveniles en manglares y estuarios; adultos en arrecifes, fondos rocosos y naufragios, hasta unos 50 m'],
-          ['Tamaño', 'Hasta 2,5 m y más de 400 kg · el mero más grande del Atlántico'],
-          ['Vida', 'Más de 37 años · madura entre los 5 y 7 años'],
-          ['Dieta', 'Crustáceos (sobre todo cangrejos y langostas), peces y pulpos'],
-          ['Amenazas', 'Pesca en sus agregaciones reproductivas y pérdida de manglares'],
-          ['Autoría', '[Por confirmar] · Unimagdalena'],
-          ['Formato', 'Modelo 3D · 3 min · Público general'],
-        ],
-      },
-      {
-        name: '[Especie 2]',
-        latin: '[Nombre científico]',
-        ficha: [
-          ['Estado', '[Por verificar]'],
-          ['Hábitat', '[Por completar]'],
-          ['Formato', 'Modelo 3D · en preparación'],
-        ],
-      },
-      {
-        name: '[Especie 3]',
-        latin: '[Nombre científico]',
-        ficha: [
-          ['Estado', '[Por verificar]'],
-          ['Hábitat', '[Por completar]'],
-          ['Formato', 'Modelo 3D · en preparación'],
-        ],
-      },
-    ],
+    count: (n, total) => `${pad(n)} / ${pad(total)}`,
   },
   web: {
     howTo: {

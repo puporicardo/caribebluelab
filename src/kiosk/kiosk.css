@@ -425,6 +425,35 @@
   scale: calc(0.85 + var(--in) * 0.15);
 }
 
+.k-mero-label {
+  position: absolute;
+  right: 6%;
+  bottom: 4%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  text-align: right;
+  opacity: clamp(0, calc(var(--in) * 2 - 1), 1);
+}
+
+.k-mero-name {
+  font-family: var(--f-mono);
+  font-stretch: 87.5%;
+  font-size: clamp(11px, 1vw, 18px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-cream);
+}
+
+.k-mero-latin {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: clamp(14px, 1.3vw, 26px);
+  color: var(--c-accent);
+}
+
 .k-mero .viewer {
   position: absolute;
   inset: 0;
@@ -453,6 +482,10 @@
     right: 6vw;
     top: 30vh;
     width: auto;
+  }
+  .k-mero-label {
+    top: 0;
+    bottom: auto;
   }
   .k-brandcard .k-logo {
     width: clamp(260px, 78vw, 900px);

@@ -210,9 +210,12 @@ export function DiveFilm({ film, playing, clock = false }: DiveFilmProps) {
         const t = clamp(cur - i, 0, 0.9995) * dur;
 
         // Avance sostenido hacia adelante en el tramo activo: reproducir, no buscar.
-        const flowing = !reduce && L.painted && i === a && vel > (clock ? 0.002 : 0.012) && cur - i < 0.995;
+        // Arranca a reproducir con avance claro; una vez reproduciendo sigue hasta casi detenerse
+        // (frena bajando la velocidad, no saltando a buscar fotogramas).
+        const moving = vel > (clock || !V.paused ? 0.002 : 0.012);
+        const flowing = !reduce && L.painted && i === a && moving && cur - i < 0.995;
         if (flowing) {
-          const rate = clamp(vel * dur, clock ? 0.0625 : 0.25, 4);
+          const rate = clamp(vel * dur, 0.0625, 4);
           if (Math.abs(rate - L.rate) / L.rate > 0.06) {
             L.rate = rate;
             V.playbackRate = rate;

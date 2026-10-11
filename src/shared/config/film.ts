@@ -46,19 +46,20 @@ export const FILM_LEGS: FilmLeg[] = [
 /**
  * Del avance del recorrido (g: zona + progreso, 0–6) al tiempo de la película (T: tramo + progreso, 0–6).
  * Puntos [g, T] interpolados linealmente. La cámara llega a cada capa poco después de que
- * su titular entra en pantalla y se queda casi quieta mientras se lee (meseta corta).
+ * su titular entra en pantalla y se DETIENE mientras se lee (meseta quieta: nada de avanzar
+ * despacio, que se vería fotograma a fotograma); reanuda al pasar el último bloque de la capa.
  */
 export const FILM_KEYS: ReadonlyArray<readonly [number, number]> = [
   [0, 0],
   [0.32, 0], // portada: superficie quieta
   [1.12, 1], // llega a la zona de luz
-  [1.3, 1.06],
+  [1.3, 1], // quieta mientras se lee
   [2.1, 2], // arrecife
-  [2.3, 2.06],
+  [2.86, 2], // quieta mientras pasan las nueve especies
   [3.1, 3], // pradera
-  [3.3, 3.06],
+  [3.3, 3],
   [4.1, 4], // zona oscura
-  [4.4, 4.1],
+  [4.4, 4],
   [4.96, 5], // lo más hondo, justo al final de la zona oscura
   [5.16, 5.42], // el ascenso arranca rápido: al entrar su titular ya hay luz azul
   [5.92, 6], // rompe la superficie al llegar al pie

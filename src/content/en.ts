@@ -58,41 +58,7 @@ export const en: Content = {
   species: {
     tabs: 'Species',
     eyebrow: 'Scientific profile',
-    items: [
-      {
-        name: 'Goliath grouper',
-        latin: 'Epinephelus itajara',
-        ficha: [
-          ['Status', 'Vulnerable (VU) · IUCN Red List · Critically Endangered (CR) in the Colombian Red Book'],
-          ['Range', 'Western Atlantic, from Florida to southern Brazil · including the *Colombian Caribbean*'],
-          ['Habitat', 'Juveniles in mangroves and estuaries; adults on reefs, rocky bottoms and wrecks, down to about 50 m'],
-          ['Size', 'Up to 2.5 m and over 400 kg · the largest grouper in the Atlantic'],
-          ['Lifespan', 'Over 37 years · matures at 5 to 7 years'],
-          ['Diet', 'Crustaceans (mostly crabs and lobsters), fish and octopus'],
-          ['Threats', 'Fishing at spawning aggregations and mangrove loss'],
-          ['Authors', '[To be confirmed] · Unimagdalena'],
-          ['Format', '3D model · 3 min · General public'],
-        ],
-      },
-      {
-        name: '[Species 2]',
-        latin: '[Scientific name]',
-        ficha: [
-          ['Status', '[To be verified]'],
-          ['Habitat', '[To be completed]'],
-          ['Format', '3D model · in preparation'],
-        ],
-      },
-      {
-        name: '[Species 3]',
-        latin: '[Scientific name]',
-        ficha: [
-          ['Status', '[To be verified]'],
-          ['Habitat', '[To be completed]'],
-          ['Format', '3D model · in preparation'],
-        ],
-      },
-    ],
+    count: (n, total) => `${pad(n)} / ${pad(total)}`,
   },
   web: {
     howTo: {

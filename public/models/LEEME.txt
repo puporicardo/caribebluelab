@@ -1,44 +1,30 @@
-Modelos 3D de las especies (formato .glb)
+Modelos 3D de las especies (formato .glb, optimizados para web)
 
-    atun.glb             Atún
-    cojinua.glb          Cojinúa
-    medregal.glb         Medregal
-    mero-guasa.glb       Mero guasa (Epinephelus itajara)
-    mojarra.glb          Mojarra
-    pargo.glb            Pargo
-    pez-dorado.glb       Pez dorado
-    robalo.glb           Róbalo
-    tiburon-enano.glb    Tiburón enano
+    mero-guasa.glb      Mero guasa (Epinephelus itajara)
+    pargo.glb           Pargo (Lutjanus analis)
+    tiburon-enano.glb   Tiburón enano (Etmopterus perryi)
+    pez-dorado.glb      Pez dorado (Coryphaena hippurus)
+    atun.glb            Atún (Thunnus albacares)
+    medregal.glb        Medregal (Seriola rivoliana)
+    robalo.glb          Róbalo (Centropomus undecimalis)
+    cojinua.glb         Cojinúa (Caranx crysos)
+    mojarra.glb         Mojarra (Diapterus rhombeus)
 
-Cada modelo tiene una ficha JSON con el mismo nombre, datos en español e
-inglés, fuentes y una ruta relativa hacia su GLB. Solo se conserva un GLB
-por especie en esta carpeta.
+Las fichas (español + inglés, fuentes, estado UICN) están en src/content/species/<id>.json.
+El orden del visor está en src/content/species/index.ts (ORDER).
 
-El visor de la web (/arrecife) y el kiosco cargan el mero desde
-/models/mero-guasa.glb. Para sumar más especies, añade sus rutas en
-src/shared/components/species/models.ts, en el mismo orden que las especies
-de src/content/es.ts y en.ts.
+Para sumar una especie:
+  1. Su ficha en src/content/species/<id>.json (mismo formato que las demás).
+  2. Su modelo optimizado aquí como <id>.glb.
+  3. Su id en ORDER (src/content/species/index.ts).
 
-Mero revisado (10 de octubre de 2026)
+Optimiza siempre el GLB antes de publicarlo. Los originales (20–85 MB, hasta ~2 M de
+triángulos) se guardan fuera de la web, en media-src/models-originales/ (no va a git).
+Se reducen a ~1–3 MB y ~250 mil triángulos sin pérdida visible con:
 
-La fuente correcta es Mero_textura_completa.glb. Incluye mapeado UV completo,
-color de 4096 px, rugosidad de 2048 px y relieve de 4096 px. El material usa
-color base blanco para conservar la paleta de las imágenes, sin un tinte
-adicional. Los dos costados conservan patrones diferentes.
+    npx @gltf-transform/cli optimize original.glb <id>.glb \
+      --compress meshopt --texture-compress webp --texture-size 2048 \
+      --simplify-ratio <250000 / triángulos del original> --simplify-error 0.0005
 
-Se conservan los 1.991.266 triángulos y las posiciones y coordenadas UV de
-la fuente. La compresión Meshopt y la precisión de 16 bits de normales y
-tangentes reducen el archivo a aproximadamente 50 MiB. Las tres imágenes
-de material mantienen su resolución y sus bytes originales.
-
-La versión anterior procedía de Mero_lomo_vientre_corregidos.glb, usaba una
-mezcla de pintura lateral y colores de vértice y carecía de los mapas de
-rugosidad y relieve de la versión completa.
-
-Optimiza los modelos antes de publicarlos conservando la pintura, las UV
-y los detalles anatómicos. El cargador de three/drei usado en el proyecto
-incluye soporte Meshopt.
-
-La ruta del mero en models.ts y assets.modelUrl lleva una versión basada
-en el contenido del GLB. Se actualiza al cambiar el archivo para evitar
-que el navegador reutilice una copia antigua almacenada en caché.
+meshopt no necesita decodificador externo (three/drei lo incluyen), así que el
+kiosco funciona también sin conexión.

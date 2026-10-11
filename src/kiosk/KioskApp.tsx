@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { useSearchParams } from 'react-router';
 import { CONTENT, ContentContext } from '../content';
+import { SPECIES } from '../content/species';
 import { ZONE_COLORS, type Lang } from '../content/zones';
 import { SiteAnalytics } from '../shared/analytics';
 import { BrandLogo } from '../shared/components/BrandLogo';
@@ -8,7 +9,6 @@ import { DiveFilm } from '../shared/components/DiveFilm';
 import { MarineSnow } from '../shared/components/MarineSnow';
 import { Rich } from '../shared/components/Rich';
 import { SeaLife } from '../shared/components/SeaLife';
-import { SPECIES_MODELS } from '../shared/components/species/models';
 import { SpeciesStage, warmUpSpecies } from '../shared/components/species/SpeciesStage';
 import { OceanCanvas } from '../shared/ocean/OceanCanvas';
 import { createPointer, type OceanTarget } from '../shared/ocean/types';
@@ -51,18 +51,26 @@ export default function KioskApp({ lang }: { lang: Lang }) {
   const paused = useRef(speed === 0);
   /** El visor 3D solo se monta cerca del arrecife (ahorra GPU el resto del bucle). */
   const [near3d, setNear3d] = useState(startStop === REEF);
+  /** Cada vuelta del bucle muestra una especie distinta en el arrecife. */
+  const [loop, setLoop] = useState(0);
+  const fish = SPECIES[loop % SPECIES.length];
 
   useEffect(() => {
     document.documentElement.lang = lang;
     document.title = `Caribe Blue Lab · ${lang === 'en' ? 'Kiosk' : 'Kiosco'}`;
-    void warmUpSpecies(SPECIES_MODELS[0]);
   }, [lang]);
+  // Precarga la especie de esta vuelta (y la siguiente) antes de llegar al arrecife.
+  useEffect(() => {
+    void warmUpSpecies(fish.model);
+    void warmUpSpecies(SPECIES[(loop + 1) % SPECIES.length].model);
+  }, [fish, loop]);
 
   /* ---------- Reloj: mueve la película; todo lo demás sale de la película ---------- */
   useEffect(() => {
     let raf = 0;
     let last = performance.now();
     let mounted3d = near3d;
+    let shownLoop = -1;
     const tick = (now: number) => {
       raf = requestAnimationFrame(tick);
       const dt = Math.min(0.1, (now - last) / 1000);
@@ -85,6 +93,11 @@ export default function KioskApp({ lang }: { lang: Lang }) {
 
       // Loop: segundos desde que empezó la vuelta (la portada entra con el reloj, no hay movimiento aún).
       const loopT = ((clock.current % TIMELINE.total) + TIMELINE.total) % TIMELINE.total;
+      const loopN = Math.floor(clock.current / TIMELINE.total);
+      if (loopN !== shownLoop) {
+        shownLoop = loopN;
+        setLoop(loopN);
+      }
       let brand = 0;
       STOPS.forEach((s, i) => {
         let { enter, leave } = presence(i, T);
@@ -277,7 +290,11 @@ export default function KioskApp({ lang }: { lang: Lang }) {
 
         {/* El mero en 3D llega nadando con la cámara al arrecife y se queda atrás al seguir */}
         <div ref={meroRef} className="k-mero" aria-hidden="true">
-          {near3d ? <SpeciesStage url={SPECIES_MODELS[0]} label={content.species.items[0].name} labels={content.viewer} mode="showcase" active /> : null}
+          {near3d ? <SpeciesStage key={fish.id} url={fish.model} label={fish.copy[lang].name} labels={content.viewer} mode="showcase" active /> : null}
+          <p className="k-mero-label">
+            <span className="k-mero-name">{fish.copy[lang].name}</span>
+            <span className="k-mero-latin">{fish.copy[lang].latin}</span>
+          </p>
         </div>
 
         <header className="k-top">
