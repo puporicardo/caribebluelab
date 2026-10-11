@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "id": "mero-guasa",
+  "language": "es",
+  "name": "Mero guasa",
+  "latin": "Epinephelus itajara",
+  "description": "Gran mero de cuerpo robusto, asociado a arrecifes y hábitats costeros.",
+  "ficha": [
+    [
+      "Familia",
+      "Serranidae"
+    ],
+    [
+      "Estado",
+      "Vulnerable (VU) · UICN, según Smithsonian STRI"
+    ],
+    [
+      "Distribución",
+      "Atlántico tropical y subtropical, incluido el Caribe"
+    ],
+    [
+      "Hábitat",
+      "Arrecifes, fondos costeros, manglares y estuarios"
+    ],
+    [
+      "Profundidad",
+      "1–100 m, según Smithsonian STRI"
+    ],
+    [
+      "Tamaño",
+      "Hasta 2,5 m; aproximadamente 360 kg según NOAA"
+    ],
+    [
+      "Vida",
+      "Más de 30 años"
+    ],
+    [
+      "Dieta",
+      "Crustáceos, peces y cefalópodos"
+    ],
+    [
+      "Rasgos",
+      "Cuerpo robusto; boca grande y cola redondeada"
+    ],
+    [
+      "Amenazas",
+      "Sobrepesca y pérdida de hábitat"
+    ],
+    [
+      "Autoría",
+      "Por confirmar"
+    ],
+    [
+      "Formato",
+      "Modelo 3D interactivo · público general"
+    ]
+  ],
+  "translations": {
+    "en": {
+      "name": "Goliath grouper",
+      "latin": "Epinephelus itajara",
+      "description": "A large, robust grouper associated with reefs and coastal habitats.",
+      "ficha": [
+        [
+          "Family",
+          "Serranidae"
+        ],
+        [
+          "Status",
+          "Vulnerable (VU) · IUCN, as reported by Smithsonian STRI"
+        ],
+        [
+          "Distribution",
+          "Tropical and subtropical Atlantic, including the Caribbean"
+        ],
+        [
+          "Habitat",
+          "Reefs, coastal bottoms, mangroves and estuaries"
+        ],
+        [
+          "Depth",
+          "1–100 m, according to Smithsonian STRI"
+        ],
+        [
+          "Size",
+          "Up to 2.5 m; approximately 360 kg according to NOAA"
+        ],
+        [
+          "Lifespan",
+          "More than 30 years"
+        ],
+        [
+          "Diet",
+          "Crustaceans, fish and cephalopods"
+        ],
+        [
+          "Features",
+          "Robust body; large mouth and rounded tail"
+        ],
+        [
+          "Threats",
+          "Overfishing and habitat loss"
+        ],
+        [
+          "Authorship",
+          "To be confirmed"
+        ],
+        [
+          "Format",
+          "Interactive 3D model · general audience"
+        ]
+      ]
+    }
+  },
+  "assets": {
+    "model": "mero-guasa.glb",
+    "format": "glb",
+    "pathsRelativeTo": "mero-guasa.json",
+    "modelUrl": "mero-guasa.glb?v=a1a062209172"
+  },
+  "identification": {
+    "status": "supported_by_project_content",
+    "basis": "La web identifica esta pieza como Mero guasa, Epinephelus itajara. El nombre científico se mantiene conforme al contenido existente del proyecto; no se dispone de una etiqueta científica legible de la escultura.",
+    "requiresReview": true
+  },
+  "conservation": {
+    "system": "IUCN Red List",
+    "category": "VU",
+    "scope": "global",
+    "publicationYear": null,
+    "checkedAt": "2026-10-10",
+    "note": "Categoría reportada por Smithsonian STRI; no equivale a una evaluación de la población colombiana."
+  },
+  "sources": [
+    {
+      "id": "stri",
+      "title": "Smithsonian STRI · Epinephelus itajara",
+      "url": "https://biogeodb.stri.si.edu/caribbean/es/thefishes/species/4760",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "latin",
+        "description",
+        "ficha.Estado",
+        "ficha.Distribución",
+        "ficha.Hábitat",
+        "ficha.Profundidad",
+        "ficha.Tamaño",
+        "ficha.Dieta",
+        "ficha.Rasgos"
+      ]
+    },
+    {
+      "id": "noaa",
+      "title": "NOAA Fisheries · Atlantic Goliath Grouper",
+      "url": "https://www.fisheries.noaa.gov/species/atlantic-goliath-grouper",
+      "accessedAt": "2026-10-10",
+      "supports": [
+        "latin",
+        "ficha.Familia",
+        "ficha.Distribución",
+        "ficha.Hábitat",
+        "ficha.Tamaño",
+        "ficha.Vida",
+        "ficha.Amenazas"
+      ]
+    }
+  ],
+  "credits": {
+    "modelAuthor": null,
+    "originalPaintingAuthor": null,
+    "modelLicense": null,
+    "status": "pending_confirmation"
+  },
+  "updatedAt": "2026-10-10"
+}

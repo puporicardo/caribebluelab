@@ -1,20 +1,44 @@
 Modelos 3D de las especies (formato .glb)
 
-    mero-guasa.glb   Mero guasa (Epinephelus itajara)
+    atun.glb             Atún
+    cojinua.glb          Cojinúa
+    medregal.glb         Medregal
+    mero-guasa.glb       Mero guasa (Epinephelus itajara)
+    mojarra.glb          Mojarra
+    pargo.glb            Pargo
+    pez-dorado.glb       Pez dorado
+    robalo.glb           Róbalo
+    tiburon-enano.glb    Tiburón enano
 
-El visor de la web (/arrecife) y el kiosco (escena del Arrecife) lo cargan desde
-/models/mero-guasa.glb. Para sumar más especies, añade su archivo aquí y su ruta
-en src/shared/components/species/models.ts (en el mismo orden que las especies
-de src/content/es.ts y en.ts).
+Cada modelo tiene una ficha JSON con el mismo nombre, datos en español e
+inglés, fuentes y una ruta relativa hacia su GLB. Solo se conserva un GLB
+por especie en esta carpeta.
 
-Optimiza siempre el GLB antes de publicarlo. El original del mero
-(Mero_lomo_vientre_corregidos.glb, 85 MB y ~2 M de triángulos) se redujo a ~3 MB
-y ~500 mil triángulos sin pérdida visible con:
+El visor de la web (/arrecife) y el kiosco cargan el mero desde
+/models/mero-guasa.glb. Para sumar más especies, añade sus rutas en
+src/shared/components/species/models.ts, en el mismo orden que las especies
+de src/content/es.ts y en.ts.
 
-    npx @gltf-transform/cli optimize original.glb mero-guasa.glb \
-      --compress meshopt --texture-compress webp --texture-size 2048 \
-      --simplify-ratio 0.25 --simplify-error 0.0005
+Mero revisado (10 de octubre de 2026)
 
-meshopt no necesita decodificador externo (three/drei lo incluyen), así que el
-kiosco funciona también sin conexión. Con una relación de 0.12 aparecen defectos
-en la aleta pectoral.
+La fuente correcta es Mero_textura_completa.glb. Incluye mapeado UV completo,
+color de 4096 px, rugosidad de 2048 px y relieve de 4096 px. El material usa
+color base blanco para conservar la paleta de las imágenes, sin un tinte
+adicional. Los dos costados conservan patrones diferentes.
+
+Se conservan los 1.991.266 triángulos y las posiciones y coordenadas UV de
+la fuente. La compresión Meshopt y la precisión de 16 bits de normales y
+tangentes reducen el archivo a aproximadamente 50 MiB. Las tres imágenes
+de material mantienen su resolución y sus bytes originales.
+
+La versión anterior procedía de Mero_lomo_vientre_corregidos.glb, usaba una
+mezcla de pintura lateral y colores de vértice y carecía de los mapas de
+rugosidad y relieve de la versión completa.
+
+Optimiza los modelos antes de publicarlos conservando la pintura, las UV
+y los detalles anatómicos. El cargador de three/drei usado en el proyecto
+incluye soporte Meshopt.
+
+La ruta del mero en models.ts y assets.modelUrl lleva una versión basada
+en el contenido del GLB. Se actualiza al cambiar el archivo para evitar
+que el navegador reutilice una copia antigua almacenada en caché.
