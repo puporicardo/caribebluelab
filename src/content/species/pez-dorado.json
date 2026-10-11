@@ -98,8 +98,9 @@
   },
   "assets": {
     "model": "pez-dorado.glb",
+    "modelUrl": "pez-dorado.glb?v=77c6bf1e5888",
     "format": "glb",
-    "pathsRelativeTo": "pez-dorado.json"
+    "pathsRelativeTo": "public/models"
   },
   "identification": {
     "status": "supported_by_source_model_name",
@@ -149,5 +150,40 @@
     "modelLicense": null,
     "status": "pending_confirmation"
   },
-  "updatedAt": "2026-10-10"
+  "updatedAt": "2026-10-10",
+  "optimization": {
+    "version": "77c6bf1e5888",
+    "modelBytes": 6051220,
+    "sourceBytes": 47829328,
+    "triangles": 789394,
+    "sourceTriangles": 1328640,
+    "vertices": 424632,
+    "drawCalls": 1,
+    "embeddedTextures": 1,
+    "extensionsRequired": [
+      "EXT_meshopt_compression",
+      "KHR_mesh_quantization",
+      "EXT_texture_webp"
+    ],
+    "textureEncoding": "WebP sin pérdida, píxeles pintados conservados a resolución nativa",
+    "textureDimensions": [
+      1580,
+      428
+    ],
+    "estimatedGpuBytes": 21570892,
+    "comparison": {
+      "views": 8,
+      "resolution": [
+        1600,
+        932
+      ],
+      "minSilhouetteIoU": 0.9997748689415624,
+      "minSSIM": 0.9961276650428772,
+      "maxMAE": 0.49305152893066406,
+      "maxColorP99": 4.0,
+      "maxNormalP99": 1.0042192935943604,
+      "minLocalPSNR": 42.51607958267782
+    },
+    "geometryPolicy": "Simplificación conservadora con protección de normales, UV y color por vértice; original de máxima resolución conservado."
+  }
 }

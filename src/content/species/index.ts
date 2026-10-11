@@ -15,6 +15,7 @@ interface SpeciesJson {
   translations: { en: { name: string; latin: string; description: string; ficha: [string, string][] } };
   identification?: { requiresReview?: boolean };
   conservation?: { category?: string };
+  optimization?: { version?: string };
 }
 
 /** Orden en el visor: el mero primero (el de la colección), luego de lo más amenazado a lo menos. */
@@ -43,7 +44,7 @@ export const SPECIES: Species[] = ORDER.flatMap((id) => {
   return [
     {
       id,
-      model: `${base}models/${id}.glb`,
+      model: `${base}models/${id}.glb${d.optimization?.version ? `?v=${d.optimization.version}` : ''}`,
       status: d.conservation?.category,
       review: !!d.identification?.requiresReview,
       copy: {

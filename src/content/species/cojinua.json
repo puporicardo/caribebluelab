@@ -106,8 +106,9 @@
   },
   "assets": {
     "model": "cojinua.glb",
+    "modelUrl": "cojinua.glb?v=d1b8dbd2e4ca",
     "format": "glb",
-    "pathsRelativeTo": "cojinua.json"
+    "pathsRelativeTo": "public/models"
   },
   "identification": {
     "status": "provisional",
@@ -160,5 +161,40 @@
     "modelLicense": null,
     "status": "pending_confirmation"
   },
-  "updatedAt": "2026-10-10"
+  "updatedAt": "2026-10-10",
+  "optimization": {
+    "version": "d1b8dbd2e4ca",
+    "modelBytes": 8767356,
+    "sourceBytes": 69786424,
+    "triangles": 1093670,
+    "sourceTriangles": 1922310,
+    "vertices": 604281,
+    "drawCalls": 1,
+    "embeddedTextures": 1,
+    "extensionsRequired": [
+      "EXT_meshopt_compression",
+      "KHR_mesh_quantization",
+      "EXT_texture_webp"
+    ],
+    "textureEncoding": "WebP sin pérdida, píxeles pintados conservados a resolución nativa",
+    "textureDimensions": [
+      1578,
+      608
+    ],
+    "estimatedGpuBytes": 30325960,
+    "comparison": {
+      "views": 8,
+      "resolution": [
+        1600,
+        932
+      ],
+      "minSilhouetteIoU": 0.9997672072631334,
+      "minSSIM": 0.9959579110145569,
+      "maxMAE": 0.669897198677063,
+      "maxColorP99": 5.0,
+      "maxNormalP99": 3.3026490211486816,
+      "minLocalPSNR": 35.03357549829929
+    },
+    "geometryPolicy": "Simplificación conservadora con protección de normales, UV y color por vértice; original de máxima resolución conservado."
+  }
 }

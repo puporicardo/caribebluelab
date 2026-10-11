@@ -1,30 +1,36 @@
-Modelos 3D de las especies (formato .glb, optimizados para web)
+Modelos 3D de las especies (un archivo .glb por especie)
 
-    mero-guasa.glb      Mero guasa (Epinephelus itajara)
-    pargo.glb           Pargo (Lutjanus analis)
-    tiburon-enano.glb   Tiburón enano (Etmopterus perryi)
-    pez-dorado.glb      Pez dorado (Coryphaena hippurus)
-    atun.glb            Atún (Thunnus albacares)
-    medregal.glb        Medregal (Seriola rivoliana)
-    robalo.glb          Róbalo (Centropomus undecimalis)
-    cojinua.glb         Cojinúa (Caranx crysos)
-    mojarra.glb         Mojarra (Diapterus rhombeus)
+Versiones revisadas y optimizadas el 10 de octubre de 2026.
 
-Las fichas (español + inglés, fuentes, estado UICN) están en src/content/species/<id>.json.
-El orden del visor está en src/content/species/index.ts (ORDER).
+Archivo                  Especie                  Peso       Triángulos
+atun.glb                 Atún                       1.71 MB     112,888
+cojinua.glb              Cojinúa                    8.77 MB   1,093,670
+medregal.glb             Medregal                  11.15 MB   1,465,200
+mojarra.glb              Mojarra                   10.00 MB   1,190,786
+pargo.glb                Pargo                      6.30 MB     797,766
+pez-dorado.glb           Pez dorado                 6.05 MB     789,394
+robalo.glb               Róbalo                     7.08 MB     904,678
+tiburon-enano.glb        Tiburón enano              9.31 MB   1,268,390
+mero-guasa.glb           Mero guasa                 9.75 MB   1,234,000
 
-Para sumar una especie:
-  1. Su ficha en src/content/species/<id>.json (mismo formato que las demás).
-  2. Su modelo optimizado aquí como <id>.glb.
-  3. Su id en ORDER (src/content/species/index.ts).
+Las fichas en español e inglés están en src/content/species/<id>.json.
+Conservan el contenido editorial vigente de la web e incluyen la versión y los datos del modelo.
+El mero rehecho sigue las fotos nuevas, sin manchas blancas de soportes.
+El pargo es 30 % más ancho que su versión anterior; 43 % respecto al original.
+Róbalo y tiburón enano usan las versiones con ojos pintados.
 
-Optimiza siempre el GLB antes de publicarlo. Los originales (20–85 MB, hasta ~2 M de
-triángulos) se guardan fuera de la web, en media-src/models-originales/ (no va a git).
-Se reducen a ~1–3 MB y ~250 mil triángulos sin pérdida visible con:
+Optimización: atlas reorganizado a resolución nativa, WebP sin pérdida, Meshopt,
+posiciones/UV de 16 bits y normales/color por vértice de 8 bits. Una malla,
+un material y una textura por especie. Los maestros de máxima resolución
+y los previews se conservan fuera de public.
 
-    npx @gltf-transform/cli optimize original.glb <id>.glb \
-      --compress meshopt --texture-compress webp --texture-size 2048 \
-      --simplify-ratio <250000 / triángulos del original> --simplify-error 0.0005
+Las reducciones se compararon con los maestros en ocho vistas a 1600×932.
+Se priorizó conservar la pintura y el relieve de ojos, escamas, aletas y espinas.
+Por esa razón se mantiene más geometría que en las versiones anteriores de la web.
+No se midió el tiempo de carga ni FPS en dispositivos móviles.
 
-meshopt no necesita decodificador externo (three/drei lo incluyen), así que el
-kiosco funciona también sin conexión.
+El cargador actual de three/drei incluye Meshopt y soporta WebP y KHR_mesh_quantization.
+Las URLs del visor incluyen optimization.version para renovar la caché tras cada cambio.
+
+Para sumar una especie: añadir su GLB aquí, su JSON a src/content/species
+y su id a ORDER en src/content/species/index.ts.

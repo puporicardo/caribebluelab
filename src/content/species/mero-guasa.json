@@ -90,7 +90,9 @@
   },
   "assets": {
     "model": "mero-guasa.glb",
-    "format": "glb"
+    "modelUrl": "mero-guasa.glb?v=45568c39fb50",
+    "format": "glb",
+    "pathsRelativeTo": "public/models"
   },
   "identification": {
     "status": "confirmed",
@@ -105,5 +107,61 @@
   "credits": {
     "status": "pending_confirmation"
   },
-  "updatedAt": "2026-10-10"
+  "updatedAt": "2026-10-10",
+  "optimization": {
+    "version": "45568c39fb50",
+    "modelBytes": 9747220,
+    "sourceBytes": 31573912,
+    "triangles": 1234000,
+    "sourceTriangles": 1991266,
+    "vertices": 663016,
+    "drawCalls": 1,
+    "embeddedTextures": 1,
+    "extensionsRequired": [
+      "EXT_meshopt_compression",
+      "KHR_mesh_quantization",
+      "EXT_texture_webp"
+    ],
+    "textureEncoding": "WebP sin pérdida, píxeles pintados conservados a resolución nativa",
+    "textureDimensions": [
+      1572,
+      650
+    ],
+    "estimatedGpuBytes": 33516352,
+    "comparison": {
+      "views": 8,
+      "resolution": [
+        1600,
+        932
+      ],
+      "minSilhouetteIoU": 0.9998008810141794,
+      "minSSIM": 0.9967098236083984,
+      "maxMAE": 0.5212156176567078,
+      "maxColorP99": 4.0,
+      "maxNormalP99": 2.9957821369171143,
+      "minLocalPSNR": 38.41602929794349
+    },
+    "geometryPolicy": "Simplificación conservadora con protección de normales, UV y color por vértice; original de máxima resolución conservado."
+  },
+  "appearance": {
+    "referencePhotos": [
+      "UMC08470.jpg",
+      "UMC07741.jpg",
+      "UMC08768.ARW"
+    ],
+    "paletteSource": "Fotografías de la escultura pintada; repintado completo sin usar la paleta del GLB anterior.",
+    "palette": [
+      "Crema cálido",
+      "Beige ocre",
+      "Oliva suave",
+      "Carbón pardo",
+      "Amarillo dorado y naranja en los ojos"
+    ],
+    "pattern": "Manchas orgánicas irregulares y pequeñas motas; dos costados distintos; lomo y vientre completos.",
+    "supportsRemoved": true,
+    "originalGeometryPreserved": false,
+    "hiddenSurfaces": "Color reconstruido con la paleta de las fotos; las zonas ocultas no constituyen una reproducción fotográfica exacta.",
+    "originalSilhouettePreserved": true,
+    "fullResolutionMasterPreserved": true
+  }
 }

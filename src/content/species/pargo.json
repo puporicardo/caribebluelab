@@ -98,8 +98,9 @@
   },
   "assets": {
     "model": "pargo.glb",
+    "modelUrl": "pargo.glb?v=6a2298eada11",
     "format": "glb",
-    "pathsRelativeTo": "pargo.json"
+    "pathsRelativeTo": "public/models"
   },
   "identification": {
     "status": "confirmed_from_local_label",
@@ -140,5 +141,60 @@
     "modelLicense": null,
     "status": "pending_confirmation"
   },
-  "updatedAt": "2026-10-10"
+  "updatedAt": "2026-10-10",
+  "optimization": {
+    "version": "6a2298eada11",
+    "modelBytes": 6297992,
+    "sourceBytes": 53998996,
+    "triangles": 797766,
+    "sourceTriangles": 1496464,
+    "vertices": 434702,
+    "drawCalls": 1,
+    "embeddedTextures": 1,
+    "extensionsRequired": [
+      "EXT_meshopt_compression",
+      "KHR_mesh_quantization",
+      "EXT_texture_webp"
+    ],
+    "textureEncoding": "WebP sin pérdida, píxeles pintados conservados a resolución nativa",
+    "textureDimensions": [
+      1583,
+      470
+    ],
+    "estimatedGpuBytes": 22232344,
+    "comparison": {
+      "views": 8,
+      "resolution": [
+        1600,
+        932
+      ],
+      "minSilhouetteIoU": 0.9995890986276802,
+      "minSSIM": 0.9959636330604553,
+      "maxMAE": 0.501367449760437,
+      "maxColorP99": 3.0,
+      "maxNormalP99": 3.225311279296875,
+      "minLocalPSNR": 38.28223437439188
+    },
+    "geometryPolicy": "Simplificación conservadora con protección de normales, UV y color por vértice; original de máxima resolución conservado."
+  },
+  "modelAdjustment": {
+    "axis": "Ancho transversal, de costado a costado (Z)",
+    "factor": 1.43,
+    "percent": 43,
+    "factorRelativeToPrevious": 1.3,
+    "additionalPercent": 30,
+    "lengthUnchanged": true,
+    "heightUnchanged": true,
+    "paintingUnchanged": true,
+    "beforeDimensions_m": [
+      1.1529099941253662,
+      0.47912800312042236,
+      0.15024241507053376
+    ],
+    "afterDimensions_m": [
+      1.1529099941253662,
+      0.47912800312042236,
+      0.1953151395916939
+    ]
+  }
 }

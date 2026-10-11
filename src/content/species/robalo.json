@@ -106,8 +106,9 @@
   },
   "assets": {
     "model": "robalo.glb",
+    "modelUrl": "robalo.glb?v=e3a329c19fb1",
     "format": "glb",
-    "pathsRelativeTo": "robalo.json"
+    "pathsRelativeTo": "public/models"
   },
   "identification": {
     "status": "provisional",
@@ -161,5 +162,40 @@
     "modelLicense": null,
     "status": "pending_confirmation"
   },
-  "updatedAt": "2026-10-10"
+  "updatedAt": "2026-10-10",
+  "optimization": {
+    "version": "e3a329c19fb1",
+    "modelBytes": 7075256,
+    "sourceBytes": 38396464,
+    "triangles": 904678,
+    "sourceTriangles": 1048906,
+    "vertices": 487001,
+    "drawCalls": 1,
+    "embeddedTextures": 1,
+    "extensionsRequired": [
+      "EXT_meshopt_compression",
+      "KHR_mesh_quantization",
+      "EXT_texture_webp"
+    ],
+    "textureEncoding": "WebP sin pérdida, píxeles pintados conservados a resolución nativa",
+    "textureDimensions": [
+      1582,
+      473
+    ],
+    "estimatedGpuBytes": 24583904,
+    "comparison": {
+      "views": 8,
+      "resolution": [
+        1600,
+        932
+      ],
+      "minSilhouetteIoU": 0.9998165978908757,
+      "minSSIM": 0.9978615641593933,
+      "maxMAE": 0.21390646696090698,
+      "maxColorP99": 2.0,
+      "maxNormalP99": 2.4610607624053955,
+      "minLocalPSNR": 39.785134517746435
+    },
+    "geometryPolicy": "Simplificación conservadora con protección de normales, UV y color por vértice; original de máxima resolución conservado."
+  }
 }

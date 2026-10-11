@@ -98,8 +98,9 @@
   },
   "assets": {
     "model": "tiburon-enano.glb",
+    "modelUrl": "tiburon-enano.glb?v=6a3ae27c3cc0",
     "format": "glb",
-    "pathsRelativeTo": "tiburon-enano.json"
+    "pathsRelativeTo": "public/models"
   },
   "identification": {
     "status": "confirmed_from_local_label",
@@ -149,5 +150,40 @@
     "modelLicense": null,
     "status": "pending_confirmation"
   },
-  "updatedAt": "2026-10-10"
+  "updatedAt": "2026-10-10",
+  "optimization": {
+    "version": "6a3ae27c3cc0",
+    "modelBytes": 9311128,
+    "sourceBytes": 69624736,
+    "triangles": 1268390,
+    "sourceTriangles": 1933131,
+    "vertices": 696075,
+    "drawCalls": 1,
+    "embeddedTextures": 1,
+    "extensionsRequired": [
+      "EXT_meshopt_compression",
+      "KHR_mesh_quantization",
+      "EXT_texture_webp"
+    ],
+    "textureEncoding": "WebP sin pérdida, píxeles pintados conservados a resolución nativa",
+    "textureDimensions": [
+      1567,
+      372
+    ],
+    "estimatedGpuBytes": 32249412,
+    "comparison": {
+      "views": 8,
+      "resolution": [
+        1600,
+        932
+      ],
+      "minSilhouetteIoU": 0.9997774617089006,
+      "minSSIM": 0.9958734512329102,
+      "maxMAE": 0.4041888415813446,
+      "maxColorP99": 3.0,
+      "maxNormalP99": 1.7169016599655151,
+      "minLocalPSNR": 44.489599349499436
+    },
+    "geometryPolicy": "Simplificación conservadora con protección de normales, UV y color por vértice; original de máxima resolución conservado."
+  }
 }

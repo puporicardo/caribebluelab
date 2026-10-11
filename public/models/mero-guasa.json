@@ -4,172 +4,164 @@
   "language": "es",
   "name": "Mero guasa",
   "latin": "Epinephelus itajara",
-  "description": "Gran mero de cuerpo robusto, asociado a arrecifes y hábitats costeros.",
+  "description": "El mero más grande del Atlántico: supera los 2 m y vive más de 37 años. Juveniles en manglares; adultos en arrecifes y naufragios.",
   "ficha": [
     [
-      "Familia",
-      "Serranidae"
-    ],
-    [
       "Estado",
-      "Vulnerable (VU) · UICN, según Smithsonian STRI"
+      "Vulnerable (VU) · Lista Roja UICN · En peligro crítico (CR) en el Libro Rojo de Colombia"
     ],
     [
       "Distribución",
-      "Atlántico tropical y subtropical, incluido el Caribe"
+      "Atlántico occidental, de Florida al sur de Brasil · incluido el *Caribe colombiano*"
     ],
     [
       "Hábitat",
-      "Arrecifes, fondos costeros, manglares y estuarios"
-    ],
-    [
-      "Profundidad",
-      "1–100 m, según Smithsonian STRI"
+      "Juveniles en manglares y estuarios; adultos en arrecifes, fondos rocosos y naufragios, hasta unos 50 m"
     ],
     [
       "Tamaño",
-      "Hasta 2,5 m; aproximadamente 360 kg según NOAA"
+      "Hasta 2,5 m y más de 400 kg · el mero más grande del Atlántico"
     ],
     [
       "Vida",
-      "Más de 30 años"
+      "Más de 37 años · madura entre los 5 y 7 años"
     ],
     [
       "Dieta",
-      "Crustáceos, peces y cefalópodos"
-    ],
-    [
-      "Rasgos",
-      "Cuerpo robusto; boca grande y cola redondeada"
+      "Crustáceos (sobre todo cangrejos y langostas), peces y pulpos"
     ],
     [
       "Amenazas",
-      "Sobrepesca y pérdida de hábitat"
+      "Pesca en sus agregaciones reproductivas y pérdida de manglares"
     ],
     [
       "Autoría",
-      "Por confirmar"
+      "[Por confirmar] · Unimagdalena"
     ],
     [
       "Formato",
-      "Modelo 3D interactivo · público general"
+      "Modelo 3D · 3 min · Público general"
     ]
   ],
   "translations": {
     "en": {
       "name": "Goliath grouper",
       "latin": "Epinephelus itajara",
-      "description": "A large, robust grouper associated with reefs and coastal habitats.",
+      "description": "The largest grouper in the Atlantic: it grows beyond 2 m and lives more than 37 years. Juveniles in mangroves; adults on reefs and wrecks.",
       "ficha": [
         [
-          "Family",
-          "Serranidae"
-        ],
-        [
           "Status",
-          "Vulnerable (VU) · IUCN, as reported by Smithsonian STRI"
+          "Vulnerable (VU) · IUCN Red List · Critically Endangered (CR) in the Colombian Red Book"
         ],
         [
-          "Distribution",
-          "Tropical and subtropical Atlantic, including the Caribbean"
+          "Range",
+          "Western Atlantic, from Florida to southern Brazil · including the *Colombian Caribbean*"
         ],
         [
           "Habitat",
-          "Reefs, coastal bottoms, mangroves and estuaries"
-        ],
-        [
-          "Depth",
-          "1–100 m, according to Smithsonian STRI"
+          "Juveniles in mangroves and estuaries; adults on reefs, rocky bottoms and wrecks, down to about 50 m"
         ],
         [
           "Size",
-          "Up to 2.5 m; approximately 360 kg according to NOAA"
+          "Up to 2.5 m and over 400 kg · the largest grouper in the Atlantic"
         ],
         [
           "Lifespan",
-          "More than 30 years"
+          "Over 37 years · matures at 5 to 7 years"
         ],
         [
           "Diet",
-          "Crustaceans, fish and cephalopods"
-        ],
-        [
-          "Features",
-          "Robust body; large mouth and rounded tail"
+          "Crustaceans (mostly crabs and lobsters), fish and octopus"
         ],
         [
           "Threats",
-          "Overfishing and habitat loss"
+          "Fishing at spawning aggregations and mangrove loss"
         ],
         [
-          "Authorship",
-          "To be confirmed"
+          "Authors",
+          "[To be confirmed] · Unimagdalena"
         ],
         [
           "Format",
-          "Interactive 3D model · general audience"
+          "3D model · 3 min · General public"
         ]
       ]
     }
   },
   "assets": {
     "model": "mero-guasa.glb",
+    "modelUrl": "mero-guasa.glb?v=45568c39fb50",
     "format": "glb",
-    "pathsRelativeTo": "mero-guasa.json",
-    "modelUrl": "mero-guasa.glb?v=a1a062209172"
+    "pathsRelativeTo": "public/models"
   },
   "identification": {
-    "status": "supported_by_project_content",
-    "basis": "La web identifica esta pieza como Mero guasa, Epinephelus itajara. El nombre científico se mantiene conforme al contenido existente del proyecto; no se dispone de una etiqueta científica legible de la escultura.",
-    "requiresReview": true
+    "status": "confirmed",
+    "requiresReview": false
   },
   "conservation": {
     "system": "IUCN Red List",
     "category": "VU",
-    "scope": "global",
-    "publicationYear": null,
-    "checkedAt": "2026-10-10",
-    "note": "Categoría reportada por Smithsonian STRI; no equivale a una evaluación de la población colombiana."
+    "scope": "global"
   },
-  "sources": [
-    {
-      "id": "stri",
-      "title": "Smithsonian STRI · Epinephelus itajara",
-      "url": "https://biogeodb.stri.si.edu/caribbean/es/thefishes/species/4760",
-      "accessedAt": "2026-10-10",
-      "supports": [
-        "latin",
-        "description",
-        "ficha.Estado",
-        "ficha.Distribución",
-        "ficha.Hábitat",
-        "ficha.Profundidad",
-        "ficha.Tamaño",
-        "ficha.Dieta",
-        "ficha.Rasgos"
-      ]
-    },
-    {
-      "id": "noaa",
-      "title": "NOAA Fisheries · Atlantic Goliath Grouper",
-      "url": "https://www.fisheries.noaa.gov/species/atlantic-goliath-grouper",
-      "accessedAt": "2026-10-10",
-      "supports": [
-        "latin",
-        "ficha.Familia",
-        "ficha.Distribución",
-        "ficha.Hábitat",
-        "ficha.Tamaño",
-        "ficha.Vida",
-        "ficha.Amenazas"
-      ]
-    }
-  ],
+  "sources": [],
   "credits": {
-    "modelAuthor": null,
-    "originalPaintingAuthor": null,
-    "modelLicense": null,
     "status": "pending_confirmation"
   },
-  "updatedAt": "2026-10-10"
+  "updatedAt": "2026-10-10",
+  "optimization": {
+    "version": "45568c39fb50",
+    "modelBytes": 9747220,
+    "sourceBytes": 31573912,
+    "triangles": 1234000,
+    "sourceTriangles": 1991266,
+    "vertices": 663016,
+    "drawCalls": 1,
+    "embeddedTextures": 1,
+    "extensionsRequired": [
+      "EXT_meshopt_compression",
+      "KHR_mesh_quantization",
+      "EXT_texture_webp"
+    ],
+    "textureEncoding": "WebP sin pérdida, píxeles pintados conservados a resolución nativa",
+    "textureDimensions": [
+      1572,
+      650
+    ],
+    "estimatedGpuBytes": 33516352,
+    "comparison": {
+      "views": 8,
+      "resolution": [
+        1600,
+        932
+      ],
+      "minSilhouetteIoU": 0.9998008810141794,
+      "minSSIM": 0.9967098236083984,
+      "maxMAE": 0.5212156176567078,
+      "maxColorP99": 4.0,
+      "maxNormalP99": 2.9957821369171143,
+      "minLocalPSNR": 38.41602929794349
+    },
+    "geometryPolicy": "Simplificación conservadora con protección de normales, UV y color por vértice; original de máxima resolución conservado."
+  },
+  "appearance": {
+    "referencePhotos": [
+      "UMC08470.jpg",
+      "UMC07741.jpg",
+      "UMC08768.ARW"
+    ],
+    "paletteSource": "Fotografías de la escultura pintada; repintado completo sin usar la paleta del GLB anterior.",
+    "palette": [
+      "Crema cálido",
+      "Beige ocre",
+      "Oliva suave",
+      "Carbón pardo",
+      "Amarillo dorado y naranja en los ojos"
+    ],
+    "pattern": "Manchas orgánicas irregulares y pequeñas motas; dos costados distintos; lomo y vientre completos.",
+    "supportsRemoved": true,
+    "originalGeometryPreserved": false,
+    "hiddenSurfaces": "Color reconstruido con la paleta de las fotos; las zonas ocultas no constituyen una reproducción fotográfica exacta.",
+    "originalSilhouettePreserved": true,
+    "fullResolutionMasterPreserved": true
+  }
 }

@@ -106,8 +106,9 @@
   },
   "assets": {
     "model": "mojarra.glb",
+    "modelUrl": "mojarra.glb?v=a01baa9b8803",
     "format": "glb",
-    "pathsRelativeTo": "mojarra.json"
+    "pathsRelativeTo": "public/models"
   },
   "identification": {
     "status": "provisional",
@@ -160,5 +161,40 @@
     "modelLicense": null,
     "status": "pending_confirmation"
   },
-  "updatedAt": "2026-10-10"
+  "updatedAt": "2026-10-10",
+  "optimization": {
+    "version": "a01baa9b8803",
+    "modelBytes": 9995012,
+    "sourceBytes": 69513808,
+    "triangles": 1190786,
+    "sourceTriangles": 1888184,
+    "vertices": 677292,
+    "drawCalls": 1,
+    "embeddedTextures": 1,
+    "extensionsRequired": [
+      "EXT_meshopt_compression",
+      "KHR_mesh_quantization",
+      "EXT_texture_webp"
+    ],
+    "textureEncoding": "WebP sin pérdida, píxeles pintados conservados a resolución nativa",
+    "textureDimensions": [
+      1582,
+      754
+    ],
+    "estimatedGpuBytes": 34194816,
+    "comparison": {
+      "views": 8,
+      "resolution": [
+        1600,
+        932
+      ],
+      "minSilhouetteIoU": 0.9995650583309622,
+      "minSSIM": 0.9965931177139282,
+      "maxMAE": 0.6027225852012634,
+      "maxColorP99": 4.0,
+      "maxNormalP99": 4.240325450897217,
+      "minLocalPSNR": 36.686183128061806
+    },
+    "geometryPolicy": "Simplificación conservadora con protección de normales, UV y color por vértice; original de máxima resolución conservado."
+  }
 }
