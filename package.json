@@ -1,7 +1,7 @@
 {
   "name": "caribe-blue-lab",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.12",
   "description": "Micrositio Caribe Blue Lab (Unimagdalena · InnovAzul): web por zonas con scroll continuo y modo kiosco para el stand del Blue Zone Forum, Cádiz 2026.",
   "type": "module",
   "scripts": {
