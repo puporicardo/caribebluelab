@@ -1,12 +1,87 @@
-import { useContent } from '../../content';
+import { useContent, type Content } from '../../content';
 import { LINKS } from '../../content/links';
-import { ArrowRight, RIVER_SERIES } from '../../shared/components/Icons';
+import { ArrowRight } from '../../shared/components/Icons';
 import { Rich, plain } from '../../shared/components/Rich';
 import { ExternalLink } from '../parts/ExternalLink';
 import { ZoneHead } from '../parts/ZoneHead';
+import { useGranFaro } from '../useGranFaro';
 
 const ACCENT_INK = 'var(--c-accent-ink)';
 const NUMERALS = ['I', 'II', 'III'];
+const SERIES_W = 200;
+const SERIES_H = 40;
+/** Mientras carga o si la fuente falla: línea punteada plana. */
+const SERIES_EMPTY = `M0 ${SERIES_H / 2} L${SERIES_W} ${SERIES_H / 2}`;
+
+/** Trazo de la mini-serie en el viewBox 200×40; los huecos (null) se saltan. */
+function seriesPath(values: (number | null)[]): string | null {
+  const pts = values.flatMap((v, i) => (typeof v === 'number' ? [[i, v] as const] : []));
+  if (pts.length < 2) return null;
+  const ys = pts.map(([, v]) => v);
+  const min = Math.min(...ys);
+  const span = Math.max(...ys) - min || 1;
+  const pad = 4;
+  const x = (i: number) => (i / (values.length - 1)) * SERIES_W;
+  const y = (v: number) => pad + (1 - (v - min) / span) * (SERIES_H - pad * 2);
+  return pts.map(([i, v], k) => `${k ? 'L' : 'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
+}
+
+/** Fig. 5.1: los cuatro indicadores de Copernicus que muestra Gran Faro en su panel de monitoreo. */
+function FaroTable({ t, mar, lluvia }: { t: Content } & ReturnType<typeof useGranFaro>) {
+  const faro = t.web.faro;
+  const fmt = (n: number | null | undefined, unit: string, digits = 1) =>
+    typeof n === 'number'
+      ? `${new Intl.NumberFormat(locale(t), { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(n)} ${unit}`
+      : null;
+  const dias = mar.data?.disponible ? mar.data.dias : [];
+  const hoy = dias[0];
+  const rain = lluvia.data?.disponible ? lluvia.data : null;
+  const rumbo = typeof hoy?.corriente_rumbo_grados === 'number' ? faro.bearings[Math.round(hoy.corriente_rumbo_grados / 45) % 8] : null;
+  const corriente = fmt(hoy?.corriente_ms, 'm/s', 2);
+
+  const rows: { value: string | null; series: (number | null)[]; loading: boolean }[] = [
+    { value: fmt(hoy?.temperatura_c, '°C'), series: dias.map((d) => d.temperatura_c), loading: mar.loading },
+    { value: fmt(hoy?.ola_m, 'm'), series: dias.map((d) => d.ola_m), loading: mar.loading },
+    { value: corriente && rumbo ? `${corriente} · ${rumbo}` : corriente, series: dias.map((d) => d.corriente_ms), loading: mar.loading },
+    { value: fmt(rain?.ultimos_30_dias_mm, 'mm', 0), series: rain?.meses.map((m) => m.total_mm) ?? [], loading: lluvia.loading },
+  ];
+
+  return (
+    <div className="faro-table" aria-busy={mar.loading || lluvia.loading}>
+      <div className="faro-grid stagger">
+        <div className="faro-row faro-row--head">
+          {faro.cols.map((c) => (
+            <span key={c}>{c}</span>
+          ))}
+        </div>
+        {faro.indicators.map((ind, i) => {
+          const row = rows[i];
+          const path = seriesPath(row.series);
+          return (
+            <div key={ind.name} className="faro-row">
+              <span>
+                <span className="disp faro-river">{ind.name}</span>
+                <span className="faro-note">{ind.note}</span>
+              </span>
+              <span className="faro-live">{row.value ?? (row.loading ? faro.loading : faro.noData)}</span>
+              <svg viewBox={`0 0 ${SERIES_W} ${SERIES_H}`} aria-hidden="true" className="faro-series draw-wipe">
+                <path
+                  d={path ?? SERIES_EMPTY}
+                  fill="none"
+                  stroke="#0B1B33"
+                  strokeWidth={path ? 1.6 : 1.2}
+                  strokeDasharray={path ? undefined : '3 5'}
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 /** Zona 5 · Ascenso (Monitorear y actuar): Gran Faro, Caribe Blue Challenge y cierre con IncubAzul. */
 export function AscensoPage() {
@@ -14,6 +89,12 @@ export function AscensoPage() {
   const faro = t.web.faro;
   const challenge = t.web.challenge;
   const close = t.web.close;
+  const { mar, lluvia } = useGranFaro();
+  const updated = mar.data?.actualizado_en
+    ? new Intl.DateTimeFormat(locale(t), { dateStyle: 'medium', timeStyle: 'short' }).format(
+        new Date(mar.data.actualizado_en),
+      )
+    : null;
 
   return (
     <section id="ascenso" className="zone zone--ascent lt" aria-labelledby="titulo-zona-5">
@@ -38,27 +119,10 @@ export function AscensoPage() {
             <p className="eyebrow faro-panel" style={{ color: ACCENT_INK }}>
               {faro.panel}
             </p>
-            <div className="faro-table">
-              <div className="faro-grid stagger">
-                <div className="faro-row faro-row--head">
-                  {faro.cols.map((c) => (
-                    <span key={c}>{c}</span>
-                  ))}
-                </div>
-                {faro.rivers.map((river, i) => (
-                  <div key={river} className="faro-row">
-                    <span className="disp faro-river">{river}</span>
-                    <span className="faro-live">{faro.live}</span>
-                    <svg viewBox="0 0 200 40" aria-hidden="true" className="faro-series draw-wipe">
-                      <path d={RIVER_SERIES[i]} fill="none" stroke="#0B1B33" strokeWidth="1.2" strokeDasharray="3 5" />
-                    </svg>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <FaroTable t={t} mar={mar} lluvia={lluvia} />
             <p className="figcap" style={{ color: '#3A4A5E' }}>
               <b style={{ color: ACCENT_INK }}>{t.ui.fig} 5.1</b>
-              {faro.fig}
+              {faro.fig(updated)}
             </p>
           </figure>
         </article>
@@ -104,3 +168,5 @@ export function AscensoPage() {
     </section>
   );
 }
+
+const locale = (t: Content) => (t.lang === 'es' ? 'es-CO' : 'en-US');

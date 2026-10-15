@@ -6,6 +6,14 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/api/granfaro/mar",
+      "destination": "https://gran-faro-cmee.vercel.app/api/v1/copernicus/mar/"
+    },
+    {
+      "source": "/api/granfaro/lluvia",
+      "destination": "https://gran-faro-cmee.vercel.app/api/v1/copernicus/lluvia/"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

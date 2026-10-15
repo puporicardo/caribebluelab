@@ -26,6 +26,11 @@ export interface SpeciesCopy {
   ficha: FichaRow[];
 }
 
+export interface FaroIndicator {
+  name: string;
+  note: string;
+}
+
 export interface Content {
   lang: Lang;
   /** Etiqueta del idioma para el selector. */
@@ -138,9 +143,13 @@ export interface Content {
       link: string;
       panel: string;
       cols: [string, string, string];
-      rivers: [string, string, string];
-      live: string;
-      fig: string;
+      /** Temperatura del mar, oleaje, corriente y lluvia (en ese orden), desde la API de Gran Faro. */
+      indicators: [FaroIndicator, FaroIndicator, FaroIndicator, FaroIndicator];
+      /** Puntos cardinales hacia donde va la corriente: N, NE, E, SE, S, SO, O, NO. */
+      bearings: [string, string, string, string, string, string, string, string];
+      loading: string;
+      noData: string;
+      fig: (updated: string | null) => string;
     };
     challenge: {
       title: Rich;

@@ -1300,7 +1300,8 @@
 
 .faro-row {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1.3fr;
+  grid-template-columns: 1.5fr 1fr 1.3fr;
+  gap: 16px;
   align-items: center;
   padding: 20px 0;
   border-bottom: 1px solid rgba(11, 27, 51, 0.2);
@@ -1316,7 +1317,16 @@
 }
 
 .faro-river {
-  font-size: 26px;
+  display: block;
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+.faro-note {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--c-slate);
 }
 
 .faro-live {

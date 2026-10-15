@@ -56,10 +56,3 @@ export function PauseIcon({ color = 'currentColor', width = 18, height = 18, cla
 
 /** Pez esquemático (siluetas difusas del fondo). */
 export const FISH_PATH = 'M14 12 C26 0 46 0 56 12 C46 24 26 24 14 12 Z M16 12 L2 2 L5 12 L2 22 Z';
-
-/** Serie punteada de los laboratorios de río (Gran Faro). */
-export const RIVER_SERIES = [
-  'M0 30 C30 24 50 34 80 20 C110 8 130 24 160 14 C180 8 190 12 200 10',
-  'M0 18 C30 26 50 12 80 22 C110 30 130 10 160 18 C180 24 190 16 200 20',
-  'M0 24 C30 14 50 28 80 16 C110 6 130 30 160 22 C180 16 190 26 200 18',
-] as const;
