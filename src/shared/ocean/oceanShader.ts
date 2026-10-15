@@ -69,7 +69,7 @@ void main(){
     // Sobre video real: partículas, luz del puntero y óptica del agua (rayos y red de cáusticas
     // que se mueve sobre la escena). Nada de esto se dibuja con la cámara sobre el agua.
     // Pocas motas redondas (el polvo y la arena los dibuja MarineSnow); en lo profundo quedan como bioluminiscencia.
-    float pa = (p1 * 0.22 + p2 * mix(0.12, 0.55, deep) + p3 * mix(0.03, 0.2, deep)) * mix(1.0, pulse * 1.8, deep) * (1.0 - uAscent * 0.85) * uUnder;
+    float pa = (p1 * 0.1 + p2 * mix(0.06, 0.3, deep) + p3 * mix(0.015, 0.1, deep)) * mix(1.0, pulse * 1.8, deep) * (1.0 - uAscent * 0.85) * uUnder;
     float shine = 1.0 - smoothstep(0.0, 0.7, d);
     float ra = rays * (0.22 * shine + uAscent * 0.18) * uUnder;
     float cn = caustic(st * 1.15 + vec2(t * 0.015, t * 0.03), t * 0.42 + 7.0);

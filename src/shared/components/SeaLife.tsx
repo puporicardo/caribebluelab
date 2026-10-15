@@ -15,25 +15,6 @@ interface SeaLifeProps {
   drive?: 'scroll' | 'film';
 }
 
-const BUBBLES = Array.from({ length: 8 }, (_, i) => `${import.meta.env.BASE_URL}sea/bubble-${i + 1}.webp`);
-
-interface Bubble {
-  el: HTMLImageElement;
-  /** vw / vh */
-  x: number;
-  y: number;
-  size: number;
-  vy: number;
-  ph: number;
-  freq: number;
-  amp: number;
-  /** Deformación al subir (las grandes no son esferas perfectas). */
-  wob: number;
-  rot: number;
-  age: number;
-  d: number;
-}
-
 interface Creature {
   sp: Species;
   el: HTMLDivElement;
@@ -89,13 +70,9 @@ export function SeaLife({ film, pointer, drive = 'scroll' }: SeaLifeProps) {
     const narrow = () => window.innerWidth < 760;
 
     const live: Creature[] = [];
-    const bubbles: Bubble[] = [];
-    const streams: { x: number; until: number; next: number; size: [number, number]; d: number }[] = [];
     let habitat: Habitat | null = null;
     let nextAt = 0;
     let nextFront = performance.now() + 40000;
-    let nextStream = 0;
-    let lastT = film.current;
     let lastFilm = film.current;
     let scrollAcc = 0;
     let lastY = window.scrollY;
@@ -187,59 +164,6 @@ export function SeaLife({ film, pointer, drive = 'scroll' }: SeaLifeProps) {
       }
     };
 
-    /**
-     * Burbuja real (foto con alfa). Física simple: las grandes suben más rápido y se deforman
-     * al subir, las pequeñas zigzaguean; todas crecen un poco al bajar la presión.
-     * d: distancia a cámara (desenfoque y opacidad); front: pasa por delante del texto.
-     */
-    const bubble = (x: number, y: number, size: number, d: number, front = false) => {
-      if (bubbles.length > (narrow() ? 10 : 18)) return;
-      const el = document.createElement('img');
-      el.className = 'sl-bubble';
-      el.src = BUBBLES[Math.floor(Math.random() * BUBBLES.length)];
-      el.alt = '';
-      el.decoding = 'async';
-      el.draggable = false;
-      el.style.width = `${size}px`;
-      const blur = front ? rand(2.5, 5) : d * 2.2;
-      el.style.filter = blur > 0.25 ? `blur(${blur.toFixed(2)}px)` : '';
-      el.style.opacity = (front ? 0.55 : lerp(0.95, 0.4, d)).toFixed(2);
-      (front ? fore : host).appendChild(el);
-      bubbles.push({
-        el,
-        x,
-        y,
-        size,
-        // vh/s: velocidad terminal aproximada, ~√tamaño
-        vy: (2.6 + Math.sqrt(size) * 1.25) * lerp(1, 0.6, d) * rand(0.85, 1.15),
-        ph: Math.random() * Math.PI * 2,
-        freq: size < 14 ? rand(2.4, 3.6) : rand(1.2, 1.9),
-        amp: size < 14 ? rand(0.25, 0.6) : rand(0.1, 0.25),
-        wob: size >= 16 ? rand(0.06, 0.12) : 0.02,
-        rot: rand(-25, 25),
-        age: 0,
-        d,
-      });
-    };
-
-    /** Un chorro: burbujas que salen del mismo punto durante unos segundos (gas del fondo, un buzo abajo). */
-    const stream = (now: number, deep: boolean) => {
-      streams.push({
-        x: rand(6, 94),
-        until: now + rand(1400, 3200),
-        next: now,
-        size: deep ? [3, 9] : [4, 22],
-        d: Math.pow(Math.random(), 1.4) * 0.85,
-      });
-    };
-
-    /** Al zambullirse: una nube de burbujas que sube y se dispersa. */
-    const plunge = () => {
-      for (let k = 0; k < (narrow() ? 8 : 14); k++) {
-        bubble(rand(10, 90), rand(80, 125), rand(5, 26), Math.random() * 0.7, k < 1 && !coarse);
-      }
-    };
-
     const remove = (i: number) => {
       live[i].el.remove();
       live.splice(i, 1);
@@ -270,33 +194,8 @@ export function SeaLife({ film, pointer, drive = 'scroll' }: SeaLifeProps) {
       }
       if (!coarse && habitat && !habitat.silhouette && habitat.light > 0.8 && now > nextFront) {
         spawn(habitat, { front: true });
-        nextFront = now + rand(50000, 90000);
+        nextFront = now + rand(110000, 180000);
       }
-
-      // Burbujas: zambullida, chorros en la parte con luz, pocas en lo profundo y muchas en el ascenso.
-      if (lastT < 0.4 && t >= 0.4 && t < 0.8) plunge();
-      lastT = t;
-      const shallow = t > 0.42 && t < 3.4;
-      const rising = t > 5.05 && t < 5.5;
-      const deep = t >= 3.4 && t < 5.05;
-      if ((shallow || rising || deep) && now > nextStream) {
-        stream(now, deep);
-        nextStream = now + (rising ? rand(3500, 6000) : deep ? rand(14000, 22000) : rand(8000, 14000)) * (narrow() ? 1.5 : 1);
-      }
-      for (let k = streams.length - 1; k >= 0; k--) {
-        const st = streams[k];
-        if (now > st.until) {
-          streams.splice(k, 1);
-          continue;
-        }
-        if (now >= st.next) {
-          const sz = rand(st.size[0], st.size[1]) * (Math.random() < 0.12 ? 1.6 : 1);
-          bubble(st.x + rand(-0.6, 0.6), 106, sz, st.d);
-          st.next = now + rand(160, 460);
-        }
-      }
-      // Ascenso: alguna burbuja grande y desenfocada pasa muy cerca del lente.
-      if (rising && !coarse && Math.random() < dt * 0.06) bubble(rand(0, 95), 112, rand(40, 70), 0, true);
 
       // El scroll mueve la cámara: los animales cercanos se desplazan más (paralaje).
       const sy = window.scrollY;
@@ -315,7 +214,6 @@ export function SeaLife({ film, pointer, drive = 'scroll' }: SeaLifeProps) {
       // Salto (menú, enlace): la película corta, la fauna también. Y nada queda en el cielo.
       if (Math.abs(dT) > 0.6 || (t > 5.6 && Math.abs(dT) >= 0.2)) {
         while (live.length) remove(live.length - 1);
-        bubbles.splice(0).forEach((b) => b.el.remove());
       }
       // Kiosco: la cámara baja al avanzar la película (≈ 90 vh por tramo).
       if (drive === 'film') dy = t < 5 && Math.abs(dT) < 0.2 ? Math.max(-4, Math.min(4, dT * 90)) : 0;
@@ -379,30 +277,12 @@ export function SeaLife({ film, pointer, drive = 'scroll' }: SeaLifeProps) {
         if (gone) remove(i);
       }
 
-      for (let i = bubbles.length - 1; i >= 0; i--) {
-        const b = bubbles[i];
-        b.age += dt;
-        // Aceleran un poco al arrancar y la cámara que baja las hace subir más rápido.
-        const acc = Math.min(1, 0.45 + b.age * 0.9);
-        b.y -= b.vy * acc * dt + dy * lerp(0.75, 0.3, b.d) - lift * lerp(1, 0.75, b.d) - sink;
-        b.ph += dt * b.freq;
-        const sway = Math.sin(b.ph) * b.amp + Math.sin(b.ph * 0.37) * b.amp * 0.6;
-        const grow = 1 + Math.min(0.18, b.age * 0.03);
-        const sx = grow * (1 + Math.sin(b.ph * 1.7) * b.wob);
-        const sy = grow * (1 - Math.sin(b.ph * 1.7) * b.wob * 0.9);
-        b.el.style.transform = `translate3d(${(b.x + sway).toFixed(2)}vw, ${b.y.toFixed(2)}vh, 0) rotate(${b.rot}deg) scale(${sx.toFixed(3)}, ${sy.toFixed(3)})`;
-        if (b.y < -14 || b.y > 140 || t < 0.3 || t > 5.8) {
-          b.el.remove();
-          bubbles.splice(i, 1);
-        }
-      }
     };
 
     raf = requestAnimationFrame(tick);
     return () => {
       cancelAnimationFrame(raf);
       live.forEach((c) => c.el.remove());
-      bubbles.forEach((b) => b.el.remove());
     };
   }, [film, pointer, drive]);
 

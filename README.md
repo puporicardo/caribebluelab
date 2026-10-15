@@ -4,7 +4,7 @@ Micrositio de la Universidad del Magdalena para el ecosistema InnovAzul / Perla 
 (stand en el Blue Zone Forum, Cádiz, 27–30 oct 2026). Dos experiencias sobre el mismo contenido:
 
 - **Web**: un recorrido continuo por seis profundidades, con scroll. Cada zona es una página de React con su propia URL.
-- **Kiosco**: la TV del stand recorre sola el mismo descenso de la web (≈2,5 min en bucle), en español o inglés.
+- **Kiosco**: la TV del stand recorre sola el mismo descenso de la web (60 s en bucle, sin pausas), en español o inglés.
 
 React 19 · TypeScript · Vite · React Router · React Three Fiber (visor 3D) · Vercel Analytics + Speed Insights.
 
@@ -55,12 +55,12 @@ El idioma se elige en la Superficie, y también en la cabecera y el pie. Al camb
 ### Kiosco
 
 - `/kiosco/es` (español) y `/kiosco/en` (inglés). `/kiosco` redirige a español.
-- Es la misma película, fauna y luz de la web, automática: baja sola, se detiene en cada profundidad con poco texto (eyebrow, titular con su coreografía y una franja gigante), muestra una especie 3D distinta en cada vuelta al pasar por el arrecife, sube hasta el atardecer, cierra con el logo y vuelve a empezar (~2,5 min).
+- Es la misma película, fauna y luz de la web, automática: la película corre de principio a fin a velocidad real, sin detenerse; al pasar por cada profundidad muestra poco texto (eyebrow, titular con su coreografía y una franja gigante), muestra una especie 3D distinta en cada vuelta al pasar por el arrecife, sube hasta el atardecer, cierra con el logo y vuelve a empezar (60 s: seis tramos de 10 s).
 - **Un clic o toque en cualquier parte pone la pantalla completa** y pide mantener la pantalla encendida. No hay avisos ni instrucciones en pantalla. El cursor se esconde solo.
 - Funciona en TV horizontal y vertical (usa la película 9:16 en pantallas verticales).
 - Parámetros de revisión: `?escena=0–6` (parada inicial) y `?velocidad=x2|x6|pausa`.
 - Teclado (solo montaje, no se anuncia): `F` pantalla completa · `←` `→` parada anterior/siguiente · `espacio` pausa.
-- Las pausas y la duración de cada viaje se ajustan en `src/kiosk/timeline.ts`.
+- La duración de cada tramo (`LEG_SECONDS`, igual a la de los clips) y cuánto se queda cada texto se ajustan en `src/kiosk/timeline.ts`.
 
 ## Estructura
 
@@ -74,7 +74,7 @@ src/
     parts/                 Header, DepthRail, Stage, Footer, ZoneHead…
   kiosk/
     KioskApp.tsx           recorrido automático en bucle: película, fauna, textos por nivel, especie 3D por vuelta
-    timeline.ts            paradas, pausas y viajes (el reloj del kiosco)
+    timeline.ts            paradas y presencia de textos (el reloj del kiosco)
   shared/
     ocean/                 océano WebGL (shader) compartido: partículas, rayos y cáusticas
     config/                film.ts (tramos y mapa scroll → película), sealife.ts (fauna por capa), media.ts (kiosco)

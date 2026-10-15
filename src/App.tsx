@@ -17,7 +17,7 @@ const KioskApp = lazy(() => import('./kiosk/KioskApp'));
  *    /ascenso          Ascenso                   /en/ascenso
  *    También funcionan los anchors: /#arrecife, /en#ascenso, /#como-recorrer, /ascenso#incubazul
  *
- *  Kiosco (TV del stand, bucle de 6 min):
+ *  Kiosco (TV del stand, bucle de 60 s sin pausas):
  *    /kiosco/es · /kiosco/en   (+ ?escena=0–5 &velocidad=x6|pausa &subtitulos=0)
  */
 export function App() {

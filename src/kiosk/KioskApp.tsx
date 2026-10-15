@@ -23,7 +23,7 @@ const REEF = STOPS.findIndex((s) => s.zone === 2);
 
 /**
  * Kiosco del stand (TV): el mismo descenso de la web, automático y en bucle.
- * La película la mueve un reloj, y TODO lo demás (titulares, franjas, logo, mero 3D) se calcula
+ * La película la mueve un reloj, y TODO lo demás (titulares, logo, mero 3D) se calcula
  * en cada cuadro a partir de la posición de la película, como en la web con el scroll: los textos
  * empiezan a entrar mientras la cámara llega a cada capa y salen arrastrados cuando reanuda.
  * Un clic o toque en cualquier parte pone la pantalla completa (sin avisos en pantalla) y
@@ -45,11 +45,13 @@ export default function KioskApp({ lang }: { lang: Lang }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const fadeRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
-  const bandRefs = useRef<(HTMLElement | null)[]>([]);
   const meroRef = useRef<HTMLDivElement>(null);
   const clock = useRef(holdStart(startStop));
   const paused = useRef(speed === 0);
-  /** El visor 3D solo se monta cerca del arrecife (ahorra GPU el resto del bucle). */
+  /**
+   * El visor 3D se monta al empezar cada vuelta (oculto) y solo dibuja cerca del arrecife: así al
+   * llegar ya está cargado y no hay tirón ni aviso de carga, y el resto del bucle no gasta GPU.
+   */
   const [near3d, setNear3d] = useState(startStop === REEF);
   /** Cada vuelta del bucle muestra una especie distinta en el arrecife. */
   const [loop, setLoop] = useState(0);
@@ -111,14 +113,6 @@ export default function KioskApp({ lang }: { lang: Lang }) {
           if (vis) {
             el.style.setProperty('--in', enter.toFixed(4));
             el.style.setProperty('--out', leave.toFixed(4));
-          }
-        }
-        const band = bandRefs.current[i];
-        if (band) {
-          band.style.visibility = vis ? 'visible' : 'hidden';
-          if (vis) {
-            band.style.setProperty('--pres', (smooth(enter) * (1 - smooth(leave))).toFixed(4));
-            band.style.setProperty('--rel', (T - s.t).toFixed(4));
           }
         }
         if (i === REEF) {
@@ -251,27 +245,6 @@ export default function KioskApp({ lang }: { lang: Lang }) {
     [content],
   );
 
-  const bands = useMemo(
-    () =>
-      STOPS.map((s, i) =>
-        s.kind === 'zone' ? (
-          <div key={i} ref={(el) => void (bandRefs.current[i] = el)} className={`k-band ${s.zone! % 2 ? 'k-band--l' : 'k-band--r'}`} aria-hidden="true">
-            <div className="k-band-track">
-              {[0, 1, 2, 3].map((k) => (
-                <span key={k} className="k-band-run">
-                  <span className="k-band-word">{content.zones[s.zone!].name}</span>
-                  <span className="k-band-dot">✦</span>
-                  <span className="k-band-em">{content.zones[s.zone!].verb}</span>
-                  <span className="k-band-dot">✦</span>
-                </span>
-              ))}
-            </div>
-          </div>
-        ) : null,
-      ),
-    [content],
-  );
-
   return (
     <ContentContext.Provider value={content}>
       <div ref={rootRef} className="kiosk" style={{ '--tint': ZONE_COLORS[2] } as CSSProperties}>
@@ -286,11 +259,9 @@ export default function KioskApp({ lang }: { lang: Lang }) {
           <div className="k-lens" />
         </div>
 
-        {bands}
-
         {/* El mero en 3D llega nadando con la cámara al arrecife y se queda atrás al seguir */}
         <div ref={meroRef} className="k-mero" aria-hidden="true">
-          {near3d ? <SpeciesStage key={fish.id} url={fish.model} label={fish.copy[lang].name} labels={content.viewer} mode="showcase" active /> : null}
+          <SpeciesStage key={fish.id} url={fish.model} label={fish.copy[lang].name} labels={content.viewer} mode="showcase" active={near3d} />
           <p className="k-mero-label">
             <span className="k-mero-name">{fish.copy[lang].name}</span>
             <span className="k-mero-latin">{fish.copy[lang].latin}</span>

@@ -127,9 +127,8 @@
   z-index: 20;
   visibility: hidden;
   pointer-events: none;
-  /* Al irse la cámara, todo sube (o baja en el ascenso), se desenfoca y se apaga. */
-  translate: 0 calc(var(--eout) * var(--exit-dir, -1) * 22vh);
-  filter: blur(calc(var(--eout) * 14px));
+  /* Al irse la cámara, todo se desliza apenas (sube, o baja en el ascenso) y se apaga. */
+  translate: 0 calc(var(--eout) * var(--exit-dir, -1) * 4vh);
   opacity: calc(1 - var(--eout));
 }
 
@@ -201,7 +200,7 @@
   color: var(--c-accent);
   --v: clamp(0, calc(var(--in) * 2.2 - 1.2), 1);
   opacity: var(--v);
-  translate: 0 calc((1 - var(--v)) * 24px);
+  translate: 0 calc((1 - var(--v)) * 10px);
 }
 
 /* Palabras del titular: cada una con su propio avance (las primeras llegan antes). */
@@ -217,47 +216,17 @@
   display: inline-block;
 }
 
-/* 1 · luz: convergen desde los dos lados */
-.k-v--converge .k-title .w--a {
-  translate: calc(var(--q) * -50vw) 0;
-  transform: skewX(calc(var(--q) * 20deg));
-}
-.k-v--converge .k-title .w--b {
-  translate: calc(var(--q) * 50vw) 0;
-  transform: skewX(calc(var(--q) * -20deg));
+/* Todas las zonas: las palabras se deslizan apenas y aparecen (sutil y barato de dibujar). */
+.k-title .w {
+  translate: 0 calc(var(--q) * 3vh);
 }
 
-/* 2 · arrecife: caen desde arriba girando (la cámara baja hacia ellas) */
-.k-v--drop .k-title .w {
-  translate: 0 calc(var(--q) * -60vh);
-  rotate: calc(var(--q) * -14deg);
-}
-.k-v--drop .k-title .w--b {
-  rotate: calc(var(--q) * 11deg);
-}
-
-/* 3 · pradera: ola desde la derecha */
-.k-v--wave .k-title .w {
-  translate: calc(var(--q) * 70vw) calc(var(--q) * 8vh);
-  transform: skewX(calc(var(--q) * -24deg));
-}
-.k-v--wave .k-title .w--b {
-  translate: calc(var(--q) * 70vw) calc(var(--q) * -8vh);
-}
-
-/* 4 · oscura: emergen del desenfoque */
-.k-v--focus .k-title .w {
-  scale: calc(1 + var(--q) * 0.6);
-  filter: blur(calc(var(--q) * 24px));
-}
-
-/* 5 · ascenso: suben desde abajo creciendo, con la cámara */
+/* 5 · ascenso: suben desde abajo, con la cámara */
 .k-v--rise .k-title .w {
-  translate: 0 calc(var(--q) * 40vh);
-  scale: calc(0.6 + var(--pe) * 0.4);
+  translate: 0 calc(var(--q) * -3vh);
 }
 
-/* ---------- Portada y cierre: el logo se arma con la película y se parte al zambullirse ---------- */
+/* ---------- Portada y cierre: el logo se arma con la película y se apaga al zambullirse ---------- */
 .k-brandcard .k-logo {
   margin: 0;
   width: clamp(280px, 46vw, 980px);
@@ -274,17 +243,17 @@
   --ae: calc(var(--a) * var(--a) * (3 - 2 * var(--a)));
   --b: clamp(0, calc(var(--in) * 1.4 - 0.15), 1);
   --be: calc(var(--b) * var(--b) * (3 - 2 * var(--b)));
-  /* la portada no sube al irse: se parte en dos */
+  /* la portada no se desplaza al irse: solo se apaga */
   translate: none;
 }
 
 .k-brandcard .lg-caribe {
-  transform: translateX(calc((1 - var(--ae)) * -60% + var(--eout) * -55vw)) skewX(calc((1 - var(--ae)) * 18deg));
+  transform: translateX(calc((1 - var(--ae)) * -6%));
   opacity: var(--ae);
 }
 
 .k-brandcard :is(.lg-bluelab, .lg-lab) {
-  transform: translateX(calc((1 - var(--be)) * 60% + var(--eout) * 55vw)) skewX(calc((1 - var(--be)) * -18deg));
+  transform: translateX(calc((1 - var(--be)) * 6%));
   opacity: var(--be);
 }
 
@@ -306,8 +275,7 @@
   display: inline-block;
   --p: clamp(0, calc((var(--in) - 0.45 - var(--i, 0) * 0.025) * 2.4), 1);
   opacity: var(--p);
-  translate: 0 calc((1 - var(--p)) * 22px);
-  filter: blur(calc((1 - var(--p)) * 8px));
+  translate: 0 calc((1 - var(--p)) * 8px);
 }
 
 .k-partners {
@@ -331,84 +299,6 @@
   opacity: calc(1 - var(--brand, 0));
 }
 
-/* ---------- Franja gigante: llega con la cámara y la cruza de lado ---------- */
-.k-band {
-  --pres: 0;
-  --rel: 0;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: clamp(56px, 10vh, 170px);
-  z-index: 10;
-  overflow: hidden;
-  visibility: hidden;
-  pointer-events: none;
-  opacity: var(--pres);
-}
-
-.k-band--l {
-  --dir: 1;
-}
-
-.k-band--r {
-  --dir: -1;
-}
-
-.k-band-track {
-  display: flex;
-  width: max-content;
-  white-space: nowrap;
-  /* posición ligada a la película + una deriva lenta para que nunca quede quieta */
-  translate: calc(-20% + var(--rel) * -90vw * var(--dir)) 0;
-  animation: k-band-drift 26s linear infinite alternate;
-}
-
-.k-band--r .k-band-track {
-  animation-direction: alternate-reverse;
-}
-
-@keyframes k-band-drift {
-  from {
-    transform: translate3d(-4%, 0, 0);
-  }
-  to {
-    transform: translate3d(4%, 0, 0);
-  }
-}
-
-.k-band-run {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.28em;
-  padding-right: 0.28em;
-  font-family: var(--f-display);
-  font-weight: 200;
-  font-stretch: 125%;
-  font-size: clamp(64px, 12vw, 260px);
-  letter-spacing: -0.045em;
-  line-height: 1.05;
-}
-
-.k-band-word {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(245, 243, 240, 0.32);
-}
-
-.k-band-em {
-  font-family: var(--f-serif);
-  font-style: italic;
-  font-weight: 300;
-  font-stretch: normal;
-  letter-spacing: -0.02em;
-  color: var(--c-accent);
-  opacity: 0.85;
-}
-
-.k-band-dot {
-  font-size: 0.22em;
-  color: var(--c-accent);
-}
-
 /* ---------- El mero en 3D: llega nadando con la cámara y se queda atrás ---------- */
 .k-mero {
   --in: 0;
@@ -421,8 +311,7 @@
   aspect-ratio: 4 / 3;
   pointer-events: none;
   opacity: calc(var(--in) * (1 - var(--out)));
-  translate: calc((1 - var(--in)) * 30vw) calc(var(--out) * -30vh);
-  scale: calc(0.85 + var(--in) * 0.15);
+  translate: calc((1 - var(--in)) * 6vw) calc(var(--out) * -5vh);
 }
 
 .k-mero-label {
@@ -459,8 +348,13 @@
   inset: 0;
 }
 
+/* En el kiosco nunca se ve el aviso de carga del visor. */
+.k-mero :is(.viewer-loading, .viewer-empty) {
+  display: none;
+}
+
 .k-mero canvas {
-  filter: saturate(0.85) contrast(0.86) brightness(0.94) drop-shadow(0 30px 34px rgba(2, 14, 26, 0.45));
+  filter: saturate(0.85) contrast(0.86) brightness(0.94);
 }
 
 /* ---------- Pantallas verticales ---------- */
@@ -470,12 +364,6 @@
   }
   .k-title {
     font-size: clamp(40px, 9.5vw, 140px);
-  }
-  .k-band {
-    top: 14vh;
-  }
-  .k-band-run {
-    font-size: clamp(70px, 22vw, 300px);
   }
   .k-mero {
     left: 6vw;

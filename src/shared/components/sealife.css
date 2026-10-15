@@ -106,17 +106,6 @@
   animation: sl-pulse 3.2s cubic-bezier(0.45, 0, 0.3, 1) var(--sl-delay, 0s) infinite;
 }
 
-/* Burbujas: fotos reales con alfa (reflejo plateado, brillo especular). */
-.sl-bubble {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: auto;
-  pointer-events: none;
-  user-select: none;
-  will-change: transform;
-}
-
 @keyframes sl-bob {
   from {
     transform: translateY(-0.4vh) rotate(-1.4deg);

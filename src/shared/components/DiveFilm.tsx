@@ -185,8 +185,9 @@ export function DiveFilm({ film, playing, clock = false }: DiveFilmProps) {
       vel = jumped ? 0 : vel + ((cur - prev) / dt - vel) * 0.2;
       const a = Math.min(N - 1, Math.floor(cur));
 
-      // Al romper la superficie (tramo 6, ~78 %): destello y lente mojada un instante.
-      const f = reduce ? 0 : Math.exp(-(((cur - 5.785) / 0.028) ** 2));
+      // Al romper la superficie (tramo 6, ~78 %): destello y lente mojada un instante (solo en la
+      // web; en el kiosco, que corre solo, se veía como un parpadeo).
+      const f = reduce || clock ? 0 : Math.exp(-(((cur - 5.785) / 0.028) ** 2));
       if (root) root.style.filter = f > 0.01 ? `brightness(${(1 + f * 0.55).toFixed(3)}) blur(${(f * 5).toFixed(2)}px)` : '';
 
       // Carga perezosa: activo y vecinos ya; los siguientes en cola.
@@ -215,14 +216,20 @@ export function DiveFilm({ film, playing, clock = false }: DiveFilmProps) {
         const moving = vel > (clock || !V.paused ? 0.002 : 0.012);
         const flowing = !reduce && L.painted && i === a && moving && cur - i < 0.995;
         if (flowing) {
-          const rate = clamp(vel * dur, 0.0625, 4);
-          if (Math.abs(rate - L.rate) / L.rate > 0.06) {
+          // Kiosco: el desfase con el reloj se corrige acelerando o frenando un poco el video, no
+          // buscando: un seek en plena reproducción congela el cuadro (parece que algo carga).
+          const drift = clock ? clamp((t - V.currentTime) * 0.5, -0.25, 0.25) : 0;
+          const rate = clamp(vel * dur * (1 + drift), 0.0625, 4);
+          if (Math.abs(rate - L.rate) / L.rate > (clock ? 0.02 : 0.06)) {
             L.rate = rate;
             V.playbackRate = rate;
           }
-          if (V.paused) void V.play().catch(() => undefined);
+          // Si el clip ya llegó al final (un poco antes que el reloj), se queda en su último cuadro, que
+          // es el primero del tramo siguiente. play() sobre un video terminado lo reinicia desde el
+          // principio: eso se veía como un destello a mitad de cada zona.
+          if (V.paused && !V.ended && V.currentTime < dur - 0.05) void V.play().catch(() => undefined);
           // Corrige desfase grande (p. ej. un tirón de scroll) sin detener la reproducción.
-          if (!V.seeking && Math.abs(V.currentTime - t) > (clock ? 0.3 : 0.45)) V.currentTime = t;
+          if (!V.seeking && Math.abs(V.currentTime - t) > (clock ? 1.5 : 0.45)) V.currentTime = t;
           if (!hasVFC) L.draw();
           continue;
         }

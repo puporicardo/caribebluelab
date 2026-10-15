@@ -65,7 +65,7 @@ function makeFlakes(n: number): HTMLCanvasElement[] {
 }
 
 /**
- * Polvo y arena en suspensión, en un canvas 2D: cientos de motas diminutas que revolotean con
+ * Polvo y arena en suspensión, en un canvas 2D: un centenar de motas diminutas que revolotean con
  * la corriente (ruido suave, sin dirección fija), algunas que destellan al cruzar la luz, y
  * pocos copos irregulares desenfocados muy cerca de la cámara. Al bajar con el scroll suben,
  * en el ascenso caen (la cámara sube entre ellas). Arena cálida arriba, nieve marina azulada
@@ -81,9 +81,9 @@ export function MarineSnow({ film, drive = 'scroll' }: MarineSnowProps) {
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
     const small = window.innerWidth < 760;
 
-    const N = small ? 170 : 320;
+    const N = small ? 50 : 110;
     const specks: Speck[] = Array.from({ length: N }, (_, i) => {
-      const flake = i < (small ? 7 : 14) ? 1 : 0;
+      const flake = i < (small ? 2 : 4) ? 1 : 0;
       const z = flake ? Math.random() * 0.25 : Math.random();
       return {
         x: Math.random(),
@@ -171,7 +171,7 @@ export function MarineSnow({ film, drive = 'scroll' }: MarineSnowProps) {
         if (s.flake) {
           const img = flakes[Math.floor(s.ph) % flakes.length];
           const sz = s.r * (small ? 1.4 : 2);
-          ctx.globalAlpha = 0.1 * light * under;
+          ctx.globalAlpha = 0.07 * light * under;
           ctx.save();
           ctx.translate(px, py);
           ctx.rotate(s.rot);
@@ -181,7 +181,7 @@ export function MarineSnow({ film, drive = 'scroll' }: MarineSnowProps) {
         }
         // Destello: algunas motas captan la luz un instante al girar.
         const glint = Math.pow(Math.max(0, Math.sin(time * (0.6 + s.tw) + s.ph)), 12) * (1 - deep * 0.7);
-        const a = (lerp(0.6, 0.2, s.z) + glint * 0.55) * light * under;
+        const a = (lerp(0.45, 0.15, s.z) + glint * 0.35) * light * under;
         ctx.globalAlpha = Math.min(0.85, a);
         ctx.fillStyle = `rgb(${cr},${cg},${cb})`;
         ctx.beginPath();
