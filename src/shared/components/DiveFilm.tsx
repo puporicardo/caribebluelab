@@ -197,8 +197,10 @@ export function DiveFilm({ film, playing, clock = false }: DiveFilmProps) {
 
       for (let i = 0; i < N; i++) {
         const L = legs[i];
-        // Cada tramo aparece al llegar su costura (los de abajo quedan tapados).
-        const op = i === 0 ? 1 : reduce ? smoothstep(i - 0.18, i + 0.18, cur) : smoothstep(i - SEAM, i + SEAM, cur);
+        // Cada tramo aparece al llegar su costura (los de abajo quedan tapados). El fundido termina
+        // justo EN la costura: las pausas de la web caen ahí (p. ej. el arrecife, en T = 2) y deben
+        // mostrar solo el primer cuadro del tramo nuevo, nítido, no dos cuadros mezclados al 50 %.
+        const op = i === 0 ? 1 : reduce ? smoothstep(i - 0.18, i + 0.18, cur) : smoothstep(i - SEAM * 2, i, cur);
         const near = i >= a - 1 && i <= a + 1;
         L.el.style.opacity = op.toFixed(3);
         L.el.style.visibility = near && op > 0.001 ? 'visible' : 'hidden';
