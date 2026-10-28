@@ -14,7 +14,7 @@ export const es: Content = {
     { name: 'Superficie', verb: 'Bienvenida', title: '' },
     { name: 'Zona de luz', verb: 'Mirar', title: 'El Caribe visto por *artistas, niñas, niños y jóvenes*' },
     { name: 'Arrecife', verb: 'Tocar y crear', title: 'Peces del Caribe que se pueden *girar y tocar*' },
-    { name: 'Pradera marina', verb: 'Leer y cantar', title: 'Universo STEAM+G: *relatos y canciones* para la primera infancia' },
+    { name: 'Pradera marina', verb: 'Leer', title: 'Universo STEAM+G: *relatos* para la primera infancia' },
     { name: 'Zona oscura', verb: 'Escuchar y descubrir', title: 'Lo que el Caribe guarda en el sonido y *en la oscuridad*' },
     { name: 'Ascenso', verb: 'Monitorear y actuar', title: 'Del asombro *a los datos* y a los proyectos' },
   ],
@@ -54,6 +54,7 @@ export const es: Content = {
     pendingTitle: 'Modelo 3D en preparación',
     pendingBody: 'Esta especie se suma pronto al visor.',
     canvasLabel: (s) => `Modelo 3D interactivo: ${s}`,
+    download: 'Descargar modelo 3D (.glb)',
   },
   species: {
     tabs: 'Especies',
@@ -296,7 +297,7 @@ export const es: Content = {
         'Gira el modelo en tu teléfono y toca la pieza impresa en el mostrador.',
       ],
       [
-        'Pradera marina: aquí se lee y se canta.',
+        'Pradera marina: aquí se lee.',
         'Seis fábulas de CUBI y sus Super-Amigos, de la Editorial Unimagdalena.',
         'Escucha las canciones de CUBI y hojea los libros aquí en el stand.',
       ],

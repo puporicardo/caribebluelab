@@ -14,7 +14,7 @@ export const en: Content = {
     { name: 'Surface', verb: 'Welcome', title: '' },
     { name: 'Light zone', verb: 'Look', title: 'The Caribbean seen by *artists, girls, boys and young people*' },
     { name: 'Reef', verb: 'Touch and create', title: 'Caribbean fish you can *turn and touch*' },
-    { name: 'Seagrass meadow', verb: 'Read and sing', title: 'The STEAM+G universe: *stories and songs* for early childhood' },
+    { name: 'Seagrass meadow', verb: 'Read', title: 'The STEAM+G universe: *stories* for early childhood' },
     { name: 'Dark zone', verb: 'Listen and discover', title: 'What the Caribbean keeps in sound and *in the dark*' },
     { name: 'Ascent', verb: 'Monitor and act', title: 'From wonder *to data* and to projects' },
   ],
@@ -54,6 +54,7 @@ export const en: Content = {
     pendingTitle: '3D model in preparation',
     pendingBody: 'This species joins the viewer soon.',
     canvasLabel: (s) => `Interactive 3D model: ${s}`,
+    download: 'Download 3D model (.glb)',
   },
   species: {
     tabs: 'Species',
@@ -295,7 +296,7 @@ export const en: Content = {
         'Turn the model on your phone and touch the printed piece at the counter.',
       ],
       [
-        'Seagrass meadow: here we read and sing.',
+        'Seagrass meadow: here we read.',
         'Six fables of CUBI and its Super-Friends, from Editorial Unimagdalena.',
         'Listen to the CUBI songs and browse the books here at the stand.',
       ],

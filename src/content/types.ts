@@ -85,6 +85,8 @@ export interface Content {
     pendingTitle: string;
     pendingBody: string;
     canvasLabel: (species: string) => string;
+    /** Enlace para descargar el modelo 3D de la especie. */
+    download: string;
   };
   species: {
     tabs: string;

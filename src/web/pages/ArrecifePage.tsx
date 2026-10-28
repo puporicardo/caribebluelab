@@ -4,6 +4,7 @@ import { SPECIES, type Species } from '../../content/species';
 import type { Lang } from '../../content/zones';
 import { trackEvent } from '../../shared/analytics';
 import { Ficha } from '../../shared/components/Ficha';
+import { ArrowRight } from '../../shared/components/Icons';
 import { Rich } from '../../shared/components/Rich';
 import { SpeciesStage, type ViewerAction } from '../../shared/components/species/SpeciesStage';
 import { useDive } from '../dive';
@@ -76,6 +77,14 @@ function Specimen({ species, index, total, lang }: { species: Species; index: nu
         <p className="disp it species-latin">{copy.latin}</p>
         {copy.description ? <p className="body species-desc">{copy.description}</p> : null}
         <Ficha rows={copy.ficha} />
+        <a
+          className="link link--start species-download"
+          href={species.model}
+          download={`${species.id}.glb`}
+          onClick={() => trackEvent('visor_3d', { accion: 'descargar', especie: species.id })}
+        >
+          {t.viewer.download} <ArrowRight />
+        </a>
       </div>
     </article>
   );

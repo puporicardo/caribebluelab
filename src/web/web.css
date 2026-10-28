@@ -2087,3 +2087,44 @@
 .plate--photo {
   cursor: zoom-in;
 }
+
+/* Estantería: portadas de la Editorial Unimagdalena y libros enlazados */
+.shelf {
+  align-items: start;
+}
+a.book {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.book-inner {
+  position: absolute;
+  inset: 0;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.book--cover {
+  aspect-ratio: auto;
+  padding: 0;
+  background: none;
+}
+.book--cover::before {
+  display: none;
+}
+.book--cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.book-caption {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.3;
+  opacity: 0.8;
+}
+.species-download {
+  margin-top: 22px;
+}
