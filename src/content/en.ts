@@ -128,7 +128,7 @@ export const en: Content = {
       ],
       tracksLabel: 'Recordings',
       tracks: ['Humpback whale · call', 'Humpback whale · song', 'Blue whale · Pacific', 'Blue whale · Atlantic', 'Humpback whale · sound'],
-      fig: 'Recordings from Wikimedia Commons (CC0, public domain and CC BY). Attributions to be confirmed.',
+      fig: 'Recordings from Wikimedia Commons (CC0, public domain and CC BY). Attributions below.',
     },
     creatures: {
       title: 'Creatures in *the Dark*',

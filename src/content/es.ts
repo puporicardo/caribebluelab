@@ -128,7 +128,7 @@ export const es: Content = {
       ],
       tracksLabel: 'Grabaciones',
       tracks: ['Ballena jorobada · llamado', 'Ballena jorobada · canto', 'Ballena azul · Pacífico', 'Ballena azul · Atlántico', 'Ballena jorobada · sonido'],
-      fig: 'Grabaciones de Wikimedia Commons (CC0, dominio público y CC BY). Atribuciones por confirmar.',
+      fig: 'Grabaciones de Wikimedia Commons (CC0, dominio público y CC BY). Atribuciones abajo.',
     },
     creatures: {
       title: 'Criaturas en *la Oscuridad*',

@@ -30,6 +30,15 @@ const TRACK_FILES = [
   'ballena-jorobada-sonido.mp3',
 ];
 
+/** Atribuciones de cada grabación (Wikimedia Commons), en el mismo orden que TRACK_FILES. */
+const TRACK_CREDITS = [
+  'Humpback whale moo · National Park Service (Glacier Bay) · dominio público',
+  'Humpback whale song · Stimpert et al. (2012), PLOS ONE · CC BY 2.5',
+  'Blue whale, NE Pacific · NOAA PMEL · CC0',
+  'Blue whale, Atlantic · NOAA PMEL · CC0',
+  'Sound Effect Humpback Whale · copyright-free sound effect · CC BY 3.0',
+];
+
 /** Zona 4 · Zona oscura (Escuchar y descubrir): grabaciones de ballenas y exposición que se ilumina con el puntero. */
 export function ZonaOscuraPage() {
   const t = useContent();
@@ -123,6 +132,11 @@ export function ZonaOscuraPage() {
               <b>{t.ui.fig} 4.1</b>
               {sounds.fig}
             </p>
+            <ul className="audio-credits">
+              {TRACK_CREDITS.map((c) => (
+                <li key={c}>{c}</li>
+              ))}
+            </ul>
           </figure>
         </article>
 
