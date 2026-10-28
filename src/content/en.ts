@@ -82,10 +82,10 @@ export const en: Content = {
     },
     films: {
       title: 'Cine Al Mar *Minute-Film Festival*',
-      body: '“60 Seconds at Sea”: six stories by girls, boys and young people, shot on mobile phones. A screening room with each short and its credits.',
+      body: 'Five minute-films about the sea and global warming, made by students from Colegio Camilo Torres in Santa Marta and the Film and Audiovisual programme at Unimagdalena. A screening room with each short and its credits.',
       ficha: [
-        ['Authors', 'Cine Al Mar · girls, boys and young people'],
-        ['Format', 'Video · 6 × 60 s'],
+        ['Authors', 'Cine Al Mar · Colegio Camilo Torres · Unimagdalena Film and Audiovisual'],
+        ['Format', 'Video · 5 minute-films of 1 to 1.5 min'],
         ['Audience', 'General public'],
       ],
       screen: (n) => `Short ${n} / 06`,

@@ -82,10 +82,10 @@ export const es: Content = {
     },
     films: {
       title: 'Festival de Filminutos *Cine Al Mar*',
-      body: '«60 Segundos en el Mar»: seis historias de niñas, niños y jóvenes filmadas con móviles. Sala de proyección con cada corto y su ficha.',
+      body: 'Cinco filminutos sobre el mar y el calentamiento global, hechos por estudiantes del Colegio Camilo Torres de Santa Marta y del Programa de Cine y Audiovisuales de Unimagdalena. Sala de proyección con cada corto y su ficha.',
       ficha: [
-        ['Autoría', 'Cine Al Mar · niñas, niños y jóvenes'],
-        ['Formato', 'Video · 6 × 60 s'],
+        ['Autoría', 'Cine Al Mar · Colegio Camilo Torres · Cine y Audiovisuales Unimagdalena'],
+        ['Formato', 'Video · 5 filminutos de 1 a 1,5 min'],
         ['Para quién', 'Público general'],
       ],
       screen: (n) => `Filminuto ${n} / 06`,
