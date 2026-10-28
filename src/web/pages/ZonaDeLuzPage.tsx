@@ -68,6 +68,9 @@ export function ZonaDeLuzPage() {
               </div>
             </div>
           </figure>
+        </article>
+
+        <div className="art-carousel-wrap">
           <ul className="art-carousel" aria-label={art.title}>
             {ART_PHOTOS.map((name, i) => (
               <li key={name}>
@@ -75,7 +78,7 @@ export function ZonaDeLuzPage() {
               </li>
             ))}
           </ul>
-        </article>
+        </div>
 
         {SHOW_FILMS && (
           <article className="spread rev" aria-label={plain(films.title)}>

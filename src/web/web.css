@@ -1910,3 +1910,7 @@
   letter-spacing: 0.06em;
   opacity: 0.7;
 }
+
+.art-carousel-wrap {
+  margin-top: 48px;
+}
