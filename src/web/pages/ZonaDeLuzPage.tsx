@@ -1,16 +1,17 @@
 import { useState } from 'react';
+import { FILMINUTOS } from '../../content/filminutos';
 import { useContent } from '../../content';
 import { LINKS } from '../../content/links';
 import { trackEvent } from '../../shared/analytics';
 import { Ficha } from '../../shared/components/Ficha';
-import { ArrowRight, PlayIcon } from '../../shared/components/Icons';
+import { ArrowRight } from '../../shared/components/Icons';
 import { Rich, plain } from '../../shared/components/Rich';
 import { cssVars } from '../../shared/css';
 import { ExternalLink } from '../parts/ExternalLink';
 import { ZoneHead } from '../parts/ZoneHead';
 
-/** El festival de filminutos queda oculto por ahora; pónlo en true para volver a mostrarlo. */
-const SHOW_FILMS = false;
+/** Filminutos de Cine al Mar, con el video de cada uno (ver src/content/filminutos.ts). */
+const SHOW_FILMS = true;
 
 /** Fotos de la galería de Art Blue Lab (public/fotos/art-blue-lab). */
 const ART_PHOTOS = Array.from({ length: 12 }, (_, i) => `art-${String(i + 1).padStart(2, '0')}.jpg`);
@@ -21,7 +22,7 @@ export function ZonaDeLuzPage() {
   const art = t.web.art;
   const films = t.web.films;
   const [film, setFilm] = useState(1);
-  const current = films.items[film];
+  const current = FILMINUTOS[film];
   const base = import.meta.env.BASE_URL;
   const total = SHOW_FILMS ? 2 : 1;
 
@@ -107,24 +108,28 @@ export function ZonaDeLuzPage() {
             <figure className="films" data-reveal="" data-m="">
               <div className="films-screen">
                 <span className="crop" />
-                <p className="eyebrow films-count">{films.screen(current.n.slice(0, 2))}</p>
-                <button
-                  type="button"
-                  className="play-circle"
+                <p className="eyebrow films-count">{films.screen(current.n)}</p>
+                <video
+                  key={current.slug}
+                  className="films-video"
+                  src={`${base}filminutos/${current.slug}.mp4`}
+                  poster={`${base}filminutos/${current.slug}.jpg`}
+                  controls
+                  playsInline
+                  preload="none"
+                  onPlay={() => trackEvent('filminuto', { accion: 'reproducir', filminuto: current.n })}
                   aria-label={t.ui.playTitle(current.title)}
-                  onClick={() => trackEvent('filminuto', { accion: 'reproducir', filminuto: current.n })}
-                >
-                  <PlayIcon width={20} height={22} color="#F5F3F0" />
-                </button>
+                />
                 <p className="disp it films-title">{current.title}</p>
+                <p className="films-meta">{current.duration} · {current.year} · {current.curador}</p>
               </div>
               <ol className="films-list stagger">
-                {films.items.map((item, i) => (
-                  <li key={item.n}>
+                {FILMINUTOS.map((item, i) => (
+                  <li key={item.slug}>
                     <button type="button" aria-current={i === film ? 'true' : undefined} className={i === film ? 'is-on' : ''} onClick={() => setFilm(i)}>
                       <span className="disp it">{item.n}</span>
                       <span>{item.title}</span>
-                      <span>{i === film ? t.ui.nowPlaying : films.duration}</span>
+                      <span>{i === film ? t.ui.nowPlaying : item.duration}</span>
                     </button>
                   </li>
                 ))}
