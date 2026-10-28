@@ -779,3 +779,31 @@ html.cbl-js .web .close.is-in .btn::after {
     opacity: 1 !important;
   }
 }
+
+/* ---------- Filminutos: el reproductor y la lista llegan rápido para poder usarlos enseguida ---------- */
+.web .spread > figure.films {
+  --ef: min(1, calc(var(--e, 1) * 3));
+  --q: calc(1 - var(--ef));
+  scale: calc(0.96 + var(--ef) * 0.04);
+}
+
+/* Las filas aparecen con el reproductor (sin deslizarse cada una con el scroll): se pueden pulsar en cuanto se ven. */
+.web .films-list > li {
+  translate: none;
+}
+
+/* ---------- Arrecife: las palabras caen de menos alto y aterrizan antes ---------- */
+.web .zhead--drop .zhead-title .w {
+  --p: clamp(0, calc((var(--e, 1) - var(--i, 0) * 0.02) * 3), 1);
+  translate: 0 calc(var(--q) * -14vh);
+  rotate: calc(var(--q) * -8deg);
+}
+.web .zhead--drop .zhead-title .w--b {
+  rotate: calc(var(--q) * 6deg);
+}
+
+/* Los titulares de zona son solo texto: nunca tapan clics de lo que pasa por debajo. */
+.web .zhead-title,
+.web .band {
+  pointer-events: none;
+}
