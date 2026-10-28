@@ -138,9 +138,8 @@ export function AscensoPage() {
             <span className="challenge-note">{challenge.note}</span>
           </div>
           <ol className="challenge-grid stagger">
-            {challenge.winners.map((w, i) => (
+            {challenge.winners.map((w) => (
               <li key={w.project}>
-                <span className="disp it challenge-n">{String(i + 1).padStart(2, '0')}</span>
                 <span className="challenge-place">{challenge.place}</span>
                 <span className="disp challenge-project">{w.project}</span>
                 <p className="challenge-desc">{w.description}</p>
