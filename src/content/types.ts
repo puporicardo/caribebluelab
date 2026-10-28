@@ -26,6 +26,14 @@ export interface SpeciesCopy {
   ficha: FichaRow[];
 }
 
+/** Primer puesto de una categoría del Caribe Blue Challenge. */
+export interface ChallengeWinner {
+  project: string;
+  description: string;
+  team: string;
+  status: string;
+}
+
 export interface FaroIndicator {
   name: string;
   note: string;
@@ -144,10 +152,7 @@ export interface Content {
     challenge: {
       title: Rich;
       note: string;
-      project: string;
-      team: string;
-      status: string;
-      contact: string;
+      winners: ChallengeWinner[];
     };
     close: { eyebrow: string; title: Rich; cta: string };
   };

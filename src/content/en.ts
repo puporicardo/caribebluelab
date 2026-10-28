@@ -151,10 +151,20 @@ export const en: Content = {
     challenge: {
       title: 'Caribe Blue *Challenge 2026*',
       note: '',
-      project: '[Winning project]',
-      team: '[Team] · [Challenge addressed]',
-      status: 'Prototype · [stage of progress]',
-      contact: 'Contact the team',
+      winners: [
+        {
+          project: 'De desecho a alternativa clave para la construcción: el geopolímero que pega, construye y protege',
+          description: 'El proyecto aborda la gestión de la ceniza de fondo de carbón (CFC) generada por centrales termoeléctricas en Colombia, proponiendo su uso como precursor para un mortero geopolimérico que sustituya parcialmente al cemento Portland. Reduce residuos y emisiones de CO₂ y ofrece un material con propiedades mecánicas competitivas para la construcción en ambientes salinos. La viabilidad técnica se respalda con resultados preliminares y un enfoque experimental claro.',
+          team: 'Jacques Pierre Ropain Rodríguez (ingeniería civil); Diego Alfonso Camacho Perez (ingeniería civil); Shanery Sofia Palmera Luna (ingeniería ambiental); Angelin Isabel López Núñez (medicina); Brandon David Blanco Malaver (ingeniería civil).',
+          status: 'TRL 3 · resultados experimentales preliminares de granulometría, compresión y adhesión, validados con la empresa aliada que suministra la CFC.',
+        },
+        {
+          project: 'Pontia',
+          description: 'El proyecto aborda la proliferación de la macrófita invasora Pontederia crassipes en la Ciénaga Grande de Santa Marta, proponiendo papel artesanal a partir de esta biomasa. Transforma un residuo en un material de empaque sostenible, contribuye a la economía circular y reduce el uso de plásticos. La viabilidad técnica se respalda en pruebas iniciales; aún se requiere validar sus propiedades.',
+          team: 'Orasi Smith Montenegro Sepulveda (biología); Liliana Margarita Ojeda Manjarrés (docente y egresada doctorado Ciencias del Mar); Laura Marcela Bolaño Ortega (biología); Danilo Andrés Quintero Rangel (biología); Laura Tatiana Patiño Aguirre (biología).',
+          status: 'TRL 3 · prueba experimental de concepto: una primera transformación y conformado de la biomasa dio una lámina y expuso retos técnicos concretos.',
+        },
+      ],
     },
     close: {
       eyebrow: 'End of the journey',

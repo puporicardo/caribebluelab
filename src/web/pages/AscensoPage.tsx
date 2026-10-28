@@ -7,7 +7,6 @@ import { ZoneHead } from '../parts/ZoneHead';
 import { useGranFaro } from '../useGranFaro';
 
 const ACCENT_INK = 'var(--c-accent-ink)';
-const NUMERALS = ['I', 'II', 'III'];
 const SERIES_W = 200;
 const SERIES_H = 40;
 /** Mientras carga o si la fuente falla: línea punteada plana. */
@@ -139,13 +138,14 @@ export function AscensoPage() {
             <span className="challenge-note">{challenge.note}</span>
           </div>
           <ol className="challenge-grid stagger">
-            {NUMERALS.map((n) => (
-              <li key={n}>
-                <span className="disp it challenge-n">{n}</span>
-                <span className="disp challenge-project">{challenge.project}</span>
-                <span className="challenge-team">{challenge.team}</span>
-                <span className="challenge-status">{challenge.status}</span>
-                <span className="link link--start is-pending">{challenge.contact}</span>
+            {challenge.winners.map((w, i) => (
+              <li key={w.project}>
+                <span className="disp it challenge-n">{String(i + 1).padStart(2, '0')}</span>
+                <span className="challenge-place">Primer puesto</span>
+                <span className="disp challenge-project">{w.project}</span>
+                <p className="challenge-desc">{w.description}</p>
+                <span className="challenge-team">{w.team}</span>
+                <span className="challenge-status">{w.status}</span>
               </li>
             ))}
           </ol>
