@@ -118,7 +118,7 @@ export const es: Content = {
         ['En el stand', 'Auriculares'],
       ],
       tracksLabel: 'Grabaciones',
-      tracks: ['Ballena jorobada · llamado', 'Ballena jorobada · canto', 'Ballena azul · Pacífico', 'Ballena azul · Atlántico', 'Ballena jorobada · sonido'],
+      tracks: ['Ballena azul · Pacífico', 'Ballena azul · Atlántico', 'Ballena jorobada · llamado', 'Ballena jorobada · canto', 'Ballena jorobada · sonido'],
       fig: 'Grabaciones de Wikimedia Commons (CC0, dominio público y CC BY). Atribuciones abajo.',
     },
     creatures: {

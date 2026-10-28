@@ -7,6 +7,7 @@ import { Ficha } from '../../shared/components/Ficha';
 import { ArrowRight } from '../../shared/components/Icons';
 import { Rich, plain } from '../../shared/components/Rich';
 import { ExternalLink } from '../parts/ExternalLink';
+import { Lightbox } from '../parts/Lightbox';
 import { ZoneHead } from '../parts/ZoneHead';
 
 /** Festival de filminutos visible en la zona de luz; pónlo en false para ocultarlo. */
@@ -22,6 +23,7 @@ export function ZonaDeLuzPage() {
   const films = t.web.films;
   const [film, setFilm] = useState(0);
   const [slide, setSlide] = useState(0);
+  const [zoom, setZoom] = useState(false);
   const go = (d: number) => setSlide((i) => (i + d + ART_PHOTOS.length) % ART_PHOTOS.length);
   const current = FILMINUTOS[film];
   const base = import.meta.env.BASE_URL;
@@ -61,6 +63,7 @@ export function ZonaDeLuzPage() {
                   alt={`${art.title} · ${i + 1} / ${ART_PHOTOS.length}`}
                   className={i === slide ? 'is-on' : ''}
                   aria-hidden={i !== slide}
+                  onClick={() => setZoom(true)}
                   loading={i === 0 ? 'eager' : 'lazy'}
                   decoding="async"
                 />
@@ -103,6 +106,14 @@ export function ZonaDeLuzPage() {
               </div>
             </div>
           </figure>
+          {zoom && (
+            <Lightbox
+              images={ART_PHOTOS.map((name, i) => ({ src: `${base}fotos/art-blue-lab/${name}`, alt: `${art.title} · ${i + 1}` }))}
+              index={slide}
+              onIndex={setSlide}
+              onClose={() => setZoom(false)}
+            />
+          )}
         </article>
 
         {SHOW_FILMS && (

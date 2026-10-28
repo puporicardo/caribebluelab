@@ -118,7 +118,7 @@ export const en: Content = {
         ['At the stand', 'Headphones'],
       ],
       tracksLabel: 'Recordings',
-      tracks: ['Humpback whale · call', 'Humpback whale · song', 'Blue whale · Pacific', 'Blue whale · Atlantic', 'Humpback whale · sound'],
+      tracks: ['Blue whale · Pacific', 'Blue whale · Atlantic', 'Humpback whale · call', 'Humpback whale · song', 'Humpback whale · sound'],
       fig: 'Recordings from Wikimedia Commons (CC0, public domain and CC BY). Attributions below.',
     },
     creatures: {
