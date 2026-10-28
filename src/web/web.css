@@ -1816,3 +1816,26 @@
     font-size: 42vw;
   }
 }
+
+/* Galería de Art Blue Lab */
+.art-gallery {
+  list-style: none;
+  margin: 48px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.art-gallery img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+/* Láminas con fotografía real */
+.plate--photo {
+  background-size: cover;
+  background-position: center;
+}

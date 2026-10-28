@@ -1,4 +1,4 @@
-import { useMemo, useState, type PointerEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type PointerEvent } from 'react';
 import { useContent } from '../../content';
 import { trackEvent } from '../../shared/analytics';
 import { Ficha } from '../../shared/components/Ficha';
@@ -11,20 +11,34 @@ import { ZoneHead } from '../parts/ZoneHead';
 /** Acento coral de todo el sitio; la bioluminiscencia (cian) queda en lo que brilla: marcas, onda, linterna. */
 const ACCENT = 'var(--c-accent)';
 
+/** Posiciones de las seis láminas (fotos de public/fotos/criaturas), en mosaico. */
 const PLATES = [
-  { left: '4%', top: '7%', width: '42%', height: '46%', bg: 'linear-gradient(140deg, #1D3256, #0B1B33)' },
-  { left: '52%', top: '12%', width: '44%', height: '52%', bg: 'linear-gradient(200deg, #2A4C72, #0B1B33)' },
-  { left: '12%', top: '60%', width: '34%', height: '33%', bg: 'linear-gradient(100deg, #1D3256, #0B1B33)' },
-  { left: '56%', top: '70%', width: '30%', height: '24%', bg: 'linear-gradient(60deg, #2A4C72, #0B1B33)' },
+  { left: '2%', top: '4%', width: '30%', height: '44%' },
+  { left: '35%', top: '2%', width: '30%', height: '44%' },
+  { left: '68%', top: '6%', width: '30%', height: '40%' },
+  { left: '6%', top: '54%', width: '28%', height: '40%' },
+  { left: '38%', top: '52%', width: '28%', height: '42%' },
+  { left: '70%', top: '54%', width: '28%', height: '40%' },
 ];
 
-/** Zona 4 · Zona oscura (Escuchar y descubrir): paisajes sonoros y exposición que se ilumina con el puntero. */
+/** Grabaciones de ballenas (public/audio/naturaleza), en el mismo orden que las pestañas de la zona. */
+const TRACK_FILES = [
+  'ballena-jorobada-llamado.mp3',
+  'ballena-jorobada-canto.mp3',
+  'ballena-azul-pacifico.mp3',
+  'ballena-azul-atlantico.mp3',
+  'ballena-jorobada-sonido.mp3',
+];
+
+/** Zona 4 · Zona oscura (Escuchar y descubrir): grabaciones de ballenas y exposición que se ilumina con el puntero. */
 export function ZonaOscuraPage() {
   const t = useContent();
   const sounds = t.web.sounds;
   const creatures = t.web.creatures;
+  const base = import.meta.env.BASE_URL;
   const [track, setTrack] = useState(0);
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
+  const audio = useRef<HTMLAudioElement>(null);
   const bars = useMemo(() => makeBars(48, 11), []);
   const [spot, setSpot] = useState({ x: 300, y: 220 });
 
@@ -33,9 +47,21 @@ export function ZonaOscuraPage() {
     setSpot({ x: Math.round(e.clientX - r.left), y: Math.round(e.clientY - r.top) });
   };
 
+  /** Al cambiar de pista, sigue sonando si ya estaba reproduciéndose. */
+  useEffect(() => {
+    if (playing) audio.current?.play().catch(() => setPlaying(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [track]);
+
   const togglePlay = () => {
+    const el = audio.current;
+    if (!el) return;
     trackEvent('audio', { accion: playing ? 'pausar' : 'reproducir', pista: sounds.tracks[track] });
-    setPlaying(!playing);
+    if (playing) {
+      el.pause();
+    } else {
+      el.play().catch(() => setPlaying(false));
+    }
   };
 
   return (
@@ -71,6 +97,14 @@ export function ZonaOscuraPage() {
                 </button>
               ))}
             </div>
+            <audio
+              ref={audio}
+              src={`${base}audio/naturaleza/${TRACK_FILES[track]}`}
+              preload="none"
+              onPlay={() => setPlaying(true)}
+              onPause={() => setPlaying(false)}
+              onEnded={() => setPlaying(false)}
+            />
             <div className={`sound-wave ${playing ? '' : 'is-paused'}`} aria-hidden="true">
               <span className="crop" style={{ color: 'rgba(111,227,214,.6)' }} />
               {bars.map((b, i) => (
@@ -84,9 +118,6 @@ export function ZonaOscuraPage() {
               <div className="sound-progress">
                 <span />
               </div>
-              <button type="button" className="link link--button">
-                {t.ui.fullscreen}
-              </button>
             </div>
             <p className="figcap">
               <b>{t.ui.fig} 4.1</b>
@@ -112,13 +143,13 @@ export function ZonaOscuraPage() {
               {PLATES.map((p, i) => (
                 <div
                   key={i}
-                  className="plate"
+                  className="plate plate--photo"
                   style={{
                     left: p.left,
                     top: p.top,
                     width: p.width,
                     height: p.height,
-                    backgroundImage: `repeating-linear-gradient(135deg, rgba(245,243,240,.06) 0 1px, rgba(245,243,240,0) 1px 13px), ${p.bg}`,
+                    backgroundImage: `url(${base}fotos/criaturas/criatura-${i + 1}.jpg)`,
                   }}
                 >
                   {creatures.plates[i]}

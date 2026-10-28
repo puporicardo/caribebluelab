@@ -9,6 +9,12 @@ import { cssVars } from '../../shared/css';
 import { ExternalLink } from '../parts/ExternalLink';
 import { ZoneHead } from '../parts/ZoneHead';
 
+/** El festival de filminutos queda oculto por ahora; pónlo en true para volver a mostrarlo. */
+const SHOW_FILMS = false;
+
+/** Fotos de la galería de Art Blue Lab (public/fotos/art-blue-lab). */
+const ART_PHOTOS = Array.from({ length: 12 }, (_, i) => `art-${String(i + 1).padStart(2, '0')}.jpg`);
+
 /** Zona 1 · Zona de luz (Mirar): Art Blue Lab y Festival de Filminutos Cine Al Mar. */
 export function ZonaDeLuzPage() {
   const t = useContent();
@@ -16,6 +22,8 @@ export function ZonaDeLuzPage() {
   const films = t.web.films;
   const [film, setFilm] = useState(1);
   const current = films.items[film];
+  const base = import.meta.env.BASE_URL;
+  const total = SHOW_FILMS ? 2 : 1;
 
   return (
     <section id="zona-de-luz" className="zone" aria-labelledby="titulo-zona-1">
@@ -26,7 +34,7 @@ export function ZonaDeLuzPage() {
           <div className="stack" data-reveal="">
             <p className="eyebrow exp-eyebrow">
               <span className="n">01</span>
-              {t.ui.experience(1, 2)}
+              {t.ui.experience(1, total)}
             </p>
             <h3 className="disp exp-title">
               <Rich text={art.title} split />
@@ -73,48 +81,57 @@ export function ZonaDeLuzPage() {
               </div>
             </div>
           </figure>
+          <ul className="art-gallery stagger" aria-label={art.title}>
+            {ART_PHOTOS.map((name, i) => (
+              <li key={name}>
+                <img src={`${base}fotos/art-blue-lab/${name}`} alt={`${art.title} · ${i + 1}`} loading="lazy" decoding="async" />
+              </li>
+            ))}
+          </ul>
         </article>
 
-        <article className="spread rev" aria-label={plain(films.title)}>
-          <div className="stack" data-reveal="">
-            <p className="eyebrow exp-eyebrow">
-              <span className="n">01</span>
-              {t.ui.experience(2, 2)}
-            </p>
-            <h3 className="disp exp-title exp-title--sm">
-              <Rich text={films.title} split />
-            </h3>
-            <p className="body">{films.body}</p>
-            <Ficha rows={films.ficha} />
-            <p className="note">{films.note}</p>
-          </div>
-          <figure className="films" data-reveal="" data-m="">
-            <div className="films-screen">
-              <span className="crop" />
-              <p className="eyebrow films-count">{films.screen(current.n.slice(0, 2))}</p>
-              <button
-                type="button"
-                className="play-circle"
-                aria-label={t.ui.playTitle(current.title)}
-                onClick={() => trackEvent('filminuto', { accion: 'reproducir', filminuto: current.n })}
-              >
-                <PlayIcon width={20} height={22} color="#F5F3F0" />
-              </button>
-              <p className="disp it films-title">{current.title}</p>
+        {SHOW_FILMS && (
+          <article className="spread rev" aria-label={plain(films.title)}>
+            <div className="stack" data-reveal="">
+              <p className="eyebrow exp-eyebrow">
+                <span className="n">01</span>
+                {t.ui.experience(2, 2)}
+              </p>
+              <h3 className="disp exp-title exp-title--sm">
+                <Rich text={films.title} split />
+              </h3>
+              <p className="body">{films.body}</p>
+              <Ficha rows={films.ficha} />
+              <p className="note">{films.note}</p>
             </div>
-            <ol className="films-list stagger">
-              {films.items.map((item, i) => (
-                <li key={item.n}>
-                  <button type="button" aria-current={i === film ? 'true' : undefined} className={i === film ? 'is-on' : ''} onClick={() => setFilm(i)}>
-                    <span className="disp it">{item.n}</span>
-                    <span>{item.title}</span>
-                    <span>{i === film ? t.ui.nowPlaying : films.duration}</span>
-                  </button>
-                </li>
-              ))}
-            </ol>
-          </figure>
-        </article>
+            <figure className="films" data-reveal="" data-m="">
+              <div className="films-screen">
+                <span className="crop" />
+                <p className="eyebrow films-count">{films.screen(current.n.slice(0, 2))}</p>
+                <button
+                  type="button"
+                  className="play-circle"
+                  aria-label={t.ui.playTitle(current.title)}
+                  onClick={() => trackEvent('filminuto', { accion: 'reproducir', filminuto: current.n })}
+                >
+                  <PlayIcon width={20} height={22} color="#F5F3F0" />
+                </button>
+                <p className="disp it films-title">{current.title}</p>
+              </div>
+              <ol className="films-list stagger">
+                {films.items.map((item, i) => (
+                  <li key={item.n}>
+                    <button type="button" aria-current={i === film ? 'true' : undefined} className={i === film ? 'is-on' : ''} onClick={() => setFilm(i)}>
+                      <span className="disp it">{item.n}</span>
+                      <span>{item.title}</span>
+                      <span>{i === film ? t.ui.nowPlaying : films.duration}</span>
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            </figure>
+          </article>
+        )}
       </div>
     </section>
   );

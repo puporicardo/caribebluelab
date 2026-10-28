@@ -115,26 +115,19 @@ export interface Content {
       books: { label: string; title: string }[];
       kit: string;
     };
-    corner: {
-      eyebrow: string;
-      title: Rich;
-      sources: string;
-      songs: string[];
-      duration: string;
-    };
     sounds: {
       title: Rich;
       body: string;
       ficha: FichaRow[];
       tracksLabel: string;
-      tracks: [string, string, string];
+      tracks: string[];
       fig: string;
     };
     creatures: {
       title: Rich;
       body: string;
       ficha: FichaRow[];
-      plates: [string, string, string, string];
+      plates: string[];
       fig: string;
     };
     faro: {
