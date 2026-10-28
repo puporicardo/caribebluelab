@@ -152,6 +152,7 @@ export const es: Content = {
     challenge: {
       title: 'Caribe Blue *Challenge 2026*',
       note: '',
+      place: 'Primer puesto',
       winners: [
         {
           project: 'De desecho a alternativa clave para la construcción: el geopolímero que pega, construye y protege',

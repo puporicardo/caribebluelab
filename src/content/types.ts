@@ -152,6 +152,8 @@ export interface Content {
     challenge: {
       title: Rich;
       note: string;
+      /** Etiqueta sobre cada ganador. */
+      place: string;
       winners: ChallengeWinner[];
     };
     close: { eyebrow: string; title: Rich; cta: string };

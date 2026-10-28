@@ -141,7 +141,7 @@ export function AscensoPage() {
             {challenge.winners.map((w, i) => (
               <li key={w.project}>
                 <span className="disp it challenge-n">{String(i + 1).padStart(2, '0')}</span>
-                <span className="challenge-place">Primer puesto</span>
+                <span className="challenge-place">{challenge.place}</span>
                 <span className="disp challenge-project">{w.project}</span>
                 <p className="challenge-desc">{w.description}</p>
                 <span className="challenge-team">{w.team}</span>

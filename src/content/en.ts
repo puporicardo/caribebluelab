@@ -151,18 +151,19 @@ export const en: Content = {
     challenge: {
       title: 'Caribe Blue *Challenge 2026*',
       note: '',
+      place: 'First place',
       winners: [
         {
-          project: 'De desecho a alternativa clave para la construcción: el geopolímero que pega, construye y protege',
-          description: 'El proyecto aborda la gestión de la ceniza de fondo de carbón (CFC) generada por centrales termoeléctricas en Colombia, proponiendo su uso como precursor para un mortero geopolimérico que sustituya parcialmente al cemento Portland. Reduce residuos y emisiones de CO₂ y ofrece un material con propiedades mecánicas competitivas para la construcción en ambientes salinos. La viabilidad técnica se respalda con resultados preliminares y un enfoque experimental claro.',
-          team: 'Jacques Pierre Ropain Rodríguez (ingeniería civil); Diego Alfonso Camacho Perez (ingeniería civil); Shanery Sofia Palmera Luna (ingeniería ambiental); Angelin Isabel López Núñez (medicina); Brandon David Blanco Malaver (ingeniería civil).',
-          status: 'TRL 3 · resultados experimentales preliminares de granulometría, compresión y adhesión, validados con la empresa aliada que suministra la CFC.',
+          project: 'From waste to a key building alternative: the geopolymer that binds, builds and protects',
+          description: 'The project tackles the management of coal bottom ash (CBA) produced by thermal power plants in Colombia, proposing its use as a precursor for a geopolymer mortar that partially replaces Portland cement. It reduces waste and CO₂ emissions and offers a material with competitive mechanical properties for construction in saline environments. Its technical feasibility is backed by preliminary results and a clear experimental approach.',
+          team: 'Jacques Pierre Ropain Rodríguez (civil engineering); Diego Alfonso Camacho Perez (civil engineering); Shanery Sofia Palmera Luna (environmental engineering); Angelin Isabel López Núñez (medicine); Brandon David Blanco Malaver (civil engineering).',
+          status: 'TRL 3 · preliminary experimental results on particle size, compression and adhesion, validated with the partner company that supplies the CBA.',
         },
         {
           project: 'Pontia',
-          description: 'El proyecto aborda la proliferación de la macrófita invasora Pontederia crassipes en la Ciénaga Grande de Santa Marta, proponiendo papel artesanal a partir de esta biomasa. Transforma un residuo en un material de empaque sostenible, contribuye a la economía circular y reduce el uso de plásticos. La viabilidad técnica se respalda en pruebas iniciales; aún se requiere validar sus propiedades.',
-          team: 'Orasi Smith Montenegro Sepulveda (biología); Liliana Margarita Ojeda Manjarrés (docente y egresada doctorado Ciencias del Mar); Laura Marcela Bolaño Ortega (biología); Danilo Andrés Quintero Rangel (biología); Laura Tatiana Patiño Aguirre (biología).',
-          status: 'TRL 3 · prueba experimental de concepto: una primera transformación y conformado de la biomasa dio una lámina y expuso retos técnicos concretos.',
+          description: 'The project addresses the spread of the invasive aquatic plant Pontederia crassipes in the Ciénaga Grande de Santa Marta, proposing handmade paper from this biomass. It turns waste into a sustainable packaging material, supports the circular economy and reduces plastic use. Its technical feasibility is backed by initial tests; its properties still need to be validated.',
+          team: 'Orasi Smith Montenegro Sepulveda (biology); Liliana Margarita Ojeda Manjarrés (lecturer and PhD graduate in Marine Sciences); Laura Marcela Bolaño Ortega (biology); Danilo Andrés Quintero Rangel (biology); Laura Tatiana Patiño Aguirre (biology).',
+          status: 'TRL 3 · experimental proof of concept: a first transformation and forming of the biomass produced a sheet and revealed specific technical challenges.',
         },
       ],
     },
