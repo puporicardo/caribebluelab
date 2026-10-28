@@ -16,7 +16,7 @@ interface ExternalLinkProps {
 export function ExternalLink({ href, name, className, children }: ExternalLinkProps) {
   if (!href) {
     return (
-      <span className={`${className ?? ''} is-pending`} title="Enlace por confirmar">
+      <span className={`${className ?? ''} is-pending`}>
         {children}
       </span>
     );

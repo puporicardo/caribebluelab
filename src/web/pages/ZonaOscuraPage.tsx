@@ -178,10 +178,12 @@ export function ZonaOscuraPage() {
               />
               <span className="crop" style={{ inset: 0, color: 'rgba(111,227,214,.6)' }} />
             </div>
-            <p className="figcap">
-              <b>{t.ui.fig} 4.2</b>
-              {creatures.fig}
-            </p>
+            {creatures.fig && (
+              <p className="figcap">
+                <b>{t.ui.fig} 4.2</b>
+                {creatures.fig}
+              </p>
+            )}
           </figure>
         </article>
       </div>

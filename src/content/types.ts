@@ -93,9 +93,6 @@ export interface Content {
       ficha: FichaRow[];
       explore: string;
       alliance: string;
-      work: string;
-      fig1: string;
-      fig2: string;
       network: string;
       places: [string, string];
     };
@@ -103,7 +100,7 @@ export interface Content {
       title: Rich;
       body: string;
       ficha: FichaRow[];
-      note: string;
+      note?: string;
       screen: (n: string) => string;
       items: { n: string; title: string }[];
       duration: string;

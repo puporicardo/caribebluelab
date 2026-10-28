@@ -6,22 +6,21 @@ import { trackEvent } from '../../shared/analytics';
 import { Ficha } from '../../shared/components/Ficha';
 import { ArrowRight } from '../../shared/components/Icons';
 import { Rich, plain } from '../../shared/components/Rich';
-import { cssVars } from '../../shared/css';
 import { ExternalLink } from '../parts/ExternalLink';
 import { ZoneHead } from '../parts/ZoneHead';
 
-/** Filminutos de Cine al Mar, con el video de cada uno (ver src/content/filminutos.ts). */
+/** Festival de filminutos visible en la zona de luz; pónlo en false para ocultarlo. */
 const SHOW_FILMS = true;
 
-/** Fotos de la galería de Art Blue Lab (public/fotos/art-blue-lab). */
-const ART_PHOTOS = Array.from({ length: 12 }, (_, i) => `art-${String(i + 1).padStart(2, '0')}.jpg`);
+/** Fotos de Art Blue Lab (public/fotos/art-blue-lab): las dos primeras se ven junto al texto, todas en el carrusel. */
+const ART_PHOTOS = Array.from({ length: 16 }, (_, i) => `art-${String(i + 1).padStart(2, '0')}.jpg`);
 
-/** Zona 1 · Zona de luz (Mirar): Art Blue Lab y Festival de Filminutos Cine Al Mar. */
+/** Zona 1 · Zona de luz (Mirar): Art Blue Lab y Festival de Filminutos Cine al Mar. */
 export function ZonaDeLuzPage() {
   const t = useContent();
   const art = t.web.art;
   const films = t.web.films;
-  const [film, setFilm] = useState(1);
+  const [film, setFilm] = useState(0);
   const current = FILMINUTOS[film];
   const base = import.meta.env.BASE_URL;
   const total = SHOW_FILMS ? 2 : 1;
@@ -53,23 +52,10 @@ export function ZonaDeLuzPage() {
           </div>
           <figure className="art-figs" data-reveal="" data-m="">
             <div>
-              <div className="hatch frame frame--4x5">
-                <span className="crop" />
-                <span className="frame-label">{art.work}</span>
-              </div>
-              <p className="figcap">
-                <b>{t.ui.fig} 1.1</b>
-                {art.fig1}
-              </p>
+              <img className="art-photo" src={`${base}fotos/art-blue-lab/${ART_PHOTOS[0]}`} alt={art.title} loading="lazy" decoding="async" />
             </div>
             <div className="art-figs-side">
-              <div className="hatch frame frame--3x4" style={cssVars({ '--hatch-bg': 'linear-gradient(200deg, #D2BB81, #2A4C72)' })}>
-                <span className="crop" />
-              </div>
-              <p className="figcap">
-                <b>{t.ui.fig} 1.2</b>
-                {art.fig2}
-              </p>
+              <img className="art-photo art-photo--3x4" src={`${base}fotos/art-blue-lab/${ART_PHOTOS[1]}`} alt={art.title} loading="lazy" decoding="async" />
               <p className="eyebrow network-title">{art.network}</p>
               <svg viewBox="0 0 220 70" aria-hidden="true" className="network-arc draw-wipe">
                 <path d="M10 56 Q110 -8 210 56" fill="none" stroke="#6FE3D6" strokeWidth="1.2" strokeDasharray="4 6" className="dash" />
@@ -82,7 +68,7 @@ export function ZonaDeLuzPage() {
               </div>
             </div>
           </figure>
-          <ul className="art-gallery stagger" aria-label={art.title}>
+          <ul className="art-carousel" aria-label={art.title}>
             {ART_PHOTOS.map((name, i) => (
               <li key={name}>
                 <img src={`${base}fotos/art-blue-lab/${name}`} alt={`${art.title} · ${i + 1}`} loading="lazy" decoding="async" />
@@ -103,12 +89,9 @@ export function ZonaDeLuzPage() {
               </h3>
               <p className="body">{films.body}</p>
               <Ficha rows={films.ficha} />
-              <p className="note">{films.note}</p>
             </div>
             <figure className="films" data-reveal="" data-m="">
               <div className="films-screen">
-                <span className="crop" />
-                <p className="eyebrow films-count">{films.screen(current.n)}</p>
                 <video
                   key={current.slug}
                   className="films-video"
@@ -120,9 +103,11 @@ export function ZonaDeLuzPage() {
                   onPlay={() => trackEvent('filminuto', { accion: 'reproducir', filminuto: current.n })}
                   aria-label={t.ui.playTitle(current.title)}
                 />
-                <p className="disp it films-title">{current.title}</p>
-                <p className="films-meta">{current.duration} · {current.year} · {current.curador}</p>
               </div>
+              <p className="disp it films-caption">{current.title}</p>
+              <p className="films-meta">
+                {current.duration} · {current.year} · {current.curador}
+              </p>
               <ol className="films-list stagger">
                 {FILMINUTOS.map((item, i) => (
                   <li key={item.slug}>
