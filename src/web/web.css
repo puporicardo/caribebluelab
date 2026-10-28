@@ -1914,3 +1914,104 @@
 .art-carousel-wrap {
   margin-top: 48px;
 }
+
+/* Art Blue Lab: visor con flechas, contador y miniaturas */
+.art-viewer {
+  margin: 0;
+}
+.art-viewer-main {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-height: min(72vh, 680px);
+  width: 100%;
+  overflow: hidden;
+  background: rgba(11, 27, 51, 0.35);
+}
+.art-viewer-main > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.art-viewer-main > img.is-on {
+  opacity: 1;
+}
+.art-viewer-arrow {
+  position: absolute;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(11, 27, 51, 0.55);
+  color: #f5f3f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background 0.25s ease;
+}
+.art-viewer-arrow:hover {
+  background: rgba(11, 27, 51, 0.8);
+}
+.art-viewer-arrow--prev {
+  left: 14px;
+}
+.art-viewer-arrow--prev svg {
+  transform: rotate(180deg);
+}
+.art-viewer-arrow--next {
+  right: 14px;
+}
+.art-viewer-count {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  padding: 4px 10px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #f5f3f0;
+  background: rgba(11, 27, 51, 0.55);
+}
+.art-thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  padding-bottom: 6px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.art-thumbs button {
+  flex: 0 0 56px;
+  height: 70px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  opacity: 0.45;
+  outline: 1px solid transparent;
+  outline-offset: 2px;
+  transition: opacity 0.25s ease, outline-color 0.25s ease;
+}
+.art-thumbs button:hover {
+  opacity: 0.8;
+}
+.art-thumbs button.is-on {
+  opacity: 1;
+  outline-color: var(--c-accent);
+}
+.art-thumbs img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.art-network {
+  margin-top: 28px;
+  max-width: 320px;
+}

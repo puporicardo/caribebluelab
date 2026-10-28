@@ -12,7 +12,7 @@ import { ZoneHead } from '../parts/ZoneHead';
 /** Festival de filminutos visible en la zona de luz; pónlo en false para ocultarlo. */
 const SHOW_FILMS = true;
 
-/** Fotos de Art Blue Lab (public/fotos/art-blue-lab): las dos primeras se ven junto al texto, todas en el carrusel. */
+/** Fotos de Art Blue Lab (public/fotos/art-blue-lab), en el visor con miniaturas. */
 const ART_PHOTOS = Array.from({ length: 16 }, (_, i) => `art-${String(i + 1).padStart(2, '0')}.jpg`);
 
 /** Zona 1 · Zona de luz (Mirar): Art Blue Lab y Festival de Filminutos Cine al Mar. */
@@ -21,6 +21,8 @@ export function ZonaDeLuzPage() {
   const art = t.web.art;
   const films = t.web.films;
   const [film, setFilm] = useState(0);
+  const [slide, setSlide] = useState(0);
+  const go = (d: number) => setSlide((i) => (i + d + ART_PHOTOS.length) % ART_PHOTOS.length);
   const current = FILMINUTOS[film];
   const base = import.meta.env.BASE_URL;
   const total = SHOW_FILMS ? 2 : 1;
@@ -50,12 +52,45 @@ export function ZonaDeLuzPage() {
               </ExternalLink>
             </div>
           </div>
-          <figure className="art-figs" data-reveal="" data-m="">
-            <div>
-              <img className="art-photo" src={`${base}fotos/art-blue-lab/${ART_PHOTOS[0]}`} alt={art.title} loading="lazy" decoding="async" />
+          <figure className="art-viewer" data-reveal="" data-m="" aria-roledescription="carrusel" aria-label={art.title}>
+            <div className="art-viewer-main">
+              {ART_PHOTOS.map((name, i) => (
+                <img
+                  key={name}
+                  src={`${base}fotos/art-blue-lab/${name}`}
+                  alt={`${art.title} · ${i + 1} / ${ART_PHOTOS.length}`}
+                  className={i === slide ? 'is-on' : ''}
+                  aria-hidden={i !== slide}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                />
+              ))}
+              <button type="button" className="art-viewer-arrow art-viewer-arrow--prev" aria-label="Anterior" onClick={() => go(-1)}>
+                <ArrowRight />
+              </button>
+              <button type="button" className="art-viewer-arrow art-viewer-arrow--next" aria-label="Siguiente" onClick={() => go(1)}>
+                <ArrowRight />
+              </button>
+              <span className="art-viewer-count" aria-live="polite">
+                {String(slide + 1).padStart(2, '0')} / {String(ART_PHOTOS.length).padStart(2, '0')}
+              </span>
             </div>
-            <div className="art-figs-side">
-              <img className="art-photo art-photo--3x4" src={`${base}fotos/art-blue-lab/${ART_PHOTOS[1]}`} alt={art.title} loading="lazy" decoding="async" />
+            <div className="art-thumbs" role="tablist" aria-label={art.title}>
+              {ART_PHOTOS.map((name, i) => (
+                <button
+                  key={name}
+                  type="button"
+                  role="tab"
+                  aria-selected={i === slide}
+                  aria-label={`${i + 1}`}
+                  className={i === slide ? 'is-on' : ''}
+                  onClick={() => setSlide(i)}
+                >
+                  <img src={`${base}fotos/art-blue-lab/${name}`} alt="" loading="lazy" decoding="async" />
+                </button>
+              ))}
+            </div>
+            <div className="art-network">
               <p className="eyebrow network-title">{art.network}</p>
               <svg viewBox="0 0 220 70" aria-hidden="true" className="network-arc draw-wipe">
                 <path d="M10 56 Q110 -8 210 56" fill="none" stroke="#6FE3D6" strokeWidth="1.2" strokeDasharray="4 6" className="dash" />
@@ -69,16 +104,6 @@ export function ZonaDeLuzPage() {
             </div>
           </figure>
         </article>
-
-        <div className="art-carousel-wrap">
-          <ul className="art-carousel" aria-label={art.title}>
-            {ART_PHOTOS.map((name, i) => (
-              <li key={name}>
-                <img src={`${base}fotos/art-blue-lab/${name}`} alt={`${art.title} · ${i + 1}`} loading="lazy" decoding="async" />
-              </li>
-            ))}
-          </ul>
-        </div>
 
         {SHOW_FILMS && (
           <article className="spread rev" aria-label={plain(films.title)}>
